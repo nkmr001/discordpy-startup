@@ -22,8 +22,8 @@ async def ping(ctx):
     await ctx.send(pong)
     
 @bot.command()
-async def corona(ctx):
-    await ctx.send("日本国内の最新コロナニュース５件を表示します")
+async def biohazard(ctx):
+    await ctx.send("日本国内の感染者情報を最新５件表示します")
     url = "https://japan-cov-19.now.sh/"
     res = requests.get(url).text
     soup = BeautifulSoup(res, 'html.parser')
