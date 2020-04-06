@@ -18,7 +18,7 @@ async def ping(ctx):
     await ctx.send('pong')
 
 async def corona(ctx):
-    await ctx.send("本日のコロナ感染者は100人以上です")
+    await ctx.send("本日のコロナ感染者は100人以上")
 
 
 bot.run(token)
