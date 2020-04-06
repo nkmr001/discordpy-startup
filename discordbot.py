@@ -10,7 +10,6 @@ bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
 
-
 @bot.event
 async def on_command_error(ctx, error):
     orig_error = getattr(error, "original", error)
@@ -32,5 +31,8 @@ async def bio(ctx):
     for h in soup.find_all('li', class_='brief-item__title')[0:5]:
         await ctx.send(h.get_text())
         time.sleep(1)
-
+ 
+@bot.command()
+async def アタリのデータ(ctx):
+    await ctx.send("攻撃倍率 1.0\n防御倍率1.0\n体力倍率1.0\nロール:スプリンター/n現環境で強いか否か")
 bot.run(token)
