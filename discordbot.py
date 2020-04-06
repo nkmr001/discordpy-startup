@@ -17,5 +17,8 @@ async def on_command_error(ctx, error):
 async def ping(ctx):
     await ctx.send('pong')
 
+async def corona(ctx):
+    await ctx.send("本日のコロナ感染者は100人以上です")
+
 
 bot.run(token)
