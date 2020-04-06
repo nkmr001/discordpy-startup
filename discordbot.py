@@ -4,6 +4,7 @@ import os
 import traceback
 import requests
 from bs4 import BeautifulSoup
+import time
 
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
@@ -30,5 +31,6 @@ async def bio(ctx):
     hoge = soup.find_all('div', class_='brief-item')
     for h in soup.find_all('li', class_='brief-item__title')[0:5]:
         await ctx.send(h.get_text())
+        time.sleep(1)
 
 bot.run(token)
