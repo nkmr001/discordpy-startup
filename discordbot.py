@@ -22,7 +22,7 @@ async def ping(ctx):
     await ctx.send(pong)
     
 @bot.command()
-async def biohazard(ctx):
+async def bio(ctx):
     await ctx.send("日本国内の感染者情報を最新５件表示します")
     url = "https://japan-cov-19.now.sh/"
     res = requests.get(url).text
