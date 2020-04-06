@@ -24,11 +24,11 @@ async def corona(ctx):
     url = "https://japan-cov-19.now.sh/"
     res = requests.get(url).text
     soup = BeautifulSoup(res, 'html.parser')
-    for hoge in soup.find_all('div', class_='brief-item'):
-        for h in soup.find_all('li', class_='brief-item__title'):
-            if len(h) <= 5:
-                await ctx.send(h.get_text())
-            else:
-                break
+    hoge = soup.find_all('div', class_='brief-item')
+    for h in soup.find_all('li', class_='brief-item__title'):
+        if len(h) <= 5:
+            await ctx.send(h[::-1].get_text())
+        else:
+            break
 
 bot.run(token)
