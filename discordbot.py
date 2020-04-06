@@ -25,7 +25,7 @@ async def ping(ctx):
 @bot.command()
 async def アタリ(ctx)
     await ctx.send("アタリの情報※HS発動時のみ記載\n組んで相性の良いキャラ\n・マルコス＆リリカ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・全てのキャラに有利\n不利対面\n①貫通\n②毒、サイレント、スタンなどの状態異常\n③ダメカ破壊\n④防御UP中に防御ダウン\n⑤カードキャンセル\n上記のものどれか一つでもまともに食らえば不利になる。")
-    
+
 @bot.command()
 async def bio(ctx):
     await ctx.send("日本国内の感染者情報を最新５件表示します")
