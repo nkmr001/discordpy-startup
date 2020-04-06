@@ -22,6 +22,7 @@ async def on_command_error(ctx, error):
 async def ping(ctx):
     await ctx.send(pong)
 
+
 @bot.command()
 async def bio(ctx):
     await ctx.send("日本国内の感染者情報を最新５件表示します")
@@ -33,9 +34,11 @@ async def bio(ctx):
         await ctx.send(h.get_text())
         time.sleep(1)
 
+
 @bot.command()
 async def ヘルプ(ctx):
     await ctx.send("/キャラ名でそのキャラの相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています")
+
 
 @bot.command()
 async def アタリ(ctx):
