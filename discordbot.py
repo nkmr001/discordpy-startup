@@ -28,7 +28,7 @@ async def corona(ctx):
     for h in soup.find_all('li', class_='brief-item__title'):
         if len(h) <= 5:
             await ctx.send(h[::-1].get_text())
-        else:
+        elif len(h) == 6:
             break
 
 bot.run(token)
