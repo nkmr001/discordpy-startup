@@ -27,7 +27,7 @@ async def corona(ctx):
     res = requests.get(url).text
     soup = BeautifulSoup(res, 'html.parser')
     hoge = soup.find_all('div', class_='brief-item')
-    for h in soup.find_all('li', class_='brief-item__title'):
-        await ctx.send(h[0:4:-1].get_text())
+    hogehoge = [for h in soup.find_all('li', class_='brief-item__title')]
+    await ctx.send(hogehoge[0:4:-1])
 
 bot.run(token)
