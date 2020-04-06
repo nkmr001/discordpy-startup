@@ -23,6 +23,11 @@ async def ping(ctx):
     
 @bot.command()
 async def corona(ctx):
-    await ctx.send("test")
+    url = "https://japan-cov-19.now.sh/"
+    res = requests.get(url).text
+    soup = BeautifulSoup(res, 'html.parser')
+    hoge = soup.find_all('div', class_='brief-item')
+    for h in soup.find_all('li', class_='brief-item__title')[0:5]:
+        await ctx.send(h.get_text())
 
 bot.run(token)
