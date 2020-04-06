@@ -1,4 +1,5 @@
 from discord.ext import commands
+import random
 import os
 import traceback
 import requests
@@ -17,7 +18,7 @@ async def on_command_error(ctx, error):
 
 @bot.command()
 async def ping(ctx):
-    await ctx.send('pong')
+    await ctx.send(random.randrange(10))
     
 @bot.command()
 async def corona(ctx):
