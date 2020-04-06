@@ -23,6 +23,7 @@ async def ping(ctx):
     
 @bot.command()
 async def corona(ctx):
+    await ctx.send("日本国内の最新コロナニュース５件を表示します")
     url = "https://japan-cov-19.now.sh/"
     res = requests.get(url).text
     soup = BeautifulSoup(res, 'html.parser')
