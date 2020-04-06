@@ -34,7 +34,7 @@ async def bio(ctx):
         time.sleep(1)
 
 @bot.command()
-async def ヘルプ(ctx)
+async def help(ctx)
     await ctx.send("/キャラ名でそのキャラの相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています")
 
 
