@@ -34,6 +34,6 @@ async def bio(ctx):
  
 @bot.command()
 async def atari(ctx):
-    await ctx.send("攻撃倍率 1.0\n防御倍率1.0\n体力倍率1.0\nロール:スプリンター/n現環境で強いか否か")
+    await ctx.send("攻撃倍率 1.0\n防御倍率1.0\n体力倍率1.0\nロール:スプリンターn現環境で強いか否か")
     
 bot.run(token)
