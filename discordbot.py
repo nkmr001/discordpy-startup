@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
+pong = random.randrange(10)
 
 
 @bot.event
@@ -18,7 +19,7 @@ async def on_command_error(ctx, error):
 
 @bot.command()
 async def ping(ctx):
-    await ctx.send(random.randrange(10))
+    await ctx.send(pong)
     
 @bot.command()
 async def corona(ctx):
