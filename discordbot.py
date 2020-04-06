@@ -1,6 +1,8 @@
 from discord.ext import commands
 import os
 import traceback
+import requests
+from bs4 import BeautifulSoup
 
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
@@ -19,7 +21,12 @@ async def ping(ctx):
     
 @bot.command()
 async def corona(ctx):
-    await ctx.send("本日のコロナ感染者は100人以上")
+    url = "https://japan-cov-19.now.sh/"
+    res = requests.get(url).text
+    soup = BeautifulSoup(res, 'html.parser')
+    for hoge in soup.find_all('div', class_='brief-item'):
+        for h in soup.find_all('li', class_='brief-item__title'):
+            await ctx.send(h.get_text())
 
 
 bot.run(token)
