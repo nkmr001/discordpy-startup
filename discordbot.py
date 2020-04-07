@@ -10,10 +10,6 @@ bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
 
-@bot.event
-async def on_message(message):
-	if 685676747173134337 == message.id:
-		await message.delete()
 
 @bot.event
 async def on_command_error(ctx, error):
