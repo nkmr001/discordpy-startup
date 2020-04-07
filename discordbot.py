@@ -10,9 +10,6 @@ bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
 
-@bot.event
-async def on_message(message):
-	await message.delete(message,30)
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -25,7 +22,7 @@ async def on_command_error(ctx, error):
 @bot.command()
 async def ping(ctx):
 	await ctx.send(pong)
-
+	
 @bot.command()
 async def bio(ctx):
     await ctx.send("日本国内の感染者情報を最新５件表示します")
