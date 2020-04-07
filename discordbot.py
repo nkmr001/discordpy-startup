@@ -12,7 +12,8 @@ pong = random.randrange(10)
 
 @bot.event
 async def on_message(message):
-    await message.delete(*)
+	if 685676747173134337 != message.author:
+		await message.delete()
 
 @bot.event
 async def on_command_error(ctx, error):
