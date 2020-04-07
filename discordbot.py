@@ -11,9 +11,9 @@ token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
 
 @bot.event
-async def on_message(message):
+async def on_message(ctx):
 	if bot.user != message.author:
-		await ctx.delete()
+		await message.delete()
 
 @bot.event
 async def on_command_error(ctx, error):
