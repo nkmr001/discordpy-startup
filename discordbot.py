@@ -34,6 +34,9 @@ async def bio(ctx):
         await ctx.send(h.get_text())
         time.sleep(1)
 
+@bot.command()
+async def 招待URL(ctx):
+	await ctx.send("https://discordapp.com/api/oauth2/authorize?client_id=685676747173134337&permissions=8&scope=bot\n招待したいサーバーの管理者が操作してください")
 
 @bot.command()
 async def ヘルプ(ctx):
