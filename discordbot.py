@@ -17,7 +17,7 @@ async def on_command_error(ctx, error):
 	error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
 	await ctx.send(error_msg)
 	await ctx.send("すみません、存在しないコマンドです。\n何かあれば作者のDMまでhttps://twitter.com/mimiQ0012")
-	ctx.delete()
+	.delete()
 
 
 @bot.command()
