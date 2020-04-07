@@ -77,9 +77,13 @@ async def ジャンヌ(ctx):
 async def ボイドール(ctx):
 	await ctx.send("ボイドールの情報\n\n組んで相性の良いキャラ\n・トマス\n・ボイドの型によって幅広いアタッカー、ガンナーと組みやすい\n\n耐え難い対面\n・お母さん入りガンナー\n・マジスク&貫通持ち\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/231086#link05")
 
+@bot.command()
+async def マルコス(ctx):
+	await ctx.send("マルコスの情報\n\n組んで相性の良いキャラ\n・リリカ\n・アタリ\n・周囲カノーネor周囲スタン持ち\n\n有利対面\n・枝でのカードキャンセルが成功すればほぼ全キャラ\n\n不利対面(HSゲージが溜まっていれば対処可)\n・周囲カノーネ持ち\n・マジスク＆ゆらら持ち\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229810#link05")
 
-
-
+@bot.command()
+async def ルチアーノ(ctx):
+	await ctx.send("ルチアーノの情報\n\n組んで相性の良いキャラ\n・カノーネ持ちアタッカー\n・アクア\n・周囲カノーネor周囲スタン持ち\n\n有利対面\n・ディーバのみアタッカー全般\n\n不利対面\n・マルコス\n・デルミン\n・自分より射程が長いガンナー\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/232197#link05")
 
 
 
