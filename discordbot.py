@@ -13,9 +13,10 @@ pong = random.randrange(10)
 
 @bot.event
 async def on_command_error(ctx, error):
-    orig_error = getattr(error, "original", error)
-    error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-    await ctx.send(error_msg)
+	orig_error = getattr(error, "original", error)
+	error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
+	await ctx.send(error_msg)
+	await ctx.send("すみません、存在しないコマンドです。\n何かあれば作者のDMまでhttps://twitter.com/mimiQ0012")
 
 
 @bot.command()
@@ -40,7 +41,7 @@ async def 招待URL(ctx):
 
 @bot.command()
 async def ヘルプ(ctx):
-    await ctx.send("/キャラ名でそのキャラの相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。")
+    await ctx.send("/キャラ名でそのキャラの相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。")
 
 
 @bot.command()
@@ -67,8 +68,9 @@ async def 忠臣(ctx):
 async def ジャンヌ(ctx):
 	await ctx.send("ジャンヌの情報\n\n組んで相性の良いキャラ\n・ポロロッチョ\n・デルミン\n\n耐えやすい対面\n・サーティーン\n・ノホ\n・リリカ\n\n耐え難い対面\n・オカリン\n・ギルガメッシュ\n・デルミン\n・イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229854#link05")
 
-
-
+@bot.command()
+async def ボイドール(ctx):
+	await ctx.send("ボイドールの情報\n\n組んで相性の良いキャラ\n・トマス\n・ボイドの型によって幅広いアタッカー、ガンナーと組みやすい\n\n耐え難い対面\n・お母さん入りガンナー\n・マジスク&貫通持ち\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/231086#link05")
 
 
 
