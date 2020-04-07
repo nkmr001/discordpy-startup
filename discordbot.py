@@ -12,7 +12,7 @@ pong = random.randrange(10)
 
 @bot.event
 async def on_message(message):
-	if client.user != message.author:
+	if bot.user != message.author:
 		await message.delete()
 
 @bot.event
