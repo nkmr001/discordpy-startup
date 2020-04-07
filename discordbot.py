@@ -83,9 +83,11 @@ async def マルコス(ctx):
 
 @bot.command()
 async def ルチアーノ(ctx):
-	await ctx.send("ルチアーノの情報\n\n組んで相性の良いキャラ\n・カノーネ持ちアタッカー\n・アクア\n・周囲カノーネor周囲スタン持ち\n\n有利対面\n・ディーバのみアタッカー全般\n\n不利対面\n・マルコス\n・デルミン\n・自分より射程が長いガンナー\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/232197#link05")
+	await ctx.send("ルチアーノの情報\n\n組んで相性の良いキャラ\n・カノーネ持ちキャラクター全般\n・周囲の発動がが速いキャラクター\n\n有利対面\n・ディーバのみアタッカー全般\n\n不利対面\n・マルコス\n・デルミン\n・自分より射程が長いガンナー\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/232197#link05")
 
-
+@bot.command()
+async def まとい(ctx):
+	await ctx.send("まといの情報\n\n組んで相性の良いキャラ\n・ヴィオレッタ\n・フルカノアタッカー\n\n有利対面\n・ディズィー\n・ソーン\n\n不利対面\n・ほぼ全キャラ※自衛カードに当たってくれたら勝てるかもしれない\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/230412#link05")
 
 
 bot.run(token)
