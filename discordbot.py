@@ -109,7 +109,9 @@ async def テスラ(ctx):
 async def ミク(ctx):
 	await ctx.send("ミクの情報\n\n組んで相性の良いキャラ\n・フルカノ持ちアタッカー\n・デルミン\n・グスタフ\n\n耐え難いキャラ\n・ガンナー全般\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/261015#link02")
 
-
+@bot.command()
+async def ヴィオレッタ(ctx):
+	await ctx.send("ヴィオレッタの情報\n\n組んで相性の良いキャラ\n・ポロロッチョ\n・デルミン\n\n耐え難いキャラ\n・お母さん持ちガンナー\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/282804#link05")
 
 
 
