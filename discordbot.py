@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 import random
 import os
@@ -10,6 +11,9 @@ bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
 
+@bot.listen('on_message')
+async def my_message(message):
+	message.delete()
 
 
 @bot.event
