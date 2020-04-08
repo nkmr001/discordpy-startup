@@ -14,8 +14,9 @@ pong = random.randrange(10)
 @bot.listen()
 async def on_message(message):
 	if message.author.bot:
+		await ctx.send("メッセージを削除します")
 		time.sleep(5)
-		await ctx.delete()
+		await message.delete()
 
 @bot.event
 async def on_command_error(ctx, error):
