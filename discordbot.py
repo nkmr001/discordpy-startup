@@ -15,7 +15,7 @@ pong = random.randrange(10)
 async def on_message(message):
 	if message.author.bot:
 		time.sleep(5)
-		await message.delete()
+		await delete()
 
 @bot.event
 async def on_command_error(ctx, error):
