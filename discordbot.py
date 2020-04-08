@@ -22,7 +22,9 @@ async def on_command_error(ctx, error):
 @bot.command()
 async def ping(ctx):
 	embed = discord.Embed(title="再起動しました", description="A", color=#FF0000)
-	embed.add_field(name="再起動No.", value=pong, inline=False)
+	embed.add_field(name="再起動No.", value=str(pong), inline=False)
+	embed.add_field(name="aaaa", value="a", inline=False)
+	embed.add_field(name="aaaa", value="a", inline=False)
 	await ctx.send(embed=embed)
 	
 @bot.command()
