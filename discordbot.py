@@ -11,8 +11,8 @@ bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
 
-@bot.listen('on_message')
-async def my_message(message):
+@bot.listen()
+async def on_message(message):
 	await ctx.send("メッセージを削除します")
 	await message.delete()
 
