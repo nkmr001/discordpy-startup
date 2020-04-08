@@ -10,12 +10,12 @@ import time
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
-client = discord.Client()
 
-@client.event
+
+@bot.event
 async def on_message(message):
     if message.author.bot:
-	time.sleep(30)
+	time.sleep(5)
 	message.delete()
 
 @bot.event
