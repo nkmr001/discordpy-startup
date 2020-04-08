@@ -1,4 +1,5 @@
 from discord.ext import commands
+import discord
 import random
 import os
 import traceback
@@ -9,7 +10,13 @@ import time
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
+client = discord.Client()
 
+@client.event
+async def on_message(message):
+    if message.author.bot:
+	time.sleep(30)
+	message.delete()
 
 @bot.event
 async def on_command_error(ctx, error):
