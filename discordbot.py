@@ -1,5 +1,4 @@
-from discord.ext import commands
-import discord
+from discord.ext import *
 import random
 import os
 import traceback
