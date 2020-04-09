@@ -58,7 +58,7 @@ async def on_message(message):
 		async def ヘルプ(ctx):
 			embed = discord.Embed(title="このbotの説明書",description="ヘルプ以外のメッセージは３０秒で消えちゃうよ\nコマンド見にくくてごめん。")
 			embed.add_field(name="！コンパス",value="コンパスについて解説するよ。\nそのキャラの相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\nステージの立ち回りは\nhttps://twitter.com/wp_leagueの動画を引用しています。",inline=False)
-			embed.add_field(name="！bio",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
+			embed.add_field(name="！バイオハザード",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
 			embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ")
 			await ctx.send(embed=embed)
 
@@ -93,7 +93,7 @@ async def on_message(message):
 					await channel.send(compass[msg.content].format(msg))
 
 			@bot.command()
-			async def bio(ctx):
+			async def バイオハザード(ctx):
 				await ctx.send("日本国内の感染者情報を最新５件表示します")
 				url = "https://japan-cov-19.now.sh/"
 				res = requests.get(url).text
