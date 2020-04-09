@@ -12,6 +12,13 @@ token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
 
 @bot.event
+async def on_message(message):
+	if bot.user.id == 685676747173134337:
+		time.sleep(10)
+		await message.delete()
+		await bot.process_commands(message)
+
+@bot.event
 async def on_command_error(ctx, error):
 	orig_error = getattr(error, "original", error)
 	error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
