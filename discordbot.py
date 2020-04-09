@@ -81,6 +81,7 @@ async def on_message(message):
 				embed.add_field(name="ガンナー",value="リリカ\nルチアーノ\nまとい\nディズィー\nサーティーン\nエミリア\nめぐめぐ\nリン\nイスタカ\nソーン\nオカリン\n猫宮\nギルガメッシュ",inline=False)
 				embed.add_field(name="スプリンター",value="アタリ\nボイドール\nテスラ\nミク\nコクリコ\n春麗\nザクレイ\n勇者\nきらら\nアクア\nレイヤ\nピエール",inline=False)
 				embed.add_field(name="タンク",value="ジャスティス\nジャンヌ\nヴィオレッタ\nグスタフ\nレン\nモノクマ\nめぐみん\nトマス",inline=False)
+				embed.add_field(name="ステージ",value="けっこいスターパーク",inline=False)
 				await ctx.send(embed=embed)
 				def check(message):
 					return message.content == "アタリ","ジャスティス","リリカ","忠臣","ノホ","ジャンヌ","ボイドール","マルコス","ルチアーノ","まとい","ソル","ディズィー","グスタフ","テスラ","ミク","ヴィオレッタ","ソーン","コクリコ","リュウ","春麗","マリア","アダム","サーティーン","勇者","エミリア","レム","カイ","めぐめぐ","レン","リン","イスタカ","ザクレイ","きらら","モノクマ","ポロロッチョ","アクア","めぐみん","デルミン","リヴァイ","トマス","猫宮","オカリン","レイヤ","セイバー","ギルガメッシュ","ルルカ","ピエール","けっこいスターパーク" and message.channel == channel
