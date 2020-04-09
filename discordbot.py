@@ -13,10 +13,12 @@ pong = random.randrange(10)
 
 @bot.event
 async def on_message(message):
-	if bot.user.id == 685676747173134337:
+	try:
 		time.sleep(10)
 		await message.delete()
 		await bot.process_commands(message)
+	except:
+		pass
 
 @bot.event
 async def on_command_error(ctx, error):
