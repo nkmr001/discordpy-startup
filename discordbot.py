@@ -69,7 +69,7 @@ async def on_message(message):
 				def check(message):
 					return message.content == "アタリ","ジャスティス","リリカ","忠臣","ノホ","ジャンヌ","ボイドール","マルコス","ルチアーノ","まとい","ソル","ディズィー","グスタフ","テスラ","ミク","ヴィオレッタ","ソーン","コクリコ","リュウ","春麗","マリア","アダム","サーティーン","勇者","エミリア","レム","カイ","めぐめぐ","レン","リン","イスタカ","ザクレイ","きらら","モノクマ","ポロロッチョ","アクア","めぐみん","デルミン","リヴァイ","トマス","猫宮","オカリン","レイヤ","セイバー","ギルガメッシュ","ルルカ","ピエール" and message.channel == channel
 				try:
-					msg = await bot.wait_for('message', timeout=60.0, check=check)
+					msg = await bot.wait_for('message', timeout=5.0, check=check)
 				except asyncio.TimeoutError:
 					await channel.send("タイムアウトしたよ")
 				else:
