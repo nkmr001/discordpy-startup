@@ -58,7 +58,7 @@ async def on_message(message):
 		@bot.command()
 		async def ヘルプ(ctx):
 			embed = discord.Embed(title="このbotの説明書",description="ヘルプ以外のメッセージは３０秒で消えちゃうよ\nコマンド見にくくてごめん。")
-			embed.add_field(name="！コンパス",value="コンパスについて解説するよ。\nそのキャラの相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\nステージの立ち回りは\nhttps://twitter.com/wp_leagueの動画を引用しています。",inline=False)
+			embed.add_field(name="！コンパス",value="コンパスについて解説するよ。\nそのキャラの相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\n\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\n\nステージの立ち回りは\nhttps://twitter.com/wp_leagueの動画を引用しています。",inline=False)
 			embed.add_field(name="！バイオハザード",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
 			embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ")
 			await ctx.send(embed=embed)
@@ -87,7 +87,7 @@ async def on_message(message):
 				def check(message):
 					return message.content == "アタリ","ジャスティス","リリカ","忠臣","ノホ","ジャンヌ","ボイドール","マルコス","ルチアーノ","まとい","ソル","ディズィー","グスタフ","テスラ","ミク","ヴィオレッタ","ソーン","コクリコ","リュウ","春麗","マリア","アダム","サーティーン","勇者","エミリア","レム","カイ","めぐめぐ","レン","リン","イスタカ","ザクレイ","きらら","モノクマ","ポロロッチョ","アクア","めぐみん","デルミン","リヴァイ","トマス","猫宮","オカリン","レイヤ","セイバー","ギルガメッシュ","ルルカ","ピエール","けっこいスターパーク" and message.channel == channel
 				try:
-					msg = await bot.wait_for('message', timeout=60.0, check=check)
+					msg = await bot.wait_for('message', timeout=.0, check=check)
 				except asyncio.TimeoutError:
 					await channel.send("タイムアウトしたよ")
 				else:
