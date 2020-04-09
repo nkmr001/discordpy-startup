@@ -91,6 +91,8 @@ async def on_message(message):
 					msg = await bot.wait_for('message', timeout=30.0, check=check)
 				except asyncio.TimeoutError:
 					await channel.send("タイムアウトしたよ")
+				except KeyError:
+					await channel.send("このbotの辞書にそんな言葉は存在しないようです。もう一度やり直してください")
 				else:
 					await channel.send(compass[msg.content].format(msg))
 
