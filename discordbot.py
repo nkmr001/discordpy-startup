@@ -33,7 +33,7 @@ compass = {
 	"コクリコ":"コクリコの情報\n\n組んで相性の良いキャラ\n・HS発動時はアタッカー、ガンナー全キャラに合う\n・フルカノアタッカー\n・ディズィー\n\n有利対面のキャラ\n・初手のみマルコス＆リリカ\n・ダメカを積んでたらカノーネがないキャラ\n・防御バフカードを積んでいたらお母さんがないキャラ\n\n不利対面\n・ソル\n・ギルガメッシュ\n・貫通カードを持っているキャラ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/281658#link02",
 	"リュウ":"リュウの情報\n\n組んで相性の良いキャラ\n・周囲カノーネor周囲スタン持ち\n・ディズィー\n・ギルガメッシュ\n・春麗\n\n有利対面のキャラ※HSが溜まってる場合のみ\n・ダメカがないキャラ全部\n・遠距離or周囲持ちヒーロー\n\n不利対面\n・マルコス＆リリカ\n・デルミン\n・ノホ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/296611#link02",
 	"アダム":"アダムの情報\n\n組んで相性の良いキャラ\n・デズ\n・ギルガメッシュ\n・ルチアーノ\n・めぐみん\n\n有利対面のキャラ\n・ガンナー全般\n・体力倍率0.75以下のキャラほぼ全て\n\n・2凸以上のマルコス\n・デルミン\n・イスタカ\n・マリア\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/313514#link05",
-	"":"",
+	"けっこいスターパーク":"けっこいスターパークの立ち回りについて\nhttps://youtu.be/OM3gpfVLSB4",
 	"":"",
 	"":"",
 	"":"",
@@ -57,7 +57,7 @@ async def on_message(message):
 		@bot.command()
 		async def ヘルプ(ctx):
 			embed = discord.Embed(title="このbotの説明書",description="ヘルプ以外のメッセージは３０秒で消えちゃうよ\nコマンド見にくくてごめん。")
-			embed.add_field(name="！コンパス",value="コンパスのキャラについて解説するよ。\nそのキャラの相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。",inline=False)
+			embed.add_field(name="！コンパス",value="コンパスについて解説するよ。\nそのキャラの相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\nステージの立ち回りは\nhttps://twitter.com/wp_leagueの動画を引用しています。",inline=False)
 			embed.add_field(name="！bio",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
 			embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ")
 			await ctx.send(embed=embed)
