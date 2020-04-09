@@ -108,7 +108,7 @@ async def on_message(message):
 				await ctx.send("https://discordapp.com/api/oauth2/authorize?client_id=685676747173134337&permissions=8&scope=bot\n招待したいサーバーの管理者が操作してください")
 
 		else:
-			time.sleep(5)
+			time.sleep(30)
 			await message.delete()
 	except:pass
 	await bot.process_commands(message)
