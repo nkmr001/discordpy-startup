@@ -52,6 +52,8 @@ compass = {
 	"":""
 }
 
+com = [for i in compass.keys()]
+
 @bot.event
 async def on_message(message):
 	try:
@@ -86,7 +88,7 @@ async def on_message(message):
 				embed.add_field(name="ステージ",value="ケルパーズ",inline=False)
 				await ctx.send(embed=embed)
 				def check(message):
-					return message.content == "アタリ","ジャスティス","リリカ","忠臣","ノホ","ジャンヌ","ボイドール","マルコス","ルチアーノ","まとい","ソル","ディズィー","グスタフ","テスラ","ミク","ヴィオレッタ","ソーン","コクリコ","リュウ","春麗","マリア","アダム","サーティーン","勇者","エミリア","レム","カイ","めぐめぐ","レン","リン","イスタカ","ザクレイ","きらら","モノクマ","ポロロッチョ","アクア","めぐみん","デルミン","リヴァイ","トマス","猫宮","オカリン","レイヤ","セイバー","ギルガメッシュ","ルルカ","ピエール","けっこいスターパーク" and message.channel == channel
+					return message.content in com and message.channel == channel
 				try:
 					msg = await bot.wait_for('message', timeout=30.0, check=check)
 				except asyncio.TimeoutError:
