@@ -11,14 +11,6 @@ bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
 
-@bot.event
-async def on_message(message):
-	try:
-		time.sleep(10)
-		await message.delete()
-		await bot.process_commands(message)
-	except:
-		pass
 
 @bot.event
 async def on_command_error(ctx, error):
