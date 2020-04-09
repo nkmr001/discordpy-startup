@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 import time
 import asyncio
 
-bot = commands.Bot(command_prefix='/')
+bot = commands.Bot(command_prefix='！')
 token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
 
