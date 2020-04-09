@@ -74,7 +74,7 @@ async def on_message(message):
 				embed.add_field(name="ステージ",value="ケルパーズ",inline=False)
 				await ctx.send(embed=embed)
 				def check(message):
-					return message.content in [for i in compass.keys()] and message.channel == channel
+					return message.content in [i for i in compass.keys()] and message.channel == channel
 				try:
 					msg = await bot.wait_for('message', timeout=30.0, check=check)
 				except asyncio.TimeoutError:
