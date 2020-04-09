@@ -39,7 +39,6 @@ compass = {
 	"リン":"リンの情報\n\n組んで相性の良いキャラ\n・セイバー\n・アダム\nデルミン\n・ノホ\n・マリア\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・イスタカ以外のガンナー全般\n・マルコス&リリカ(諸説)\n\n不利対面のキャラ\n・デルミン\n・アダム\n・イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/355191#link02"
 }
 
-com = [for i in compass.keys()]
 
 @bot.event
 async def on_message(message):
@@ -75,7 +74,7 @@ async def on_message(message):
 				embed.add_field(name="ステージ",value="ケルパーズ",inline=False)
 				await ctx.send(embed=embed)
 				def check(message):
-					return message.content in com and message.channel == channel
+					return message.content in [for i in compass.keys()] and message.channel == channel
 				try:
 					msg = await bot.wait_for('message', timeout=30.0, check=check)
 				except asyncio.TimeoutError:
