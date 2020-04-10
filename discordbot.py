@@ -79,7 +79,7 @@ async def コンパス(ctx):
 	embed.add_field(name="ステージ",value="ケルパーズ",inline=False)
 	await ctx.send(embed=embed)
 	@bot.event
-		async def on_message(message):
+	async def on_message(message):
 		def check(message):
 			return message.content in [i for i in compass.keys()] and message.channel == channel
 		try:
