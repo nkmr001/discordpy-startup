@@ -44,9 +44,8 @@ compass = {
 async def on_message(message):
 	if message.author.id != 685676747173134337:
 		pass
-	else:	
-		time.sleep(30)
-		await message.delete()
+	else:
+		await message.delete(30.00)
 	await bot.process_commands(message)
 
 
