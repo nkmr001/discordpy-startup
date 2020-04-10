@@ -75,7 +75,7 @@ async def on_message(message):
 		embed.add_field(name="アタッカー",value="ノホ,忠臣,マルコス, ソル\nリュウ, アダム, マリア, レム\nカイ, ポロロッチョ, リヴァイ,デルミン\nセイバー, ルルカ",inline=False)
 		embed.add_field(name="\nガンナー",value="リリカ, ルチアーノ, まとい, ディズィー\nサーティーン, エミリア, めぐめぐ, リン\nイスタカ, ソーン, オカリン, 猫宮\nギルガメッシュ",inline=False)
 		embed.add_field(name="\nスプリンター",value="アタリ, ボイドール, テスラ, ミク\nコクリコ, 春麗, ザクレイ, 勇者\nきらら, アクア, レイヤ, ピエール",inline=False)
-		embed.add_field(name="\nタンク",value="ジャスティス, ジャンヌ, ヴィオレッタ, グスタフ\nレン, モノクマ, めぐみん, トマス",inline=False)
+		embed.add_field(name="\nタンク",value="ジャスティス, ジャンヌ, ヴィオレッタ\nグスタフ, レン, モノクマ, めぐみん\nトマス",inline=False)
 		embed.add_field(name="\nステージ",value="ケルパーズ",inline=False)
 		await channel.send(embed=embed)	
 		def check(message):
