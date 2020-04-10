@@ -60,26 +60,24 @@ async def ヘルプ(ctx):
 
 @bot.event
 async def on_command_error(ctx, error):
-	orig_error = getattr(error, "original", error)
-	error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-	await ctx.send(error_msg)
-	await ctx.send("すみません、存在しないコマンドです。\n何かあれば作者のDMまでhttps://twitter.com/mimiQ0012")
+	pass
 
 @bot.command()
 async def ping(ctx):
 	await ctx.send(pong)
-@bot.command()
-async def コンパス(ctx):
-	channel = message.channel
-	embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
-	embed.add_field(name="アタッカー",value="ノホ\n忠臣\nマルコス\nソル\nリュウ\nアダム\nマリア\nレム\nカイ\nポロロッチョ\nリヴァイ\nデルミン\nセイバー\nルルカ",inline=False)
-	embed.add_field(name="ガンナー",value="リリカ\nルチアーノ\nまとい\nディズィー\nサーティーン\nエミリア\nめぐめぐ\nリン\nイスタカ\nソーン\nオカリン\n猫宮\nギルガメッシュ",inline=False)
-	embed.add_field(name="スプリンター",value="アタリ\nボイドール\nテスラ\nミク\nコクリコ\n春麗\nザクレイ\n勇者\nきらら\nアクア\nレイヤ\nピエール",inline=False)
-	embed.add_field(name="タンク",value="ジャスティス\nジャンヌ\nヴィオレッタ\nグスタフ\nレン\nモノクマ\nめぐみん\nトマス",inline=False)
-	embed.add_field(name="ステージ",value="ケルパーズ",inline=False)
-	await ctx.send(embed=embed)
-	@bot.event
-	async def on_message(message):
+
+#コマンドエラーが起きてしまうから無理矢理passで対応しちゃってる
+@bot.event
+async def on_message(message):
+	if message.content == "！コンパス":
+		channel = message.channel
+		embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
+		embed.add_field(name="アタッカー",value="ノホ\n忠臣\nマルコス\nソル\nリュウ\nアダム\nマリア\nレム\nカイ\nポロロッチョ\nリヴァイ\nデルミン\nセイバー\nルルカ",inline=False)
+		embed.add_field(name="ガンナー",value="リリカ\nルチアーノ\nまとい\nディズィー\nサーティーン\nエミリア\nめぐめぐ\nリン\nイスタカ\nソーン\nオカリン\n猫宮\nギルガメッシュ",inline=False)
+		embed.add_field(name="スプリンター",value="アタリ\nボイドール\nテスラ\nミク\nコクリコ\n春麗\nザクレイ\n勇者\nきらら\nアクア\nレイヤ\nピエール",inline=False)
+		embed.add_field(name="タンク",value="ジャスティス\nジャンヌ\nヴィオレッタ\nグスタフ\nレン\nモノクマ\nめぐみん\nトマス",inline=False)
+		embed.add_field(name="ステージ",value="ケルパーズ",inline=False)
+		await channel.send(embed=embed)	
 		def check(message):
 			return message.content in [i for i in compass.keys()] and message.channel == channel
 		try:
@@ -88,7 +86,7 @@ async def コンパス(ctx):
 			await channel.send("タイムアウトしたよ")
 		else:
 			await channel.send(compass[msg.content].format(msg))
-		await bot.process_commands(message)
+	await bot.process_commands(message)
 
 @bot.command()
 async def バイオハザード(ctx):
