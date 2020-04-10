@@ -39,67 +39,69 @@ compass = {
 	"リン":"リンの情報\n\n組んで相性の良いキャラ\n・セイバー\n・アダム\nデルミン\n・ノホ\n・マリア\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・イスタカ以外のガンナー全般\n・マルコス&リリカ(諸説)\n\n不利対面のキャラ\n・デルミン\n・アダム\n・イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/355191#link02"
 }
 
-
 @bot.event
 async def on_message(message):
-	try:
-		@bot.command()
-		async def ヘルプ(ctx):
-			embed = discord.Embed(title="このbotの説明書",description="コマンド見にくくてごめん。")
-			embed.add_field(name="！コンパス",value="コンパスのキャラとステージについて解説するよ。\nキャラは相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\n\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\n\nステージの立ち回りは\nhttps://twitter.com/wp_league\nの動画を引用しています。",inline=False)
-			embed.add_field(name="！バイオハザード",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
-			embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ",inline=False)
-			embed.add_field(name="作者",value="コンパスで語ってることが間違っていたり、追加して欲しい機能があったら\nhttps://twitter.com/mimiQ0012\n↑のDMに来てね",inline=False)
-			await ctx.send(embed=embed)
-
-		@bot.event
-		async def on_command_error(ctx, error):
-			orig_error = getattr(error, "original", error)
-			error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-			await ctx.send(error_msg)
-			await ctx.send("すみません、存在しないコマンドです。\n何かあれば作者のDMまでhttps://twitter.com/mimiQ0012")
-
-		if message.author.id != 685676747173134337:
-			@bot.command()
-			async def ping(ctx):
-				await ctx.send(pong)
-			@bot.command()
-			async def コンパス(ctx):
-				channel = message.channel
-				embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
-				embed.add_field(name="アタッカー",value="ノホ\n忠臣\nマルコス\nソル\nリュウ\nアダム\nマリア\nレム\nカイ\nポロロッチョ\nリヴァイ\nデルミン\nセイバー\nルルカ",inline=False)
-				embed.add_field(name="ガンナー",value="リリカ\nルチアーノ\nまとい\nディズィー\nサーティーン\nエミリア\nめぐめぐ\nリン\nイスタカ\nソーン\nオカリン\n猫宮\nギルガメッシュ",inline=False)
-				embed.add_field(name="スプリンター",value="アタリ\nボイドール\nテスラ\nミク\nコクリコ\n春麗\nザクレイ\n勇者\nきらら\nアクア\nレイヤ\nピエール",inline=False)
-				embed.add_field(name="タンク",value="ジャスティス\nジャンヌ\nヴィオレッタ\nグスタフ\nレン\nモノクマ\nめぐみん\nトマス",inline=False)
-				embed.add_field(name="ステージ",value="ケルパーズ",inline=False)
-				await ctx.send(embed=embed)
-				def check(message):
-					return message.content in [i for i in compass.keys()] and message.channel == channel
-				try:
-					msg = await bot.wait_for('message', timeout=30.0, check=check)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ")
-				else:
-					await channel.send(compass[msg.content].format(msg))
-
-			@bot.command()
-			async def バイオハザード(ctx):
-				await ctx.send("日本国内の感染者情報を最新５件表示します")
-				url = "https://japan-cov-19.now.sh/"
-				res = requests.get(url).text
-				soup = BeautifulSoup(res, 'html.parser')
-				hoge = soup.find_all('div', class_='brief-item')
-				for h in soup.find_all('li', class_='brief-item__title')[0:5]:
-					await ctx.send(h.get_text())
-					time.sleep(1)
-
-			@bot.command()
-			async def 招待URL(ctx):
-				await ctx.send("https://discordapp.com/api/oauth2/authorize?client_id=685676747173134337&permissions=8&scope=bot\n招待したいサーバーの管理者が操作してください")
-
-		else:
-			time.sleep(30)
-			await message.delete()
-	except:pass
+	if message.author.id != 685676747173134337:
+		pass
+	else:	
+		time.sleep(30)
+		await message.delete()
 	await bot.process_commands(message)
+
+
+@bot.command()
+async def ヘルプ(ctx):
+	embed = discord.Embed(title="このbotの説明書",description="コマンド見にくくてごめん。")
+	embed.add_field(name="！コンパス",value="コンパスのキャラとステージについて解説するよ。\nキャラは相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\n\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\n\nステージの立ち回りは\nhttps://twitter.com/wp_league\nの動画を引用しています。",inline=False)
+	embed.add_field(name="！バイオハザード",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
+	embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ",inline=False)
+	embed.add_field(name="作者",value="コンパスで語ってることが間違っていたり、追加して欲しい機能があったら\nhttps://twitter.com/mimiQ0012\n↑のDMに来てね",inline=False)
+	await ctx.send(embed=embed)
+
+@bot.event
+async def on_command_error(ctx, error):
+	orig_error = getattr(error, "original", error)
+	error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
+	await ctx.send(error_msg)
+	await ctx.send("すみません、存在しないコマンドです。\n何かあれば作者のDMまでhttps://twitter.com/mimiQ0012")
+
+@bot.command()
+async def ping(ctx):
+	await ctx.send(pong)
+@bot.command()
+async def コンパス(ctx):
+	channel = message.channel
+	embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
+	embed.add_field(name="アタッカー",value="ノホ\n忠臣\nマルコス\nソル\nリュウ\nアダム\nマリア\nレム\nカイ\nポロロッチョ\nリヴァイ\nデルミン\nセイバー\nルルカ",inline=False)
+	embed.add_field(name="ガンナー",value="リリカ\nルチアーノ\nまとい\nディズィー\nサーティーン\nエミリア\nめぐめぐ\nリン\nイスタカ\nソーン\nオカリン\n猫宮\nギルガメッシュ",inline=False)
+	embed.add_field(name="スプリンター",value="アタリ\nボイドール\nテスラ\nミク\nコクリコ\n春麗\nザクレイ\n勇者\nきらら\nアクア\nレイヤ\nピエール",inline=False)
+	embed.add_field(name="タンク",value="ジャスティス\nジャンヌ\nヴィオレッタ\nグスタフ\nレン\nモノクマ\nめぐみん\nトマス",inline=False)
+	embed.add_field(name="ステージ",value="ケルパーズ",inline=False)
+	await ctx.send(embed=embed)
+	@bot.event
+		async def on_message(message):
+		def check(message):
+			return message.content in [i for i in compass.keys()] and message.channel == channel
+		try:
+			msg = await bot.wait_for('message', timeout=30.0, check=check)
+		except asyncio.TimeoutError:
+			await channel.send("タイムアウトしたよ")
+		else:
+			await channel.send(compass[msg.content].format(msg))
+		await bot.process_commands(message)
+
+@bot.command()
+async def バイオハザード(ctx):
+	await ctx.send("日本国内の感染者情報を最新５件表示します")
+	url = "https://japan-cov-19.now.sh/"
+	res = requests.get(url).text
+	soup = BeautifulSoup(res, 'html.parser')
+	hoge = soup.find_all('div', class_='brief-item')
+	for h in soup.find_all('li', class_='brief-item__title')[0:5]:
+		await ctx.send(h.get_text())
+		time.sleep(1)
+
+@bot.command()
+async def 招待URL(ctx):
+	await ctx.send("https://discordapp.com/api/oauth2/authorize?client_id=685676747173134337&permissions=8&scope=bot\n招待したいサーバーの管理者が操作してください")
 bot.run(token)
