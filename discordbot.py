@@ -72,8 +72,8 @@ async def on_message(message):
 	if message.content == "！コンパス":
 		channel = message.channel
 		embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
-		embed.add_field(name="アタッカー",value="ノホ,忠臣,マルコス\nソル,リュウ,アダム\nマリア,レム,カイ,ポロロッチョ\nリヴァイ,デルミン,セイバー\nルルカ",inline=False)
-		embed.add_field(name="\nガンナー",value="リリカ\nルチアーノ\nまとい\nディズィー\nサーティーン\nエミリア\nめぐめぐ\nリン\nイスタカ\nソーン\nオカリン\n猫宮\nギルガメッシュ",inline=False)
+		embed.add_field(name="アタッカー",value="ノホ,忠臣,マルコス, ソル\nリュウ, アダム, マリア, レム\nカイ, ポロロッチョ, リヴァイ,デルミン\nセイバー, ルルカ",inline=False)
+		embed.add_field(name="\nガンナー",value="リリカ, ルチアーノ, まとい, ディズィー\nサーティーン, エミリア, めぐめぐ, リン\nイスタカ, ソーン, オカリン, 猫宮\nギルガメッシュ",inline=False)
 		embed.add_field(name="\nスプリンター",value="アタリ\nボイドール\nテスラ\nミク\nコクリコ\n春麗\nザクレイ\n勇者\nきらら\nアクア\nレイヤ\nピエール",inline=False)
 		embed.add_field(name="\nタンク",value="ジャスティス\nジャンヌ\nヴィオレッタ\nグスタフ\nレン\nモノクマ\nめぐみん\nトマス",inline=False)
 		embed.add_field(name="\nステージ",value="ケルパーズ",inline=False)
