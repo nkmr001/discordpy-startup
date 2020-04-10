@@ -83,7 +83,8 @@ async def on_message(message):
 		try:
 			msg = await bot.wait_for('message', timeout=30.0, check=check)
 		except asyncio.TimeoutError:
-			await channel.send("タイムアウトしたよ")
+			await message.delete()
+			await channel.send("タイムアウトしたよ。最初からやり直してね")
 		else:
 			await channel.send(compass[msg.content].format(msg))
 	await bot.process_commands(message)
