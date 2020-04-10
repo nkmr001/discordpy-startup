@@ -72,11 +72,11 @@ async def on_message(message):
 	if message.content == "！コンパス":
 		channel = message.channel
 		embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
-		embed.add_field(name="アタッカー",value="ノホ\n忠臣\nマルコス\nソル\nリュウ\nアダム\nマリア\nレム\nカイ\nポロロッチョ\nリヴァイ\nデルミン\nセイバー\nルルカ",inline=False)
-		embed.add_field(name="ガンナー",value="リリカ\nルチアーノ\nまとい\nディズィー\nサーティーン\nエミリア\nめぐめぐ\nリン\nイスタカ\nソーン\nオカリン\n猫宮\nギルガメッシュ",inline=False)
-		embed.add_field(name="スプリンター",value="アタリ\nボイドール\nテスラ\nミク\nコクリコ\n春麗\nザクレイ\n勇者\nきらら\nアクア\nレイヤ\nピエール",inline=False)
-		embed.add_field(name="タンク",value="ジャスティス\nジャンヌ\nヴィオレッタ\nグスタフ\nレン\nモノクマ\nめぐみん\nトマス",inline=False)
-		embed.add_field(name="ステージ",value="ケルパーズ",inline=False)
+		embed.add_field(name="アタッカー",value="ノホ,忠臣,マルコス\nソル,リュウ,アダム\nマリア,レム,カイ,ポロロッチョ\nリヴァイ,デルミン,セイバー\nルルカ",inline=False)
+		embed.add_field(name="\nガンナー",value="リリカ\nルチアーノ\nまとい\nディズィー\nサーティーン\nエミリア\nめぐめぐ\nリン\nイスタカ\nソーン\nオカリン\n猫宮\nギルガメッシュ",inline=False)
+		embed.add_field(name="\nスプリンター",value="アタリ\nボイドール\nテスラ\nミク\nコクリコ\n春麗\nザクレイ\n勇者\nきらら\nアクア\nレイヤ\nピエール",inline=False)
+		embed.add_field(name="\nタンク",value="ジャスティス\nジャンヌ\nヴィオレッタ\nグスタフ\nレン\nモノクマ\nめぐみん\nトマス",inline=False)
+		embed.add_field(name="\nステージ",value="ケルパーズ",inline=False)
 		await channel.send(embed=embed)	
 		def check(message):
 			return message.content in [i for i in compass.keys()] and message.channel == channel
