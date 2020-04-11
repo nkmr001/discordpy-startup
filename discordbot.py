@@ -13,6 +13,8 @@ token = os.environ['DISCORD_BOT_TOKEN']
 pong = random.randrange(10)
 bot.remove_command('help')
 
+god = [263614623238848522]
+
 compass = {
 	"アタリ":"アタリの情報※HS発動時のみ記載\n\n組んで相性の良いキャラ\n・マルコス＆リリカ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・全てのキャラに有利\n\n不利対面\n①貫通\n②毒、サイレント、スタンなどの状態異常\n③ダメカ破壊\n④防御UP中に防御ダウン\n⑤カードキャンセル\n上記のものどれか一つでもまともに食らえば不利になる。\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229151#link05",
 	"ジャスティス":"ジャスティスの情報\n\n組んで相性の良いキャラ\n・ポロロッチョ\n・スタン持ち\n\n有利、不利対面のキャラ\n・相手にスタンと貫通がなければ有利、あれば不利\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/232405#link05",
@@ -47,6 +49,16 @@ compass = {
 async def on_message(message):
 	if message.author.id != 685676747173134337:
 		pass
+	if message.author.id in god:
+		@bot.command(pass_context=True, name="じゃあな")
+		async def kick(ctx, member: discord.Member, *, reason=None):
+			await ctx.send("うおおおおお！？！？！？！？")
+			try:
+				await member.kick(reason=reason)
+				await ctx.send(f"{member.mention}をキックしちゃったぜ！笑")
+			except:
+				time.sleep(5)
+				ctx.send("...すみません。なんでもないです。")
 	else:
 		await message.delete(30.00)
 	await bot.process_commands(message)
