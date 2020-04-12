@@ -158,14 +158,21 @@ async def 招待URL(ctx):
 @commands.check(check_god2)
 async def じゃあな(ctx, member: discord.Member, *, reason=None):
 	await ctx.send("うおおおおお！？！？！？！？")
-	try:
-		await member.kick(reason=reason)
-		await ctx.send(f"{member.mention}をキックしちゃったぜ！笑")
-	except:ctx.send("すみません。なんでもないです。")
+	if member.id in sub_god or god:ctx.send(f"{member.mention}も権限を持ってるみたいだね")
+	else:
+		try:
+			await member.kick(reason=reason)
+			await ctx.send(f"{member.mention}をキックしちゃったぜ！笑")
+		except:ctx.send("すみません。なんでもないです。")
 @bot.command()
 @commands.check(check_god2)
 async def 追加(ctx, member: discord.Member, *, reason=None):
 	sub_god.append(member.id)
 	await ctx.send(f"{member.mention}様にbot専用の権限を付与しました")
+
+@bot.command()
+@commands.check(check_god)
+async def 権限確認(ctx):
+	await ctx.send("今権限を持っている人は"+len(sub_god)+"人いるよ")
 
 bot.run(token)
