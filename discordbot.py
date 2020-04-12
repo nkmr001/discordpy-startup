@@ -18,7 +18,7 @@ sub_god = [263614623238848522]
 def check_god(ctx):
 	return ctx.message.author.id in god
 def check_god2(ctx):
-	return ctx.message.author.id in [subg for subg in set(sub_god) if l.count(subg) > 1] or god
+	return ctx.message.author.id in sub_god or god
 
 compass = {
 	"アタリ":"アタリの情報※HS発動時のみ記載\n\n組んで相性の良いキャラ\n・マルコス＆リリカ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・全てのキャラに有利\n\n不利対面\n①貫通\n②毒、サイレント、スタンなどの状態異常\n③ダメカ破壊\n④防御UP中に防御ダウン\n⑤カードキャンセル\n上記のものどれか一つでもまともに食らえば不利になる。\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229151#link05",
