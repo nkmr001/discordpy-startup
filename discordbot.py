@@ -20,6 +20,14 @@ def check_god(ctx):
 def check_god2(ctx):
 	return ctx.message.author.id in sub_god or god
 
+atk = ["ノホ","忠臣","マルコス","ソル","リュウ","アダム","マリア","レム","カイ","ポロロッチョ","リヴァイ","デルミン","セイバー","ルルカ"]
+gun = ["リリカ","ルチアーノ","まとい","ディズィー","サーティーン","エミリア","めぐめぐ","リン","イスタカ","ソーン","オカリン","猫宮","ギルガメッシュ"]
+tank = ["ジャスティス","ジャンヌ","ヴィオレッタ","グスタフ","レン","モノクマ","めぐみん","トマス"]
+supri = ["アタリ","ボイドール","テスラ","ミク","コクリコ","春麗","ザクレイ","勇者","きらら","アクア","レイヤ","ピエール"]
+
+all_roll = atk+gun+tank+supri
+
+
 compass = {
 	"アタリ":"アタリの情報※HS発動時のみ記載\n\n組んで相性の良いキャラ\n・マルコス＆リリカ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・全てのキャラに有利\n\n不利対面\n①貫通\n②毒、サイレント、スタンなどの状態異常\n③ダメカ破壊\n④防御UP中に防御ダウン\n⑤カードキャンセル\n上記のものどれか一つでもまともに食らえば不利になる。\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229151#link05",
 	"ジャスティス":"ジャスティスの情報\n\n組んで相性の良いキャラ\n・ポロロッチョ\n・スタン持ち\n\n有利、不利対面のキャラ\n・相手にスタンと貫通がなければ有利、あれば不利\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/232405#link05",
@@ -50,6 +58,27 @@ compass = {
 	"アクア":"アクアの情報\n\n組んで相性の良いキャラ\n・マリア\n・マジスクを持ってるアタッカー\n・オカリン\n・ギル\n\n有利対面のキャラ\n・ディズィー\n・ソーン\n\n不利対面のキャラ\n・レイヤ\n・きらら\n・ルチアーノ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/388828#link02"
 }
 
+@bot.command()
+async def シャッフル(ctx):
+	await ctx.send(random.choice(all_roll))
+
+@bot.command()
+async def シャッフルアタッカー(ctx):
+	await ctx.send(random.choice(atk))
+
+@bot.command()
+async def シャッフルガンナー(ctx):
+	await ctx.send(random.choice(gun))
+
+@bot.command()
+async def シャッフルタンク(ctx):
+	await ctx.send(random.choice(tank))
+
+@bot.command()
+async def シャッフルスプリンター(ctx):
+	await ctx.send(random.choice(supri))
+
+
 @bot.event
 async def on_message(message):
 	if message.author.id != 685676747173134337:
@@ -62,7 +91,8 @@ async def on_message(message):
 @bot.command()
 async def ヘルプ(ctx):
 	embed = discord.Embed(title="このbotの説明書",description="コマンド見にくくてごめん。")
-	embed.add_field(name="「！コンパス」の後に表示されているキャラ名orステージ名を入力",value="コンパスのキャラとステージについて解説するよ。\nキャラは相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n有利、不利は全キャラ書いてないので経験で頑張ってみてね\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\n\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\n\nステージの立ち回りは\nhttps://twitter.com/wp_league\nの動画を引用しています。",inline=False)
+	embed.add_field(name="！コンパスの後に表示されているキャラ名orステージ名を入力",value="コンパスのキャラとステージについて解説するよ。\nキャラは相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n有利、不利は全キャラ書いてないので経験で頑張ってみてね\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\n\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\n\nステージの立ち回りは\nhttps://twitter.com/wp_league\nの動画を引用しています。",inline=False)
+	embed.add_field(name="！シャッフル",value="何のキャラで遊ぶか中々決まらない時にランダムで決めちゃうよ\nシャッフルの後にロール名を入力すると更に絞れるよ",inline=False)
 	embed.add_field(name="！バイオハザード",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
 	embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ",inline=False)
 	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ",inline=False)
