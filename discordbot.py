@@ -59,23 +59,23 @@ compass = {
 }
 
 @bot.command()
-async def シャッフル(ctx):
+async def ランダム(ctx):
 	await ctx.send(random.choice(all_roll))
 
 @bot.command()
-async def シャッフルアタッカー(ctx):
+async def ランダムアタッカー(ctx):
 	await ctx.send(random.choice(atk))
 
 @bot.command()
-async def シャッフルガンナー(ctx):
+async def ランダムガンナー(ctx):
 	await ctx.send(random.choice(gun))
 
 @bot.command()
-async def シャッフルタンク(ctx):
+async def ランダムタンク(ctx):
 	await ctx.send(random.choice(tank))
 
 @bot.command()
-async def シャッフルスプリンター(ctx):
+async def ランダムスプリンター(ctx):
 	await ctx.send(random.choice(supri))
 
 
@@ -92,7 +92,7 @@ async def on_message(message):
 async def ヘルプ(ctx):
 	embed = discord.Embed(title="このbotの説明書",description="コマンド見にくくてごめん。")
 	embed.add_field(name="！コンパスの後に表示されているキャラ名orステージ名を入力",value="コンパスのキャラとステージについて解説するよ。\nキャラは相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n有利、不利は全キャラ書いてないので経験で頑張ってみてね\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\n\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\n\nステージの立ち回りは\nhttps://twitter.com/wp_league\nの動画を引用しています。",inline=False)
-	embed.add_field(name="！シャッフル",value="何のキャラで遊ぶか中々決まらない時にランダムで決めちゃうよ\nシャッフルの後にロール名を入力すると更に絞れるよ",inline=False)
+	embed.add_field(name="！ランダム",value="何のキャラで遊ぶか中々決まらない時にランダムで決めちゃうよ\nランダムの後にロール名を入力すると更に絞れるよ",inline=False)
 	embed.add_field(name="！バイオハザード",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
 	embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ",inline=False)
 	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ",inline=False)
