@@ -14,6 +14,11 @@ pong = random.randrange(10)
 bot.remove_command('help')
 
 god = [263614623238848522]
+sub_god = [263614623238848522]
+def check_god(ctx):
+	return ctx.message.author.id in god
+def check_god2(ctx):
+	return ctx.message.author.id in [subg for subg in set(sub_god) if l.count(subg) > 1] or god
 
 compass = {
 	"アタリ":"アタリの情報※HS発動時のみ記載\n\n組んで相性の良いキャラ\n・マルコス＆リリカ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・全てのキャラに有利\n\n不利対面\n①貫通\n②毒、サイレント、スタンなどの状態異常\n③ダメカ破壊\n④防御UP中に防御ダウン\n⑤カードキャンセル\n上記のものどれか一つでもまともに食らえば不利になる。\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229151#link05",
@@ -49,16 +54,6 @@ compass = {
 async def on_message(message):
 	if message.author.id != 685676747173134337:
 		pass
-	if message.author.id in god:
-		@bot.command(pass_context=True, name="じゃあな")
-		async def kick(ctx, member: discord.Member, *, reason=None):
-			await ctx.send("うおおおおお！？！？！？！？")
-			try:
-				await member.kick(reason=reason)
-				await ctx.send(f"{member.mention}をキックしちゃったぜ！笑")
-			except:
-				time.sleep(5)
-				ctx.send("...すみません。なんでもないです。")
 	else:
 		await message.delete(30.00)
 	await bot.process_commands(message)
@@ -118,4 +113,19 @@ async def バイオハザード(ctx):
 @bot.command()
 async def 招待URL(ctx):
 	await ctx.send("https://discordapp.com/api/oauth2/authorize?client_id=685676747173134337&permissions=8&scope=bot\n招待したいサーバーの管理者が操作してください")
+	
+@bot.command(pass_context=True, name="kick")
+@commands.check(check_god)
+async def じゃあな(ctx, member: discord.Member, *, reason=None):
+	await ctx.send("うおおおおお！？！？！？！？")
+	try:
+		await member.kick(reason=reason)
+		await ctx.send(f"{member.mention}をキックしちゃったぜ！笑")
+	except:ctx.send("すみません。なんでもないです。")
+@bot.command()
+@commands.check(check_god2)
+async def 追加(ctx, member: discord.Member, *, reason=None):
+	sub_god.append(member.id)
+	ctx.send(f"{member.mention}様にbot専用の権限を付与しました")
+
 bot.run(token)
