@@ -172,7 +172,13 @@ async def 追加(ctx, member: discord.Member, *, reason=None):
 
 @bot.command()
 @commands.check(check_god)
+async def チェック(ctx):
+	await ctx.send("今、権限を持っている人は"+str(len(sub_god))+"人いるよ")
+
+@bot.command()
+@commands.check(check_god2)
 async def 権限確認(ctx):
-	await ctx.send("今権限を持っている人は"+str(len(sub_god))+"人いるよ")
+	mem = ctx.message.guild.members in sub_god
+	await ctx.send("今、このグループの中に権限を持っている人は"+str(len(mem))+"人いるよ")
 
 bot.run(token)
