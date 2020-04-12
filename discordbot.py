@@ -14,7 +14,7 @@ pong = random.randrange(10)
 bot.remove_command('help')
 
 god = [263614623238848522]
-sub_god = [263614623238848522]
+sub_god = []
 def check_god(ctx):
 	return ctx.message.author.id in god
 def check_god2(ctx):
@@ -126,6 +126,6 @@ async def じゃあな(ctx, member: discord.Member, *, reason=None):
 @commands.check(check_god2)
 async def 追加(ctx, member: discord.Member, *, reason=None):
 	sub_god.append(member.id)
-	ctx.send(f"{member.mention}様にbot専用の権限を付与しました")
+	await ctx.send(f"{member.mention}様にbot専用の権限を付与しました")
 
 bot.run(token)
