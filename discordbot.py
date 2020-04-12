@@ -115,7 +115,7 @@ async def 招待URL(ctx):
 	await ctx.send("https://discordapp.com/api/oauth2/authorize?client_id=685676747173134337&permissions=8&scope=bot\n招待したいサーバーの管理者が操作してください")
 	
 @bot.command(pass_context=True, name="kick")
-@commands.check(check_god)
+@commands.check(check_god2)
 async def じゃあな(ctx, member: discord.Member, *, reason=None):
 	await ctx.send("うおおおおお！？！？！？！？")
 	try:
