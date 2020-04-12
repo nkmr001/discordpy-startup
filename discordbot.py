@@ -177,8 +177,9 @@ async def チェック(ctx):
 
 @bot.command()
 @commands.check(check_god2)
-async def 権限確認(ctx):
-	mem = ctx.message.guild.members in sub_god
-	await ctx.send("今、このグループの中に権限を持っている人は"+str(len(mem))+"人いるよ")
-
+async def 権限確認(ctx, member: discord.Member, *, reason=None):
+	if member.id in sub_god:
+		await ctx.send("この人はbotの権限を持っているよ")
+	else:await ctx.send("この人はbotの権限を持っていないよ笑")
+		
 bot.run(token)
