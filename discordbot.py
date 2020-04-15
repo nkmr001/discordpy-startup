@@ -26,7 +26,7 @@ tank = ["ジャスティス","ジャンヌ","ヴィオレッタ","グスタフ",
 supri = ["アタリ","ボイドール","テスラ","ミク","コクリコ","春麗","ザクレイ","勇者","きらら","アクア","レイヤ","ピエール"]
 
 all_roll = atk+gun+tank+supri
-allroll = [atk,gun,tank,supri]
+lll = [atk,gun,tank,supri]
 
 
 compass = {
@@ -64,8 +64,8 @@ compass = {
 @bot.command()
 async def ランダムパーティー(ctx):
 	await ctx.send("勝手にパーティーを決めます")
-	rom = random.choices(allroll,k=3)
-	for r in rom:
+	romm = random.choices(lll,k=3)
+	for r in romm:
 		for ii in random.choice(r):
 			await ctx.send(ii)
 
