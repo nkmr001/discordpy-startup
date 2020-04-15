@@ -26,6 +26,7 @@ tank = ["ジャスティス","ジャンヌ","ヴィオレッタ","グスタフ",
 supri = ["アタリ","ボイドール","テスラ","ミク","コクリコ","春麗","ザクレイ","勇者","きらら","アクア","レイヤ","ピエール"]
 
 all_roll = atk+gun+tank+supri
+allroll = [atk,gun,tank,supri]
 
 
 compass = {
@@ -59,6 +60,14 @@ compass = {
 	"ピエール":"ピエールの情報\n\n組んで相性の良いキャラ\n・支援系を除く全てのキャラ\n\n耐え難い対面\n・ギルガメッシュ\n・オカリン\n・ルチアーノ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/452335#link05",
  	"セイバー":"セイバーの情報\n\n組んで相性の良いキャラ\n・ディズィー\n・デッキ次第で攻撃系キャラならなんでも合う\n・グスタフ\n\n有利体面のキャラ\n・ギル、イスタカ以外のガンナー全般\n・きらら\n\n不利対面のキャラ\n・アダム\n・デルミン\n・ギル、イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/436927#link05
 }
+
+@bot.command()
+async def ランダムパーティー(ctx):
+	await ctx.send("勝手にパーティーを決めます")
+	rom = random.choices(allroll,k=3)
+	for r in rom:
+		for ii in random.choice(r):
+			await ctx.send(ii)
 
 @bot.command()
 async def ランダム(ctx):
