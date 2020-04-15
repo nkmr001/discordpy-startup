@@ -14,7 +14,7 @@ pong = random.randrange(10)
 bot.remove_command('help')
 
 god = [263614623238848522]
-sub_god = []
+sub_god = [300989332557135872]
 def check_god(ctx):
 	return ctx.message.author.id in god
 def check_god2(ctx):
@@ -63,11 +63,13 @@ compass = {
 
 @bot.command()
 async def ランダムパーティー(ctx):
+	pt = []
 	await ctx.send("勝手にパーティーを決めます")
 	romm = random.sample(lll,k=3)
 	for r in romm:
 		for ii in random.choice(r):
-			await ctx.send(ii)
+			pt.append(ii)
+	await ctx.send("".join(pt))
 
 @bot.command()
 async def ランダム(ctx):
