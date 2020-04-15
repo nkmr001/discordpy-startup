@@ -64,7 +64,7 @@ compass = {
 @bot.command()
 async def ランダムパーティー(ctx):
 	await ctx.send("勝手にパーティーを決めます")
-	romm = random.choices(lll,k=3)
+	romm = random.sample(lll,k=3)
 	for r in romm:
 		for ii in random.choice(r):
 			await ctx.send(ii)
