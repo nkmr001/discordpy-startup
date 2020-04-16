@@ -319,7 +319,7 @@ async def 招待URL(ctx):
 @commands.check(check_god2)
 async def キック(ctx, member: discord.Member, *, reason=None):
 	await ctx.send("うおおおおお！？！？！？！？")
-	if member.id in sub_god or god:ctx.send(f"{member.mention}も権限を持ってるみたいだね")
+	if member.id in sub_god:ctx.send(f"{member.mention}も権限を持ってるみたいだね")
 	else:
 		try:
 			await member.kick(reason=reason)
