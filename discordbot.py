@@ -263,6 +263,12 @@ async def キック(ctx, member: discord.Member, *, reason=None):
 async def 追加(ctx, member: discord.Member, *, reason=None):
 	sub_god.append(member.id)
 	await ctx.send(f"{member.mention}様にbot専用の権限を付与しました")
+	
+@bot.command()
+async def サーチプロフィール(ctx, member: discord.Member, *, reason=None):
+	if member.id in rireki_text.keys():
+		await ctx.send(f'{member.mention}さんのプロフィールを表示します\n'+rireki_text[member.id])
+	else:await ctx.send(f"{member.mention}さんはまだ登録されていません。")
 
 @bot.command()
 @commands.check(check_god)
