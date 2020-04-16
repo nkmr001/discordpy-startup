@@ -139,9 +139,9 @@ async def ヘルプ(ctx):
 	embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ",inline=False)
 	embed.add_field(name="！登録",value="自分のプロフィールを登録するよ。\n既に登録していても何度でも再登録できるよ。",inline=False)
 	embed.add_field(name="！プロフィール",value="自分のプロフィールを表示するよ。",inline=False)
-	embed.add_field(name="！サーチ",value="例「！サーチプロフィール」・プロフィール\nこのコマンドの後にグループメンバーのメンションするとメンションした人のプロフィールを出すよ\n・ロール名\nプロフィール検索をオンにした登録してある人のプロフィールを出すよ",inline=False)
+	embed.add_field(name="！サーチ",value="例「！サーチプロフィール」・プロフィール\nこのコマンドの後にグループメンバーのメンションするとメンションした人のプロフィールを出すよ\n・ロール名\nプロフィール検索をオンにした登録してある人のプロフィールをランダムに出すよ",inline=False)
 	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ。",inline=False)
-	embed.add_field(name="作者",value="コンパスで語ってることが間違っていたり、追加して欲しい機能があったら\nhttps://peing.net/ja/blalcxw2aqk2dbh?event=0\n↑に入れてね",inline=False)
+	embed.add_field(name="作者",value="コンパスで語ってることが間違っていたり、追加して欲しい機能があったら\nhttps://peing.net/ja/blalcxw2aqk2dbh?event=0\n↑に入れてね\nhttps://discord.gg/CE94F4t\n作業通話常に募集してるよ；；良ければ来てね",inline=False)
 	await ctx.send(embed=embed)
 
 @bot.event
@@ -329,7 +329,14 @@ async def キック(ctx, member: discord.Member, *, reason=None):
 async def 追加(ctx, member: discord.Member, *, reason=None):
 	sub_god.append(member.id)
 	await ctx.send(f"{member.mention}様にbot専用の権限を付与しました")
+
+@bot.command()
+@commands.check(check_god)
+async def  削除(ctx, member: discord.Member, *, reason=None):
+	sub_god.remove(member.id)
+	await ctx.send(f"{member.mention}様にbot専用の権限を削除しました")
 	
+
 @bot.command()
 async def サーチプロフィール(ctx, member: discord.Member, *, reason=None):
 	if member.id in rireki_text.keys():
