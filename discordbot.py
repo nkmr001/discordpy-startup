@@ -256,7 +256,7 @@ async def on_message(message):
 										if saticheck.content == "2":
 											rireki_text[m_id] = '名前:'+message.author.name+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-								else:
+								if "https://twitter.com/" not in twit.content:
 									await channel.send("プロフィールの検索を許可しますか？\n1:許可する 2:許可しない".format(check_mes))
 									try:
 										saticheck = await bot.wait_for('message', timeout=30.0, check=check_n)
