@@ -14,11 +14,11 @@ pong = random.randrange(10)
 bot.remove_command('help')
 
 god = [263614623238848522]
-sub_god = []
+sub_god = [263614623238848522]
 def check_god(ctx):
 	return ctx.message.author.id in god
 def check_god2(ctx):
-	return ctx.message.author.id in sub_god or god
+	return ctx.message.author.id in sub_god
 
 rireki_text = {}
 rireki = {}
