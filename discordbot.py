@@ -205,16 +205,8 @@ async def on_message(message):
 						except asyncio.TimeoutError:
 							await channel.send("タイムアウトしたよ。最初からやり直してね")
 						else:
-							await channel.send("検索を許可しますか？番号で選んでください\n許可をすれば枠埋めがしやすくなりますが多くの人に見られます\n1:許可する 2:許可しない".format(hitokoto))
-							try:
-								ynn = await bot.wait_for('message', timeout=30.0, check=check_n)
-							except asyncio.TimeoutError:
-								await channel.send("タイムアウトしたよ。最初からやり直してね")
-							else:
-								rireki_text[m_id] = '名前:'+message.author.name+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-								if ynn.content == "1":
-									rireki[m_id] = ynn[ynn.content]
-								await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(ynn))
+							rireki_text[m_id] = '名前:'+message.author.name+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+							await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(hitokoto))
 	if message.content == "！プロフィール":
 		channel = message.channel
 		m_id = message.author.id
