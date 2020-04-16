@@ -212,8 +212,8 @@ async def on_message(message):
 								await channel.send("タイムアウトしたよ。最初からやり直してね")
 							else:
 								rireki_text[m_id] = '名前:'+message.author.name+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-								if ynn == "1":
-									rireki[m_id] = ynn
+								if ynn.content == "1":
+									rireki[m_id] = ynn[ynn.content]
 								await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(ynn))
 	if message.content == "！プロフィール":
 		channel = message.channel
