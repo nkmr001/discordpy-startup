@@ -37,6 +37,11 @@ all_roll = atk+gun+tank+supri
 lll = [atk,gun,tank,supri]
 
 
+atk_plo = {}
+gun_plo = {}
+tank_plo = {}
+supri_plo = {}
+
 compass = {
 	"アタリ":"アタリの情報※HS発動時のみ記載\n\n組んで相性の良いキャラ\n・マルコス＆リリカ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・全てのキャラに有利\n\n不利対面\n①貫通\n②毒、サイレント、スタンなどの状態異常\n③ダメカ破壊\n④防御UP中に防御ダウン\n⑤カードキャンセル\n上記のものどれか一つでもまともに食らえば不利になる。\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229151#link05",
 	"ジャスティス":"ジャスティスの情報\n\n組んで相性の良いキャラ\n・ポロロッチョ\n・スタン持ち\n\n有利、不利対面のキャラ\n・相手にスタンと貫通がなければ有利、あれば不利\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/232405#link05",
@@ -132,7 +137,9 @@ async def ヘルプ(ctx):
 	embed.add_field(name="！ランダム",value="何のキャラで遊ぶか中々決まらない時にランダムで決めちゃうよ\nランダムの後にロール名を入力すると更に絞れるよ",inline=False)
 	embed.add_field(name="！バイオハザード",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
 	embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ",inline=False)
-	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ",inline=False)
+	embed.add_field(name="！登録",value="自分のプロフィールを登録するよ。\n既に登録していても何度でも再登録できるよ。",inline=False)
+	embed.add_field(name="！プロフィール",value="自分のプロフィールを表示するよ。\n！サーチプロフィールの後にメンションすると\nグループ内のメンションした人のプロフィールを出すよ",inline=False)
+	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ。",inline=False)
 	embed.add_field(name="作者",value="コンパスで語ってることが間違っていたり、追加して欲しい機能があったら\nhttps://peing.net/ja/blalcxw2aqk2dbh?event=0\n↑に入れてね",inline=False)
 	await ctx.send(embed=embed)
 
@@ -143,6 +150,26 @@ async def on_command_error(ctx, error):
 @bot.command()
 async def ping(ctx):
 	await ctx.send(pong)
+	
+@bot.command()
+async def サーチアタッカー(ctx):
+	sati = random.choice([i for i in atk_plo.values()])
+	await ctx.send(sati)
+
+@bot.command()
+async def サーチガンナー(ctx):
+	sati = random.choice([i for i in gun_plo.values()])
+	await ctx.send(sati)
+
+@bot.command()
+async def サーチタンク(ctx):
+	sati = random.choice([i for i in tank_plo.values()])
+	await ctx.send(sati)
+
+@bot.command()
+async def サーチスプリンター(ctx):
+	sati = random.choice([i for i in supri_plo.values()])
+	await ctx.send(sati)
 
 @bot.command()
 async def 最新ブログ(ctx):
@@ -205,8 +232,46 @@ async def on_message(message):
 						except asyncio.TimeoutError:
 							await channel.send("タイムアウトしたよ。最初からやり直してね")
 						else:
-							rireki_text[m_id] = '名前:'+message.author.name+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-							await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(hitokoto))
+							await channel.send("ツイッターのIDをURLで載せてください\nない場合は適当な文字を入力してください".format(hitokoto))
+							try:
+								twit = await bot.wait_for('message', timeout=30.0, check=check_mes)
+							except asyncio.TimeoutError:
+								await channel.send("タイムアウトしたよ。最初からやり直してね")
+							else:
+								if "https://twitter.com/" in twit.content:
+									await channel.send("プロフィールの検索を許可しますか？\n1:許可する 2:許可しない".format(check_mes))
+									try:
+										saticheck = await bot.wait_for('message', timeout=30.0, check=check_n)
+									except asyncio.TimeoutError:
+										await channel.send("タイムアウトしたよ。最初からやり直してね")
+									else:
+										if saticheck.content == "1":
+											rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
+											if roll in atk:atk_plo[message.author.id] = rireki_text[message.author.id]
+											if roll in gun:gun_plo[message.author.id] = rireki_text[message.author.id]
+											if roll in tank:tank_plo[message.author.id] = rireki_text[message.author.id]
+											if roll in supri:supri_plo[message.author.id] = rireki_text[message.author.id]
+											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
+										if saticheck.content == "2":
+											rireki_text[m_id] = '名前:'+message.author.name+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
+								else:
+									await channel.send("プロフィールの検索を許可しますか？\n1:許可する 2:許可しない".format(check_mes))
+									try:
+										saticheck = await bot.wait_for('message', timeout=30.0, check=check_n)
+									except asyncio.TimeoutError:
+										await channel.send("タイムアウトしたよ。最初からやり直してね")
+									else:
+										if saticheck.content == "1":
+											rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+											if roll in atk:atk_plo[message.author.id] = rireki_text[message.author.id]
+											if roll in gun:gun_plo[message.author.id] = rireki_text[message.author.id]
+											if roll in tank:tank_plo[message.author.id] = rireki_text[message.author.id]
+											if roll in supri:supri_plo[message.author.id] = rireki_text[message.author.id]
+											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
+										if saticheck.content == "2":
+											rireki_text[m_id] = '名前:'+message.author.name+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
 	if message.content == "！プロフィール":
 		channel = message.channel
 		m_id = message.author.id
