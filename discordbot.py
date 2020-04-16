@@ -14,16 +14,24 @@ pong = random.randrange(10)
 bot.remove_command('help')
 
 god = [263614623238848522]
-sub_god = [300989332557135872]
+sub_god = []
 def check_god(ctx):
 	return ctx.message.author.id in god
 def check_god2(ctx):
 	return ctx.message.author.id in sub_god or god
 
+rireki_text = {}
+rireki = {}
+
 atk = ["ノホ","忠臣","マルコス","ソル","リュウ","アダム","マリア","レム","カイ","ポロロッチョ","リヴァイ","デルミン","セイバー","ルルカ"]
 gun = ["リリカ","ルチアーノ","まとい","ディズィー","サーティーン","エミリア","めぐめぐ","リン","イスタカ","ソーン","オカリン","猫宮","ギルガメッシュ"]
 tank = ["ジャスティス","ジャンヌ","ヴィオレッタ","グスタフ","レン","モノクマ","めぐみん","トマス"]
 supri = ["アタリ","ボイドール","テスラ","ミク","コクリコ","春麗","ザクレイ","勇者","きらら","アクア","レイヤ","ピエール"]
+lol = {"1":"アタッカー","2":"ガンナー","3":"タンク","4":"スプリンター"}
+llevel = {"1":"4~119","2":"120~159","3":"160~199","4":"200~240"}
+mmedal = {"1":"アイコンなし","2":"銅アイコン経験あり","3":"銀アイコン経験あり","4":"金アイコンor公式大会優勝経験あり"}
+yyn = {"1":"可能","2":"聞き専なら可能","3":"聞き専も不可能","4":"応相談"}
+ynn = {"1":"オン","2":"オフ"}
 
 all_roll = atk+gun+tank+supri
 lll = [atk,gun,tank,supri]
@@ -58,7 +66,23 @@ compass = {
 	"猫宮":"猫宮の情報\n\n組んで相性の良いキャラ\n・ダメカ破壊持ち※周囲がおすすめ\n・スタンorサイレントの状態異常カード持ち\n\n有利対面のキャラ\n・自分より射程が同じかそれ以下のガンナーほぼ全て(アサルト時のみ)\n・遠距離持ちのアタッカーほぼ全て\n\n不利対面のキャラ\n・自分より射程の長いガンナー全て\n・マジスク＆ゆらら持ちキャラ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/414356#link05",
 	"アクア":"アクアの情報\n\n組んで相性の良いキャラ\n・マリア\n・マジスクを持ってるアタッカー\n・オカリン\n・ギル\n\n有利対面のキャラ\n・ディズィー\n・ソーン\n\n不利対面のキャラ\n・レイヤ\n・きらら\n・ルチアーノ\n・勇者\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/388828#link02",
 	"ピエール":"ピエールの情報\n\n組んで相性の良いキャラ\n・支援系を除く全てのキャラ\n\n耐え難い対面\n・ギルガメッシュ\n・オカリン\n・ルチアーノ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/452335#link05",
- 	"セイバー":"セイバーの情報\n\n組んで相性の良いキャラ\n・ディズィー\n・デッキ次第で攻撃系キャラならなんでも合う\n・グスタフ\n\n有利体面のキャラ\n・ギル、イスタカ以外のガンナー全般\n・きらら\n\n不利対面のキャラ\n・アダム\n・デルミン\n・ギル、イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/436927#link05"
+ 	"セイバー":"セイバーの情報\n\n組んで相性の良いキャラ\n・ディズィー\n・デッキ次第で攻撃系キャラならなんでも合う\n・グスタフ\n\n有利体面のキャラ\n・ギル、イスタカ以外のガンナー全般\n・きらら\n\n不利対面のキャラ\n・アダム\n・デルミン\n・ギル、イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/436927#link05",
+ 	"マリア":"",
+ 	"サーティーン":"",
+ 	"勇者":"",
+ 	"エミリア":"",
+ 	"レム":"",
+ 	"カイ":"",
+ 	"メグメグ":"",
+ 	"レン":"",
+ 	"トマス":"",
+ 	"モノクマ":"",
+ 	"オカリン":"",
+ 	"ギルガメッシュ":"",
+ 	"ルルカ":"",
+ 	"レイヤ":"",
+ 	"めぐみん":"",
+ 	"ザクレイ":""
 }
 
 @bot.command()
@@ -105,7 +129,7 @@ async def on_message(message):
 async def ヘルプ(ctx):
 	embed = discord.Embed(title="このbotの説明書",description="コマンド見にくくてごめん。")
 	embed.add_field(name="！コンパスの後に表示されているキャラ名orステージ名を入力",value="コンパスのキャラとステージについて解説するよ。\nキャラは相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n有利、不利は全キャラ書いてないので経験で頑張ってみてね\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\n\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\n\nステージの立ち回りは\nhttps://twitter.com/wp_league\nの動画を引用しています。",inline=False)
-	embed.add_field(name="！ランダム",value="何のキャラで遊ぶか中々決まらない時にランダムで決めちゃうよ\nランダムロール名　そのロールの中からランダムで決めるよ\nランダムパーティー　ロール被りなしでパーティーを決めるよ",inline=False)
+	embed.add_field(name="！ランダム",value="何のキャラで遊ぶか中々決まらない時にランダムで決めちゃうよ\nランダムの後にロール名を入力すると更に絞れるよ",inline=False)
 	embed.add_field(name="！バイオハザード",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
 	embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ",inline=False)
 	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ",inline=False)
@@ -132,6 +156,71 @@ async def 最新ブログ(ctx):
 #コマンドエラーが起きてしまうから無理矢理passで対応しちゃってる
 @bot.event
 async def on_message(message):
+	if message.content == "！登録":
+		m_id = message.author.id
+		channel = message.channel
+		await channel.send("登録を開始します。まずは主に使用するキャラ1人教えてください")
+		def check_mes(message):
+			return message.author.id == m_id and message.channel == channel
+		def check_roll(message):
+			return message.content in [i for i in compass.keys()] and message.channel == channel
+		def check_level(message):
+			return message.content in llevel and message.channel == channel
+		def check_medal(message):
+			return message.content in mmedal and message.channel == channel
+		def check_yn(message):
+			return message.content in yyn and message.channel == channel
+		def check_n(message):
+			return message.content in ynn and message.channel == channel
+		try:
+			roll = await bot.wait_for('message', timeout=30.0, check=check_roll)
+		except asyncio.TimeoutError:
+			await channel.send("タイムアウトしたよ。最初からやり直してね")
+		else:
+			roll = roll.content
+			await channel.send('デッキの合計レベルを番号で教えてください\n1:4~119 2:120~159 3:160~199 4:200~240'.format(roll))
+			try:
+				level = await bot.wait_for('message', timeout=30.0, check=check_level)
+			except asyncio.TimeoutError:
+				await channel.send("タイムアウトしたよ。最初からやり直してね")
+			else:
+				level = llevel[level.content]
+				await channel.send("実力を番号で教えてください\n1:参加賞 2:銅アイコン経験あり 3:銀アイコン経験あり 4:金アイコンor公式大会優勝経験あり".format(level))
+				try:
+					medal = await bot.wait_for('message', timeout=30.0, check=check_medal)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					medal = mmedal[medal.content]
+					await channel.send("通話が可能かどうか番号で教えてください\n1:可能 2:聞き専なら可能 3:聞き専も不可 4:応相談".format(medal))
+					try:
+						yn = await bot.wait_for('message', timeout=30.0, check=check_yn)
+					except asyncio.TimeoutError:
+						await channel.send("タイムアウトしたよ。最初からやり直してね")
+					else:
+						yn = yyn[yn.content]
+						await channel.send("何か一言をお願いします".format(yn))
+						try:
+							hitokoto = await bot.wait_for('message', timeout=30.0, check=check_mes)
+						except asyncio.TimeoutError:
+							await channel.send("タイムアウトしたよ。最初からやり直してね")
+						else:
+							await channel.send("検索を許可しますか？番号で選んでください\n許可をすれば枠埋めがしやすくなりますが多くの人に見られます\n1:許可する 2:許可しない".format(hitokoto))
+							try:
+								ynn = await bot.wait_for('message', timeout=30.0, check=check_n)
+							except asyncio.TimeoutError:
+								await channel.send("タイムアウトしたよ。最初からやり直してね")
+							else:
+								rireki_text[m_id] = '名前:'+message.author.name+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+								if ynn == "1":
+									rireki[m_id] = ynn
+								await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(ynn))
+	if message.content == "！プロフィール":
+		channel = message.channel
+		m_id = message.author.id
+		if m_id in rireki_text.keys():
+			await channel.send(f'{message.author.mention}さんのプロフィール\n'+rireki_text[m_id])
+		else:await channel.send(f"{message.author.mention}さんはまだ登録されていません。「！登録」でプロフィールを入力してください")
 	if message.content == "！コンパス":
 		channel = message.channel
 		embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
@@ -194,5 +283,5 @@ async def 権限確認(ctx, member: discord.Member, *, reason=None):
 	if member.id in sub_god:
 		await ctx.send("この人はbotの権限を持っているよ")
 	else:await ctx.send("この人はbotの権限を持っていないよ笑")
-		
+
 bot.run(token)
