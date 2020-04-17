@@ -195,7 +195,7 @@ async def on_message(message):
 		try:
 			mes = await bot.wait_for('message', timeout=30.0, check=check_mes)
 		except asyncio.TimeoutError:
-			await cl.send("タイムアウトしたよ。最初からやり直してね")
+			await ch.send("タイムアウトしたよ。最初からやり直してね")
 		else:
 			for guild in bot.guilds:
 				for channel in guild.channels:
