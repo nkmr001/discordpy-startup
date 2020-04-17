@@ -90,7 +90,8 @@ compass = {
  	"レイヤ":"零夜の情報\n\n組んで相性の良いキャラ\n・トマス\n・リン\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・ダメージカットが1枚以下のキャラ\n・マリア\n・オカリン\n\n不利対面のキャラ\n・ギルガメッシュ\n・イスタカ\n・ダメージカットの枚数が負けていたら猫宮\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/429859#link05",
  	"めぐみん":"まだ書かれていません！ごめんなさい",
  	"ザクレイ":"まだ書かれていません！ごめんなさい",
-	"きらら":"まだ書かれていません！ごめんなさい"
+	"きらら":"まだ書かれていません！ごめんなさい",
+	"春麗":"まだ書かれていません！ごめんなさい"
 }
 
 @bot.event
@@ -208,7 +209,7 @@ async def on_message(message):
 			def check_mes(message):
 				return message.author.id == m_id and message.channel == channel
 			def check_roll(message):
-				return message.content in [i for i in compass.keys()] and message.channel == channel and message.author.id == m_id
+				return message.content in all_roll and message.channel == channel and message.author.id == m_id
 			def check_level(message):
 				return message.content in llevel and message.channel == channel and message.author.id == m_id
 			def check_medal(message):
