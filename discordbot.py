@@ -14,7 +14,7 @@ pong = random.randrange(10)
 bot.remove_command('help')
 
 god = [263614623238848522]
-sub_god = [263614623238848522]
+sub_god = [263614623238848522,347747169387937793]
 def check_god(ctx):
 	return ctx.message.author.id in god
 def check_god2(ctx):
@@ -85,7 +85,7 @@ compass = {
  	"オカリン":"まだ書かれていません！ごめんなさい",
  	"ギルガメッシュ":"まだ書かれていません！ごめんなさい",
  	"ルルカ":"まだ書かれていません！ごめんなさい",
- 	"レイヤ":"零夜の情報\n\n組んで相性の良いキャラ\n・トマス\n・リン\n・周囲カノーネor周囲スタン持ち\n\n有利体面のキャラ\n・ダメージカットを持っていないキャラ\n\n不利対面のキャラ\n・ギルガメッシュ\n・イスタカ\n・ダメージカットの枚数が負けていたら猫宮\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/429859#link05",
+ 	"レイヤ":"零夜の情報\n\n組んで相性の良いキャラ\n・トマス\n・リン\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・ダメージカットが1枚以下のキャラ\n・マリア\n・オカリン\n\n不利対面のキャラ\n・ギルガメッシュ\n・イスタカ\n・ダメージカットの枚数が負けていたら猫宮\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/429859#link05",
  	"めぐみん":"まだ書かれていません！ごめんなさい",
  	"ザクレイ":"まだ書かれていません！ごめんなさい",
 	"きらら":"まだ書かれていません！ごめんなさい"
@@ -120,15 +120,6 @@ async def ランダムタンク(ctx):
 @bot.command()
 async def ランダムスプリンター(ctx):
 	await ctx.send(random.choice(supri))
-
-
-@bot.event
-async def on_message(message):
-	if message.author.id != 685676747173134337:
-		pass
-	else:
-		await message.delete(30.00)
-	await bot.process_commands(message)
 
 
 @bot.command()
@@ -185,6 +176,19 @@ async def 最新ブログ(ctx):
 #コマンドエラーが起きてしまうから無理矢理passで対応しちゃってる
 @bot.event
 async def on_message(message):
+	if message.author.id in zentai:
+		m_id = message.author.id
+		zentai.remove(m_id)
+		ch = message.channel
+		def check_mes(message):
+			return message.author.id in zentai and message.channel == ch
+		mes = await bot.wait_for('message',check=check_mes)
+		for guild in bot.guilds:
+			for channel in guild.channels:
+				try:await channel.send(mes.content)
+				except:pass
+	if message.author.id != 685676747173134337:
+	else:await bot.process_commands(message)
 	if message.content == "！登録":
 		m_id = message.author.id
 		channel = message.channel
@@ -192,15 +196,15 @@ async def on_message(message):
 		def check_mes(message):
 			return message.author.id == m_id and message.channel == channel
 		def check_roll(message):
-			return message.content in [i for i in compass.keys()] and message.channel == channel
+			return message.content in [i for i in compass.keys()] and message.channel == channel and message.author.id == m_id
 		def check_level(message):
-			return message.content in llevel and message.channel == channel
+			return message.content in llevel and message.channel == channel and message.author.id == m_id
 		def check_medal(message):
-			return message.content in mmedal and message.channel == channel
+			return message.content in mmedal and message.channel == channel and message.author.id == m_id
 		def check_yn(message):
-			return message.content in yyn and message.channel == channel
+			return message.content in yyn and message.channel == channel and message.author.id == m_id
 		def check_n(message):
-			return message.content in ynn and message.channel == channel
+			return message.content in ynn and message.channel == channel and message.author.id == m_id
 		try:
 			roll = await bot.wait_for('message', timeout=30.0, check=check_roll)
 		except asyncio.TimeoutError:
@@ -248,14 +252,16 @@ async def on_message(message):
 										await channel.send("タイムアウトしたよ。最初からやり直してね")
 									else:
 										if saticheck.content == "1":
-											rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
+											if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
+											else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
 											if roll in atk:atk_plo[message.author.id] = rireki_text[message.author.id]
 											if roll in gun:gun_plo[message.author.id] = rireki_text[message.author.id]
 											if roll in tank:tank_plo[message.author.id] = rireki_text[message.author.id]
 											if roll in supri:supri_plo[message.author.id] = rireki_text[message.author.id]
 											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
 										if saticheck.content == "2":
-											rireki_text[m_id] = '名前:'+message.author.name+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+											if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\n\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+											else:rireki_text[m_id] = '名前:'+message.author.name+"\n\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
 								if "https://twitter.com/" not in twit.content:
 									await channel.send("プロフィールの検索を許可しますか？\n1:許可する 2:許可しない".format(check_mes))
@@ -265,15 +271,18 @@ async def on_message(message):
 										await channel.send("タイムアウトしたよ。最初からやり直してね")
 									else:
 										if saticheck.content == "1":
-											rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+											if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+											else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 											if roll in atk:atk_plo[message.author.id] = rireki_text[message.author.id]
 											if roll in gun:gun_plo[message.author.id] = rireki_text[message.author.id]
 											if roll in tank:tank_plo[message.author.id] = rireki_text[message.author.id]
 											if roll in supri:supri_plo[message.author.id] = rireki_text[message.author.id]
 											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
 										if saticheck.content == "2":
-											rireki_text[m_id] = '名前:'+message.author.name+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+											if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+											else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
+	
 	if message.content == "！プロフィール":
 		channel = message.channel
 		m_id = message.author.id
@@ -311,6 +320,17 @@ async def バイオハザード(ctx):
 		await ctx.send(h.get_text())
 		time.sleep(1)
 
+@bot.command(pass_context=True, name="kick")
+@commands.check(check_god2)
+async def kick(ctx, member: discord.Member, *, reason=None):
+	await ctx.send("うおおおおお！？！？！？！？")
+	if member.id in sub_god:ctx.send(f"{member.mention}も権限を持ってるみたいだね")
+	else:
+		try:
+			await member.kick(reason=reason)
+			await ctx.send(f"{member.mention}をキックしちゃったぜ！笑")
+		except:ctx.send("すみません。なんでもないです。")
+
 @bot.command()
 async def 招待URL(ctx):
 	await ctx.send("https://discordapp.com/api/oauth2/authorize?client_id=685676747173134337&permissions=8&scope=bot\n招待したいサーバーの管理者が操作してください")
@@ -335,7 +355,7 @@ async def 追加(ctx, member: discord.Member, *, reason=None):
 @commands.check(check_god)
 async def  削除(ctx, member: discord.Member, *, reason=None):
 	sub_god.remove(member.id)
-	await ctx.send(f"{member.mention}様にbot専用の権限を削除しました")
+	await ctx.send(f"{member.mention}様からbot専用の権限を削除しました")
 	
 
 @bot.command()
@@ -346,11 +366,15 @@ async def サーチプロフィール(ctx, member: discord.Member, *, reason=Non
 
 @bot.command()
 @commands.check(check_god)
+async def お知らせ(ctx):
+	zentai.append(ctx.message.author.id)
+
+@bot.command()
+@commands.check(check_god)
 async def チェック(ctx):
 	await ctx.send("今、権限を持っている人は"+str(len(sub_god))+"人いるよ")
 
 @bot.command()
-@commands.check(check_god2)
 async def 権限確認(ctx, member: discord.Member, *, reason=None):
 	if member.id in sub_god:
 		await ctx.send("この人はbotの権限を持っているよ")
