@@ -283,33 +283,30 @@ async def on_message(message):
 												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-		await bot.process_commands(message)
-	else:
-		pass
-	if message.content == "！プロフィール":
-		channel = message.channel
-		m_id = message.author.id
-		if m_id in rireki_text.keys():
-			await channel.send(f'{message.author.mention}さんのプロフィール\n'+rireki_text[m_id])
-		else:await channel.send(f"{message.author.mention}さんはまだ登録されていません。「！登録」でプロフィールを入力してください")
-	if message.content == "！コンパス":
-		channel = message.channel
-		embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
-		embed.add_field(name="アタッカー",value="ノホ,忠臣,マルコス, ソル\nリュウ, アダム, マリア, レム\nカイ, ポロロッチョ, リヴァイ,デルミン\nセイバー, ルルカ",inline=False)
-		embed.add_field(name="\nガンナー",value="リリカ, ルチアーノ, まとい, ディズィー\nサーティーン, エミリア, めぐめぐ, リン\nイスタカ, ソーン, オカリン, 猫宮\nギルガメッシュ",inline=False)
-		embed.add_field(name="\nスプリンター",value="アタリ, ボイドール, テスラ, ミク\nコクリコ, 春麗, ザクレイ, 勇者\nきらら, アクア, レイヤ, ピエール",inline=False)
-		embed.add_field(name="\nタンク",value="ジャスティス, ジャンヌ, ヴィオレッタ\nグスタフ, レン, モノクマ, めぐみん\nトマス",inline=False)
-		embed.add_field(name="\nステージ",value="ケルパーズ",inline=False)
-		await channel.send(embed=embed)	
-		def check(message):
-			return message.content in [i for i in compass.keys()] and message.channel == channel
-		try:
-			msg = await bot.wait_for('message', timeout=30.0, check=check)
-		except asyncio.TimeoutError:
-			await message.delete()
-			await channel.send("タイムアウトしたよ。最初からやり直してね")
-		else:
-			await channel.send(compass[msg.content].format(msg))
+		if message.content == "！プロフィール":
+			channel = message.channel
+			m_id = message.author.id
+			if m_id in rireki_text.keys():
+				await channel.send(f'{message.author.mention}さんのプロフィール\n'+rireki_text[m_id])
+			else:await channel.send(f"{message.author.mention}さんはまだ登録されていません。「！登録」でプロフィールを入力してください")
+		if message.content == "！コンパス":
+			channel = message.channel
+			embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
+			embed.add_field(name="アタッカー",value="ノホ,忠臣,マルコス, ソル\nリュウ, アダム, マリア, レム\nカイ, ポロロッチョ, リヴァイ,デルミン\nセイバー, ルルカ",inline=False)
+			embed.add_field(name="\nガンナー",value="リリカ, ルチアーノ, まとい, ディズィー\nサーティーン, エミリア, めぐめぐ, リン\nイスタカ, ソーン, オカリン, 猫宮\nギルガメッシュ",inline=False)
+			embed.add_field(name="\nスプリンター",value="アタリ, ボイドール, テスラ, ミク\nコクリコ, 春麗, ザクレイ, 勇者\nきらら, アクア, レイヤ, ピエール",inline=False)
+			embed.add_field(name="\nタンク",value="ジャスティス, ジャンヌ, ヴィオレッタ\nグスタフ, レン, モノクマ, めぐみん\nトマス",inline=False)
+			embed.add_field(name="\nステージ",value="ケルパーズ",inline=False)
+			await channel.send(embed=embed)	
+			def check(message):
+				return message.content in [i for i in compass.keys()] and message.channel == channel
+			try:
+				msg = await bot.wait_for('message', timeout=30.0, check=check)
+			except asyncio.TimeoutError:
+				await message.delete()
+				await channel.send("タイムアウトしたよ。最初からやり直してね")
+			else:
+				await channel.send(compass[msg.content].format(msg))
 	await bot.process_commands(message)
 
 @bot.command()
