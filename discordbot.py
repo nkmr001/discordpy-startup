@@ -176,18 +176,18 @@ async def 最新ブログ(ctx):
 #コマンドエラーが起きてしまうから無理矢理passで対応しちゃってる
 @bot.listen()
 async def on_message(message):
-	if message.author.id in zentai:
-			m_id = message.author.id
-			zentai.remove(m_id)
-			ch = message.channel
-			def check_mes(message):
-				return message.author.id in zentai and message.channel == ch
-			mes = await bot.wait_for('message',check=check_mes)
-			for guild in bot.guilds:
-				for channel in guild.channels:
-					try:await channel.send(mes.content)
-					except:pass
 	if message.author.id != 685676747173134337:
+		if message.author.id in zentai:
+				m_id = message.author.id
+				zentai.remove(m_id)
+				ch = message.channel
+				def check_mes(message):
+					return message.author.id in zentai and message.channel == ch
+				mes = await bot.wait_for('message',check=check_mes)
+				for guild in bot.guilds:
+					for channel in guild.channels:
+						try:await channel.send(mes.content)
+						except:pass
 		if message.content == "！登録":
 			m_id = message.author.id
 			channel = message.channel
