@@ -176,113 +176,113 @@ async def 最新ブログ(ctx):
 #コマンドエラーが起きてしまうから無理矢理passで対応しちゃってる
 @bot.event
 async def on_message(message):
-	if message.author.id in zentai:
-		m_id = message.author.id
-		zentai.remove(m_id)
-		ch = message.channel
-		def check_mes(message):
-			return message.author.id in zentai and message.channel == ch
-		mes = await bot.wait_for('message',check=check_mes)
-		for guild in bot.guilds:
-			for channel in guild.channels:
-				try:await channel.send(mes.content)
-				except:pass
 	if message.author.id != 685676747173134337:
-	else:await bot.process_commands(message)
-	if message.content == "！登録":
-		m_id = message.author.id
-		channel = message.channel
-		await channel.send("登録を開始します。まずは主に使用するキャラ1人教えてください")
-		def check_mes(message):
-			return message.author.id == m_id and message.channel == channel
-		def check_roll(message):
-			return message.content in [i for i in compass.keys()] and message.channel == channel and message.author.id == m_id
-		def check_level(message):
-			return message.content in llevel and message.channel == channel and message.author.id == m_id
-		def check_medal(message):
-			return message.content in mmedal and message.channel == channel and message.author.id == m_id
-		def check_yn(message):
-			return message.content in yyn and message.channel == channel and message.author.id == m_id
-		def check_n(message):
-			return message.content in ynn and message.channel == channel and message.author.id == m_id
-		try:
-			roll = await bot.wait_for('message', timeout=30.0, check=check_roll)
-		except asyncio.TimeoutError:
-			await channel.send("タイムアウトしたよ。最初からやり直してね")
-		else:
-			roll = roll.content
-			await channel.send('デッキの合計レベルを番号で教えてください\n1:4~119 2:120~159 3:160~199 4:200~240'.format(roll))
+		if message.author.id in zentai:
+			m_id = message.author.id
+			zentai.remove(m_id)
+			ch = message.channel
+			def check_mes(message):
+				return message.author.id in zentai and message.channel == ch
+			mes = await bot.wait_for('message',check=check_mes)
+			for guild in bot.guilds:
+				for channel in guild.channels:
+					try:await channel.send(mes.content)
+					except:pass
+		if message.content == "！登録":
+			m_id = message.author.id
+			channel = message.channel
+			await channel.send("登録を開始します。まずは主に使用するキャラ1人教えてください")
+			def check_mes(message):
+				return message.author.id == m_id and message.channel == channel
+			def check_roll(message):
+				return message.content in [i for i in compass.keys()] and message.channel == channel and message.author.id == m_id
+			def check_level(message):
+				return message.content in llevel and message.channel == channel and message.author.id == m_id
+			def check_medal(message):
+				return message.content in mmedal and message.channel == channel and message.author.id == m_id
+			def check_yn(message):
+				return message.content in yyn and message.channel == channel and message.author.id == m_id
+			def check_n(message):
+				return message.content in ynn and message.channel == channel and message.author.id == m_id
 			try:
-				level = await bot.wait_for('message', timeout=30.0, check=check_level)
+				roll = await bot.wait_for('message', timeout=30.0, check=check_roll)
 			except asyncio.TimeoutError:
 				await channel.send("タイムアウトしたよ。最初からやり直してね")
 			else:
-				level = llevel[level.content]
-				await channel.send("実力を番号で教えてください\n1:参加賞 2:銅アイコン経験あり 3:銀アイコン経験あり 4:金アイコンor公式大会優勝経験あり".format(level))
+				roll = roll.content
+				await channel.send('デッキの合計レベルを番号で教えてください\n1:4~119 2:120~159 3:160~199 4:200~240'.format(roll))
 				try:
-					medal = await bot.wait_for('message', timeout=30.0, check=check_medal)
+					level = await bot.wait_for('message', timeout=30.0, check=check_level)
 				except asyncio.TimeoutError:
 					await channel.send("タイムアウトしたよ。最初からやり直してね")
 				else:
-					medal = mmedal[medal.content]
-					await channel.send("通話が可能かどうか番号で教えてください\n1:可能 2:聞き専なら可能 3:聞き専も不可 4:応相談".format(medal))
+					level = llevel[level.content]
+					await channel.send("実力を番号で教えてください\n1:参加賞 2:銅アイコン経験あり 3:銀アイコン経験あり 4:金アイコンor公式大会優勝経験あり".format(level))
 					try:
-						yn = await bot.wait_for('message', timeout=30.0, check=check_yn)
+						medal = await bot.wait_for('message', timeout=30.0, check=check_medal)
 					except asyncio.TimeoutError:
 						await channel.send("タイムアウトしたよ。最初からやり直してね")
 					else:
-						yn = yyn[yn.content]
-						await channel.send("何か一言をお願いします".format(yn))
+						medal = mmedal[medal.content]
+						await channel.send("通話が可能かどうか番号で教えてください\n1:可能 2:聞き専なら可能 3:聞き専も不可 4:応相談".format(medal))
 						try:
-							hitokoto = await bot.wait_for('message', timeout=30.0, check=check_mes)
+							yn = await bot.wait_for('message', timeout=30.0, check=check_yn)
 						except asyncio.TimeoutError:
 							await channel.send("タイムアウトしたよ。最初からやり直してね")
 						else:
-							await channel.send("ツイッターのIDをURLで載せてください\nない場合は適当な文字を入力してください".format(hitokoto))
+							yn = yyn[yn.content]
+							await channel.send("何か一言をお願いします".format(yn))
 							try:
-								twit = await bot.wait_for('message', timeout=30.0, check=check_mes)
+								hitokoto = await bot.wait_for('message', timeout=30.0, check=check_mes)
 							except asyncio.TimeoutError:
 								await channel.send("タイムアウトしたよ。最初からやり直してね")
 							else:
-								if "https://twitter.com/" in twit.content:
-									await channel.send("プロフィールの検索を許可しますか？\n1:許可する 2:許可しない".format(check_mes))
-									try:
-										saticheck = await bot.wait_for('message', timeout=30.0, check=check_n)
-									except asyncio.TimeoutError:
-										await channel.send("タイムアウトしたよ。最初からやり直してね")
-									else:
-										if saticheck.content == "1":
-											if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
-											else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
-											if roll in atk:atk_plo[message.author.id] = rireki_text[message.author.id]
-											if roll in gun:gun_plo[message.author.id] = rireki_text[message.author.id]
-											if roll in tank:tank_plo[message.author.id] = rireki_text[message.author.id]
-											if roll in supri:supri_plo[message.author.id] = rireki_text[message.author.id]
-											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-										if saticheck.content == "2":
-											if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\n\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-											else:rireki_text[m_id] = '名前:'+message.author.name+"\n\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-								if "https://twitter.com/" not in twit.content:
-									await channel.send("プロフィールの検索を許可しますか？\n1:許可する 2:許可しない".format(check_mes))
-									try:
-										saticheck = await bot.wait_for('message', timeout=30.0, check=check_n)
-									except asyncio.TimeoutError:
-										await channel.send("タイムアウトしたよ。最初からやり直してね")
-									else:
-										if saticheck.content == "1":
-											if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-											else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-											if roll in atk:atk_plo[message.author.id] = rireki_text[message.author.id]
-											if roll in gun:gun_plo[message.author.id] = rireki_text[message.author.id]
-											if roll in tank:tank_plo[message.author.id] = rireki_text[message.author.id]
-											if roll in supri:supri_plo[message.author.id] = rireki_text[message.author.id]
-											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-										if saticheck.content == "2":
-											if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-											else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-											await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-	
+								await channel.send("ツイッターのIDをURLで載せてください\nない場合は適当な文字を入力してください".format(hitokoto))
+								try:
+									twit = await bot.wait_for('message', timeout=30.0, check=check_mes)
+								except asyncio.TimeoutError:
+									await channel.send("タイムアウトしたよ。最初からやり直してね")
+								else:
+									if "https://twitter.com/" in twit.content:
+										await channel.send("プロフィールの検索を許可しますか？\n1:許可する 2:許可しない".format(check_mes))
+										try:
+											saticheck = await bot.wait_for('message', timeout=30.0, check=check_n)
+										except asyncio.TimeoutError:
+											await channel.send("タイムアウトしたよ。最初からやり直してね")
+										else:
+											if saticheck.content == "1":
+												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
+												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
+												if roll in atk:atk_plo[message.author.id] = rireki_text[message.author.id]
+												if roll in gun:gun_plo[message.author.id] = rireki_text[message.author.id]
+												if roll in tank:tank_plo[message.author.id] = rireki_text[message.author.id]
+												if roll in supri:supri_plo[message.author.id] = rireki_text[message.author.id]
+												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
+											if saticheck.content == "2":
+												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\n\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+												else:rireki_text[m_id] = '名前:'+message.author.name+"\n\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
+									if "https://twitter.com/" not in twit.content:
+										await channel.send("プロフィールの検索を許可しますか？\n1:許可する 2:許可しない".format(check_mes))
+										try:
+											saticheck = await bot.wait_for('message', timeout=30.0, check=check_n)
+										except asyncio.TimeoutError:
+											await channel.send("タイムアウトしたよ。最初からやり直してね")
+										else:
+											if saticheck.content == "1":
+												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+												if roll in atk:atk_plo[message.author.id] = rireki_text[message.author.id]
+												if roll in gun:gun_plo[message.author.id] = rireki_text[message.author.id]
+												if roll in tank:tank_plo[message.author.id] = rireki_text[message.author.id]
+												if roll in supri:supri_plo[message.author.id] = rireki_text[message.author.id]
+												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
+											if saticheck.content == "2":
+												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
+												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
+		await bot.process_commands(message)
+	else:pass					
 	if message.content == "！プロフィール":
 		channel = message.channel
 		m_id = message.author.id
