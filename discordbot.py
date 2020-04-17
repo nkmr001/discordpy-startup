@@ -284,7 +284,8 @@ async def on_message(message):
 												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
 		await bot.process_commands(message)
-	else:pass		
+	else:
+		pass
 	if message.content == "！プロフィール":
 		channel = message.channel
 		m_id = message.author.id
