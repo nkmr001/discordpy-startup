@@ -308,7 +308,6 @@ async def on_message(message):
 			else:
 				await channel.send(compass[msg.content].format(msg))
 	await bot.process_commands(message)
-
 @bot.command()
 async def バイオハザード(ctx):
 	await ctx.send("日本国内の感染者情報を最新５件表示します")
@@ -368,5 +367,4 @@ async def 権限確認(ctx, member: discord.Member, *, reason=None):
 	if member.id in sub_god:
 		await ctx.send("この人はbotの権限を持っているよ")
 	else:await ctx.send("この人はbotの権限を持っていないよ笑")
-
 bot.run(token)
