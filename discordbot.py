@@ -186,10 +186,12 @@ async def on_message(message):
 				def check_mes(message):
 					return message.author.id in zentai and message.channel == ch
 				mes = await bot.wait_for('message',check=check_mes)
-				for guild in bot.guilds:
-					for channel in guild.channels:
-						try:await channel.send(mes.content)
-						except:pass
+				for guild in bot.guilds
+					if channel in guild:continue
+					else:
+						for channel in guild.channels:
+							try:await channel.send(mes.content)
+							except:pass
 		if message.content == "！登録":
 			m_id = message.author.id
 			channel = message.channel
