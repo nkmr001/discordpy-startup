@@ -281,7 +281,7 @@ async def on_message(message):
 												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-	await bot.process_commands(message)
+		await bot.process_commands(message)
 	else:pass		
 	if message.content == "！プロフィール":
 		channel = message.channel
@@ -320,24 +320,13 @@ async def バイオハザード(ctx):
 		await ctx.send(h.get_text())
 		time.sleep(1)
 
-@bot.command(pass_context=True, name="kick")
-@commands.check(check_god2)
-async def kick(ctx, member: discord.Member, *, reason=None):
-	await ctx.send("うおおおおお！？！？！？！？")
-	if member.id in sub_god:ctx.send(f"{member.mention}も権限を持ってるみたいだね")
-	else:
-		try:
-			await member.kick(reason=reason)
-			await ctx.send(f"{member.mention}をキックしちゃったぜ！笑")
-		except:ctx.send("すみません。なんでもないです。")
-
 @bot.command()
 async def 招待URL(ctx):
 	await ctx.send("https://discordapp.com/api/oauth2/authorize?client_id=685676747173134337&permissions=8&scope=bot\n招待したいサーバーの管理者が操作してください")
 	
 @bot.command(pass_context=True, name="kick")
 @commands.check(check_god2)
-async def キック(ctx, member: discord.Member, *, reason=None):
+async def kick(ctx, member: discord.Member, *, reason=None):
 	await ctx.send("うおおおおお！？！？！？！？")
 	if member.id in sub_god:ctx.send(f"{member.mention}も権限を持ってるみたいだね")
 	else:
