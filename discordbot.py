@@ -93,6 +93,13 @@ compass = {
 	"きらら":"まだ書かれていません！ごめんなさい"
 }
 
+@bot.event
+async def on_guild_join(guild):
+	if "botのお知らせ" not in guild.channels:
+		channel = await guild.create_text_channel('botのお知らせ')
+		await channel.send("このチャンネルにお知らせを載せていくよ")
+
+
 @bot.command()
 async def ランダムパーティー(ctx):
 	pt = []
@@ -178,6 +185,21 @@ async def 最新ブログ(ctx):
 #コマンドエラーが起きてしまうから無理矢理passで対応しちゃってる
 @bot.event
 async def on_message(message):
+	if message.author.id in zentai:
+		m_id = message.author.id
+		zentai.remove(m_id)
+		ch = message.channel
+		def check_mes(message):
+			return message.author.id == m_id and message.channel == ch
+		try:
+			mes = await bot.wait_for('message', timeout=30.0, check=check_mes)
+		except asyncio.TimeoutError:
+			await cl.send("タイムアウトしたよ。最初からやり直してね")
+		else:
+			for guild in bot.guilds:
+				for channel in guild.channels:
+					if "botのお知らせ" == channel.name:
+						await channel.send(mes.content)
 	if message.author.id != 685676747173134337:
 		if message.content == "！登録":
 			m_id = message.author.id
@@ -315,13 +337,12 @@ async def 招待URL(ctx):
 @bot.command(pass_context=True, name="kick")
 @commands.check(check_god2)
 async def kick(ctx, member: discord.Member, *, reason=None):
-	await ctx.send("うおおおおお！？！？！？！？")
 	if member.id in sub_god:ctx.send(f"{member.mention}も権限を持ってるみたいだね")
 	else:
 		try:
 			await member.kick(reason=reason)
 			await ctx.send(f"{member.mention}をキックしちゃったぜ！笑")
-		except:ctx.send("すみません。なんでもないです。")
+		except:await ctx.send("すみません。なんでもないです。")
 @bot.command()
 @commands.check(check_god2)
 async def 追加(ctx, member: discord.Member, *, reason=None):
@@ -330,7 +351,7 @@ async def 追加(ctx, member: discord.Member, *, reason=None):
 
 @bot.command()
 @commands.check(check_god)
-async def  削除(ctx, member: discord.Member, *, reason=None):
+async def 削除(ctx, member: discord.Member, *, reason=None):
 	sub_god.remove(member.id)
 	await ctx.send(f"{member.mention}様からbot専用の権限を削除しました")
 	
@@ -345,6 +366,12 @@ async def サーチプロフィール(ctx, member: discord.Member, *, reason=Non
 @commands.check(check_god)
 async def お知らせ(ctx):
 	zentai.append(ctx.message.author.id)
+
+@bot.command()
+@commands.check(check_god)
+async def グループ表示(ctx):
+	for guild in bot.guilds:
+		await ctx.send(guild)
 
 @bot.command()
 @commands.check(check_god)
