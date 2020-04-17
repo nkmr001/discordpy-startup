@@ -176,7 +176,7 @@ async def 最新ブログ(ctx):
 	await ctx.send(ariria[1].get_text()+'\n'+ari.get("href"))
 
 #コマンドエラーが起きてしまうから無理矢理passで対応しちゃってる
-@bot.
+@bot.event
 async def on_message(message):
 	if message.author.id != 685676747173134337:
 		if message.author.id in zentai:
