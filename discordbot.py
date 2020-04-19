@@ -288,7 +288,7 @@ async def on_message(message):
 			else:await channel.send(f"{message.author.mention}さんはまだ登録されていません。「！登録」でプロフィールを入力してください")
 		if message.content == "！コンパス":
 			channel = message.channel
-			embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
+			embed = discord.Embed(title="何が知りたいの？",description="キャラ名を書き込んでね")
 			embed.add_field(name="アタッカー",value=atk,inline=False)
 			embed.add_field(name="\nガンナー",value=gun,inline=False)
 			embed.add_field(name="\nスプリンター",value=supri,inline=False)
