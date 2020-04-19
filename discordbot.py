@@ -23,7 +23,7 @@ def check_god2(ctx):
 rireki_text = {}
 rireki = {}
 
-osirase = None
+osirase = "再起動したから登録してくれたプロフィール全部飛んじゃったwごめんね"
 
 atk = ["ノホ","忠臣","マルコス","ソル","リュウ","アダム","マリア","レム","カイ","ポロロッチョ","リヴァイ","デルミン","セイバー","ルルカ"]
 gun = ["リリカ","ルチアーノ","まとい","ディズィー","サーティーン","エミリア","めぐめぐ","リン","イスタカ","ソーン","オカリン","猫宮","ギルガメッシュ"]
@@ -138,6 +138,7 @@ async def ヘルプ(ctx):
 	embed.add_field(name="！プロフィール",value="自分のプロフィールを表示するよ。",inline=False)
 	embed.add_field(name="！サーチ",value="例「！サーチプロフィール」・プロフィール\nこのコマンドの後にグループメンバーのメンションするとメンションした人のプロフィールを出すよ\n・ロール名\nプロフィール検索をオンにした登録してある人のプロフィールをランダムに出すよ",inline=False)
 	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ。",inline=False)
+	embed.add_field(name="！お知らせ",value="botについてのお知らせを表示するよ",inline=False)
 	embed.add_field(name="作者",value="コンパスで語ってることが間違っていたり、追加して欲しい機能があったら\nhttps://peing.net/ja/blalcxw2aqk2dbh?event=0\n↑に入れてね\nhttps://discord.gg/CE94F4t\n作業通話常に募集してるよ；；良ければ来てね",inline=False)
 	await ctx.send(embed=embed)
 
@@ -366,11 +367,12 @@ async def on_message(message):
 					supri.append(com.content)
 					await channel.send(com.content+"をスプリンターに追加しました")
 			if message.content == "お知らせ":
+				await channel.send("お知らせすることを書き込んでください")
 				channel = message.channel
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
-					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+					com = await bot.wait_for('message', timeout=300.0, check=check_mes)
 				except asyncio.TimeoutError:
 					await channel.send("タイムアウトしたよ。最初からやり直してね")
 				else:
