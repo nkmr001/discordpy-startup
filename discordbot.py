@@ -307,6 +307,7 @@ async def on_message(message):
 		if message.author.id in god:
 			if message.content == "辞書編集":
 				channel = message.channel
+				await channel.send("どうぞ")
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
@@ -324,6 +325,7 @@ async def on_message(message):
 						await channel.send(com.content+"\n"+comm.content)
 			if message.content == "アタッカー追加":
 				channel = message.channel
+				await channel.send("どうぞ")
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
@@ -335,6 +337,7 @@ async def on_message(message):
 					await channel.send(com.content+"をアタッカーに追加しました")
 			if message.content == "ガンナー追加":
 				channel = message.channel
+				await channel.send("どうぞ")
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
@@ -346,6 +349,7 @@ async def on_message(message):
 					await channel.send(com.content+"をガンナーに追加しました")
 			if message.content == "タンク追加":
 				channel = message.channel
+				await channel.send("どうぞ")
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
@@ -357,6 +361,7 @@ async def on_message(message):
 					await channel.send(com.content+"をタンクに追加しました")
 			if message.content == "スプリンター追加":
 				channel = message.channel
+				await channel.send("どうぞ")
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
@@ -368,6 +373,7 @@ async def on_message(message):
 					await channel.send(com.content+"をスプリンターに追加しました")
 			if message.content == "アタッカー削除":
 				channel = message.channel
+				await channel.send("どうぞ")
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
@@ -379,6 +385,7 @@ async def on_message(message):
 					await channel.send(com.content+"をアタッカーから削除しました")
 			if message.content == "ガンナー削除":
 				channel = message.channel
+				await channel.send("どうぞ")
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
@@ -390,6 +397,7 @@ async def on_message(message):
 					await channel.send(com.content+"をガンナーから削除しました")
 			if message.content == "タンク削除":
 				channel = message.channel
+				await channel.send("どうぞ")
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
@@ -401,6 +409,7 @@ async def on_message(message):
 					await channel.send(com.content+"をタンクから削除しました")
 			if message.content == "スプリンター削除":
 				channel = message.channel
+				await channel.send("どうぞ")
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
