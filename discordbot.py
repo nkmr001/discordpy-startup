@@ -720,6 +720,7 @@ async def 募集(ctx, about=None, arg=None):
 async def 求人(ctx, about=None, arg=None):
 	ch = bot.get_channel(701525994908942448)
 	arg = str(arg)
+	await ch.send(ctx.message.author.name+"さんのメッセージです")
 	test = discord.Embed(title=about,colour=0x1e90ff)
 	test.add_field(name="条件", value=f"{arg}", inline=True)
 	await ch.send(embed=test)
