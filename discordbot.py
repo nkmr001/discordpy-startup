@@ -366,6 +366,50 @@ async def on_message(message):
 				else:
 					supri.append(com.content)
 					await channel.send(com.content+"をスプリンターに追加しました")
+			if message.content == "アタッカー削除":
+				channel = message.channel
+				def check_mes(message):
+					return message.author.id in god and message.channel == channel
+				try:
+					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					atk.remove(com.content)
+					await channel.send(com.content+"をアタッカーから削除しました")
+			if message.content == "ガンナー削除":
+				channel = message.channel
+				def check_mes(message):
+					return message.author.id in god and message.channel == channel
+				try:
+					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					gun.remove(com.content)
+					await channel.send(com.content+"をガンナーから削除しました")
+			if message.content == "タンク削除":
+				channel = message.channel
+				def check_mes(message):
+					return message.author.id in god and message.channel == channel
+				try:
+					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					tank.remove(com.content)
+					await channel.send(com.content+"をタンクから削除しました")
+			if message.content == "スプリンター削除":
+				channel = message.channel
+				def check_mes(message):
+					return message.author.id in god and message.channel == channel
+				try:
+					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					supri.remove(com.content)
+					await channel.send(com.content+"をスプリンターから削除しました")
 			if message.content == "お知らせ":
 				await channel.send("お知らせすることを書き込んでください")
 				channel = message.channel
