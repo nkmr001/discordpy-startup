@@ -23,7 +23,7 @@ def check_god2(ctx):
 rireki_text = {}
 rireki = {}
 
-zentai = []
+osirase = None
 
 atk = ["ノホ","忠臣","マルコス","ソル","リュウ","アダム","マリア","レム","カイ","ポロロッチョ","リヴァイ","デルミン","セイバー","ルルカ"]
 gun = ["リリカ","ルチアーノ","まとい","ディズィー","サーティーン","エミリア","めぐめぐ","リン","イスタカ","ソーン","オカリン","猫宮","ギルガメッシュ"]
@@ -65,7 +65,6 @@ compass = {
 	"コクリコ":"コクリコの情報\n\n組んで相性の良いキャラ\n・HS発動時はアタッカー、ガンナー全キャラに合う\n・フルカノアタッカー\n・ディズィー\n\n有利対面のキャラ\n・初手のみマルコス＆リリカ\n・ダメカを積んでたらカノーネがないキャラ\n・防御バフカードを積んでいたらお母さんがないキャラ\n\n不利対面\n・ソル\n・ギルガメッシュ\n・貫通カードを持っているキャラ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/281658#link02",
 	"リュウ":"リュウの情報\n\n組んで相性の良いキャラ\n・周囲カノーネor周囲スタン持ち\n・ディズィー\n・ギルガメッシュ\n・春麗\n\n有利対面のキャラ※HSが溜まってる場合のみ\n・ダメカがないキャラ全部\n・遠距離or周囲持ちヒーロー\n\n不利対面\n・マルコス＆リリカ\n・デルミン\n・ノホ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/296611#link02",
 	"アダム":"アダムの情報\n\n組んで相性の良いキャラ\n・デズ\n・ギルガメッシュ\n・ルチアーノ\n・めぐみん\n\n有利対面のキャラ\n・ギルガメッシュ以外のガンナー全般\n・体力倍率0.75以下のキャラほぼ全て\n\n・2凸以上のマルコス\n・デルミン\n・イスタカ\n・マリア\n・ギルガメッシュ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/313514#link05",
-	"ケルパーズ":"ケルパーズの立ち回りについて\nhttps://youtu.be/OM3gpfVLSB4",
 	"イスタカ":"イスタカの情報\n\n組んで相性の良いキャラ\n・ダメカ破壊があるキャラ\n\n有利対面のキャラ\n・基本全有利\n\n不利対面\n・きらら\n・デルミン\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/365276#link05",
 	"リン":"リンの情報\n\n組んで相性の良いキャラ\n・セイバー\n・アダム\nデルミン\n・ノホ\n・マリア\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・イスタカ以外のガンナー全般\n・マルコス&リリカ(諸説)\n\n不利対面のキャラ\n・デルミン\n・アダム\n・イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/355191#link02",
 	"デルミン":"デルミンの情報\n\n組んで相性の良いキャラ\n・トマス\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・基本ガンナー全般\n・アダム、ソル\n\n不利対面\n・周囲カノーネ持ち\n・マリア\n・格上ガンナーからのUR貫通遠距離\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/400270#link05",
@@ -94,11 +93,7 @@ compass = {
 	"春麗":"まだ書かれていません！ごめんなさい"
 }
 
-@bot.event
-async def on_guild_join(guild):
-	if "botのお知らせ" not in guild.channels:
-		channel = await guild.create_text_channel('botのお知らせ')
-		await channel.send("このチャンネルにお知らせを載せていくよ")
+
 
 
 @bot.command()
@@ -135,7 +130,7 @@ async def ランダムスプリンター(ctx):
 @bot.command()
 async def ヘルプ(ctx):
 	embed = discord.Embed(title="このbotの説明書",description="コマンド見にくくてごめん。")
-	embed.add_field(name="！コンパスの後に表示されているキャラ名orステージ名を入力",value="コンパスのキャラとステージについて解説するよ。\nキャラは相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n有利、不利は全キャラ書いてないので経験で頑張ってみてね\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\n\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。\n\nステージの立ち回りは\nhttps://twitter.com/wp_league\nの動画を引用しています。",inline=False)
+	embed.add_field(name="！コンパスの後に表示されているキャラ名を入力",value="コンパスのキャラについて解説するよ。\nキャラは相性の良いキャラと有利対面、不利対面を出します。\n対面については全てタイマンを想定しています。\n有利、不利は全キャラ書いてないので経験で頑張ってみてね\n耐久型キャラクターのタイマンは倒されやすいかどうかを書いています。\n\nおすすめカードと立ち回りについては\nhttps://twitter.com/compass_AG\nの記事を引用しています。",inline=False)
 	embed.add_field(name="！ランダム",value="何のキャラで遊ぶか中々決まらない時にランダムで決めちゃうよ\nランダムの後にロール名を入力すると更に絞れるよ",inline=False)
 	embed.add_field(name="！バイオハザード",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ",inline=False)
 	embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ",inline=False)
@@ -153,6 +148,10 @@ async def on_command_error(ctx, error):
 @bot.command()
 async def ping(ctx):
 	await ctx.send(pong)
+
+@bot.command()
+async def お知らせ(ctx):
+	await ctx.send(osirase)
 	
 @bot.command()
 async def サーチアタッカー(ctx):
@@ -186,21 +185,6 @@ async def 最新ブログ(ctx):
 #コマンドエラーが起きてしまうから無理矢理passで対応しちゃってる
 @bot.event
 async def on_message(message):
-	if message.author.id in zentai:
-		m_id = message.author.id
-		zentai.remove(m_id)
-		ch = message.channel
-		def check_mes(message):
-			return message.author.id == m_id and message.channel == ch
-		try:
-			mes = await bot.wait_for('message', timeout=30.0, check=check_mes)
-		except asyncio.TimeoutError:
-			await ch.send("タイムアウトしたよ。最初からやり直してね")
-		else:
-			for guild in bot.guilds:
-				for channel in guild.channels:
-					if "botのお知らせ" == channel.name:
-						await channel.send(mes.content)
 	if message.author.id != 685676747173134337:
 		if message.content == "！登録":
 			m_id = message.author.id
@@ -304,10 +288,10 @@ async def on_message(message):
 		if message.content == "！コンパス":
 			channel = message.channel
 			embed = discord.Embed(title="何が知りたいの？",description="キャラ名orステージを書き込んでね")
-			embed.add_field(name="アタッカー",value="ノホ,忠臣,マルコス, ソル\nリュウ, アダム, マリア, レム\nカイ, ポロロッチョ, リヴァイ,デルミン\nセイバー, ルルカ",inline=False)
-			embed.add_field(name="\nガンナー",value="リリカ, ルチアーノ, まとい, ディズィー\nサーティーン, エミリア, めぐめぐ, リン\nイスタカ, ソーン, オカリン, 猫宮\nギルガメッシュ",inline=False)
-			embed.add_field(name="\nスプリンター",value="アタリ, ボイドール, テスラ, ミク\nコクリコ, 春麗, ザクレイ, 勇者\nきらら, アクア, レイヤ, ピエール",inline=False)
-			embed.add_field(name="\nタンク",value="ジャスティス, ジャンヌ, ヴィオレッタ\nグスタフ, レン, モノクマ, めぐみん\nトマス",inline=False)
+			embed.add_field(name="アタッカー",value=atk,inline=False)
+			embed.add_field(name="\nガンナー",value=gun,inline=False)
+			embed.add_field(name="\nスプリンター",value=supri,inline=False)
+			embed.add_field(name="\nタンク",value=tank,inline=False)
 			embed.add_field(name="\nステージ",value="ケルパーズ",inline=False)
 			await channel.send(embed=embed)	
 			def check(message):
@@ -319,6 +303,79 @@ async def on_message(message):
 				await channel.send("タイムアウトしたよ。最初からやり直してね")
 			else:
 				await channel.send(compass[msg.content].format(msg))
+		if message.author.id in god:
+			if message.content == "辞書編集":
+				channel = message.channel
+				def check_mes(message):
+					return message.author.id in god and message.channel == channel
+				try:
+					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					await channel.send(com.content+"の内容をどうぞ")
+					try:
+						comm = await bot.wait_for('message', timeout=30.0, check=check_mes)
+					except asyncio.TimeoutError:
+						await channel.send("タイムアウトしたよ。最初からやり直してね")
+					else:
+						compass[com.content] = comm.content
+						await channel.send(com.content+"\n"+comm.content)
+			if message.content == "アタッカー追加":
+				channel = message.channel
+				def check_mes(message):
+					return message.author.id in god and message.channel == channel
+				try:
+					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					atk.append(com.content)
+					await channel.send(com.content+"をアタッカーに追加しました")
+			if message.content == "ガンナー追加":
+				channel = message.channel
+				def check_mes(message):
+					return message.author.id in god and message.channel == channel
+				try:
+					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					gun.append(com.content)
+					await channel.send(com.content+"をガンナーに追加しました")
+			if message.content == "タンク追加":
+				channel = message.channel
+				def check_mes(message):
+					return message.author.id in god and message.channel == channel
+				try:
+					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					tank.append(com.content)
+					await channel.send(com.content+"をタンクに追加しました")
+			if message.content == "スプリンター追加":
+				channel = message.channel
+				def check_mes(message):
+					return message.author.id in god and message.channel == channel
+				try:
+					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					supri.append(com.content)
+					await channel.send(com.content+"をスプリンターに追加しました")
+			if message.content == "お知らせ":
+				channel = message.channel
+				def check_mes(message):
+					return message.author.id in god and message.channel == channel
+				try:
+					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
+				except asyncio.TimeoutError:
+					await channel.send("タイムアウトしたよ。最初からやり直してね")
+				else:
+					osirase = com.content
+					await channel.send(com.content+"をお知らせ欄に追加しました")
 	await bot.process_commands(message)
 @bot.command()
 async def バイオハザード(ctx):
@@ -352,6 +409,12 @@ async def 追加(ctx, member: discord.Member, *, reason=None):
 
 @bot.command()
 @commands.check(check_god)
+async def 一括削除(ctx, member: discord.Member, *, reason=None):
+	sub_god = [263614623238848522,347747169387937793,598640625142726668,483573525974614017,276000856556437504]
+	await ctx.send("特別な人以外の権限を全て剥奪しました")
+
+@bot.command()
+@commands.check(check_god)
 async def 削除(ctx, member: discord.Member, *, reason=None):
 	sub_god.remove(member.id)
 	await ctx.send(f"{member.mention}様からbot専用の権限を削除しました")
@@ -363,10 +426,6 @@ async def サーチプロフィール(ctx, member: discord.Member, *, reason=Non
 		await ctx.send(f'{member.mention}さんのプロフィールを表示します\n'+rireki_text[member.id])
 	else:await ctx.send(f"{member.mention}さんはまだ登録されていません。")
 
-@bot.command()
-@commands.check(check_god)
-async def お知らせ(ctx):
-	zentai.append(ctx.message.author.id)
 
 @bot.command()
 @commands.check(check_god)
