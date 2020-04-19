@@ -293,7 +293,6 @@ async def on_message(message):
 			embed.add_field(name="\nガンナー",value=gun,inline=False)
 			embed.add_field(name="\nスプリンター",value=supri,inline=False)
 			embed.add_field(name="\nタンク",value=tank,inline=False)
-			embed.add_field(name="\nステージ",value="ケルパーズ",inline=False)
 			await channel.send(embed=embed)	
 			def check(message):
 				return message.content in [i for i in compass.keys()] and message.channel == channel
