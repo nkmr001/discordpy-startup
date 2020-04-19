@@ -441,7 +441,7 @@ async def on_message(message):
 		if "https://compass.link/fb/" in message.content:
 			m_id = message.author.id
 			if m_id != 700618658799419512:
-				ch = bot.get_channel(701450028299976755)
+				ch = bot.get_channel(701525994908942448)
 				cl = message.channel
 				room_mes = message.content
 				await ch.send(message.author.name+"さんがイベントアリーナのメンバーを募集しています\n"+room_mes[61:106])
@@ -449,14 +449,14 @@ async def on_message(message):
 		if "https://compass.link/ba/" in message.content:
 			m_id = message.author.id
 			if m_id != 700618658799419512:
-				ch = bot.get_channel(701450028299976755)
+				ch = bot.get_channel(701525994908942448)
 				cl = message.channel
 				room_mes = message.content
 				await ch.send(message.author.name+"さんがバトルアリーナのメンバーを募集しています\n"+room_mes[60:119])
 				await cl.send("https://discord.gg/knYwFb9\nに貼っておきました")
 		if "https://compass.link/cb" in message.content:
 			if m_id != 700618658799419512:
-				ch = bot.get_channel(701450028299976755)
+				ch = bot.get_channel(701525994908942448)
 				cl = message.channel
 				room_mes = message.content
 				await ch.send(message.author.name+"さんがカスタムバトルのメンバーを募集しています\n"+room_mes[55:100])
