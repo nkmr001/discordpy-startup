@@ -668,7 +668,6 @@ async def グループ表示(ctx):
 
 @bot.command()
 async def 募集(ctx, about=None, arg=None):
-	channel = ctx.Reaction.message.channel
 	settime = 300.0
 	arg, settime = int(arg), float(settime)
 	reaction_member = [">>>"]
@@ -681,7 +680,7 @@ async def 募集(ctx, about=None, arg=None):
 	def check(reaction, user):
 		emoji = str(reaction.emoji)
 		if user.bot != True:
-			return emoji == '⏫' or emoji == '✖' and ctx.Reaction.message.channel == channel
+			return emoji == '⏫' or emoji == '✖'
 
 	while len(reaction_member)-1 <= arg:
 		try:
