@@ -441,7 +441,7 @@ async def on_message(message):
 				cl = message.channel
 				room_mes = message.content
 				await ch.send(message.author.name+"さんがイベントアリーナのメンバーを募集しています\n"+room_mes[61:106])
-				await cl.send("枠埋め掲示板に貼っておきました")
+				await cl.send("https://discord.gg/knYwFb9\nに貼っておきました")
 		if "https://compass.link/ba/" in message.content:
 			m_id = message.author.id
 			if m_id != 700618658799419512:
@@ -449,14 +449,14 @@ async def on_message(message):
 				cl = message.channel
 				room_mes = message.content
 				await ch.send(message.author.name+"さんがバトルアリーナのメンバーを募集しています\n"+room_mes[60:119])
-				await cl.send("枠埋め掲示板に貼っておきました")
+				await cl.send("https://discord.gg/knYwFb9\nに貼っておきました")
 		if "https://compass.link/cb" in message.content:
 			if m_id != 700618658799419512:
 				ch = bot.get_channel(701450028299976755)
 				cl = message.channel
 				room_mes = message.content
 				await ch.send(message.author.name+"さんがカスタムバトルのメンバーを募集しています\n"+room_mes[55:100])
-				await cl.send("枠埋め掲示板に貼っておきました")
+				await cl.send("https://discord.gg/knYwFb9\nに貼っておきました")
 		if message.content == "！コンパス":
 			channel = message.channel
 			embed = discord.Embed(title="何が知りたいの？",description="知りたいことを書き込んでね")
@@ -464,7 +464,6 @@ async def on_message(message):
 			embed.add_field(name="\nガンナー",value=gun,inline=False)
 			embed.add_field(name="\nスプリンター",value=supri,inline=False)
 			embed.add_field(name="\nタンク",value=tank,inline=False)
-			embed.add_field(name="\nその他",value=eve,inline=False)
 			await channel.send(embed=embed)	
 			def check(message):
 				return message.content in [i for i in compass.keys()] and message.channel == channel
@@ -615,6 +614,8 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 			await member.kick(reason=reason)
 			await ctx.send(f"{member.mention}をキックしちゃったぜ！笑")
 		except:await ctx.send("すみません。なんでもないです。")
+
+
 @bot.command()
 @commands.check(check_god2)
 async def 追加(ctx, member: discord.Member, *, reason=None):
@@ -713,12 +714,12 @@ async def 募集(ctx, about=None, arg=None):
 
 @bot.command()
 async def 求人(ctx, about=None, arg=None):
-	ch = bot.get_channel(701450028299976755)
+	ch = bot.get_channel(701525994908942448)
 	arg = str(arg)
 	test = discord.Embed(title=about,colour=0x1e90ff)
 	test.add_field(name="条件", value=f"{arg}", inline=True)
 	await ch.send(embed=test)
-	await ctx.send("募集文を送信しました")
+	await ctx.send("https://discord.gg/knYwFb9\nに募集文を送信しました。")
 
 
 @bot.command()
