@@ -156,8 +156,12 @@ async def ヘルプ(ctx):
 	embed.add_field(name="！プロフィール",value="自分のプロフィールを表示するよ。",inline=False)
 	embed.add_field(name="！サーチ",value="例「！サーチプロフィール」・プロフィール\nこのコマンドの後にグループメンバーのメンションするとメンションした人のプロフィールを出すよ\n・ロール名\nプロフィール検索をオンにした登録してある人のプロフィールをランダムに出すよ\nロール名の後にデッキレベルを入力すると更に絞れるようになったよ",inline=False)
 	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ。",inline=False)
+	embed.add_field(name="！募集 [募集要項] 人数",value="メンバーを募集するよ リアクションで反応してあげてね",inline=False)
+	embed.add_field(name="！求人 [募集要項] [条件]",value="メンバーを募集するよ メッセージは募集用サーバーに送られるよ",inline=False)
 	embed.add_field(name="！お知らせ",value="botについてのお知らせを表示するよ",inline=False)
+	embed.add_field(name="枠埋め募集機能",value="[チームメンバーを募集]→[バトルに誘う]↓\n[SNSに投稿]→[コピー]\nでbotと話せる場所でペーストすると募集用サーバーに送られるよ",inline=False)
 	embed.add_field(name="作者",value="コンパスで語ってることが間違っていたり、追加して欲しい機能があったら\nhttps://peing.net/ja/blalcxw2aqk2dbh?event=0\n↑に入れてね\nhttps://discord.gg/CE94F4t\n作業通話常に募集してるよ；；良ければ来てね",inline=False)
+	embed.add_field(name="募集用サーバー",value="https://discord.gg/knYwFb9",inline=False)
 	await ctx.send(embed=embed)
 
 @bot.event
