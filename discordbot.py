@@ -42,7 +42,7 @@ gun_plo = {}
 tank_plo = {}
 supri_plo = {}
 
-osirase = None
+osirase = ['None']
 
 compass = {
 	"アタリ":"アタリの情報※HS発動時のみ記載\n\n組んで相性の良いキャラ\n・マルコス＆リリカ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・全てのキャラに有利\n\n不利対面\n①貫通\n②毒、サイレント、スタンなどの状態異常\n③ダメカ破壊\n④防御UP中に防御ダウン\n⑤カードキャンセル\n上記のものどれか一つでもまともに食らえば不利になる。\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229151#link05",
@@ -152,7 +152,7 @@ async def ping(ctx):
 
 @bot.command()
 async def お知らせ(ctx):
-	await ctx.send(osirase)
+	await ctx.send(osirase[0])
 	
 @bot.command()
 async def サーチアタッカー(ctx):
@@ -428,8 +428,7 @@ async def on_message(message):
 				except asyncio.TimeoutError:
 					await channel.send("タイムアウトしたよ。最初からやり直してね")
 				else:
-					global osirase
-					osirase = com.content
+					osirase[0] = com.content
 					await channel.send(com.content+"をお知らせ欄に追加しました")
 	await bot.process_commands(message)
 @bot.command()
