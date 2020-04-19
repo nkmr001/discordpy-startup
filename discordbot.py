@@ -14,19 +14,36 @@ pong = random.randrange(10)
 bot.remove_command('help')
 
 god = [263614623238848522]
-sub_god = [263614623238848522,347747169387937793]
+sub_god = [263614623238848522,347747169387937793,598640625142726668,483573525974614017,276000856556437504,437965222523961344]
 def check_god(ctx):
 	return ctx.message.author.id in god
 def check_god2(ctx):
 	return ctx.message.author.id in sub_god
-
 rireki_text = {}
 rireki = {}
+l0 = []
+l1 = []
+l2 = []
+l3 = []
+l4 = []
+l5 = []
+l6 = []
+l7 = []
+l8 = []
+l9 = []
+l10 = []
+l11 = []
+l12 = []
+l13 = []
+l14 = []
+l15 = []
+
 
 atk = ["ノホ","忠臣","マルコス","ソル","リュウ","アダム","マリア","レム","カイ","ポロロッチョ","リヴァイ","デルミン","セイバー","ルルカ"]
 gun = ["リリカ","ルチアーノ","まとい","ディズィー","サーティーン","エミリア","めぐめぐ","リン","イスタカ","ソーン","オカリン","猫宮","ギルガメッシュ"]
 tank = ["ジャスティス","ジャンヌ","ヴィオレッタ","グスタフ","レン","モノクマ","めぐみん","トマス"]
 supri = ["アタリ","ボイドール","テスラ","ミク","コクリコ","春麗","ザクレイ","勇者","きらら","アクア","レイヤ","ピエール"]
+eve = []
 lol = {"1":"アタッカー","2":"ガンナー","3":"タンク","4":"スプリンター"}
 llevel = {"1":"4~119","2":"120~159","3":"160~199","4":"200~240"}
 mmedal = {"1":"アイコンなし","2":"銅アイコン経験あり","3":"銀アイコン経験あり","4":"金アイコンor公式大会優勝経験あり"}
@@ -37,12 +54,13 @@ all_roll = atk+gun+tank+supri
 lll = [atk,gun,tank,supri]
 
 
+
 atk_plo = {}
 gun_plo = {}
 tank_plo = {}
 supri_plo = {}
 
-osirase = ['None']
+osirase = None
 
 compass = {
 	"アタリ":"アタリの情報※HS発動時のみ記載\n\n組んで相性の良いキャラ\n・マルコス＆リリカ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・全てのキャラに有利\n\n不利対面\n①貫通\n②毒、サイレント、スタンなどの状態異常\n③ダメカ破壊\n④防御UP中に防御ダウン\n⑤カードキャンセル\n上記のものどれか一つでもまともに食らえば不利になる。\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229151#link05",
@@ -72,8 +90,8 @@ compass = {
 	"猫宮":"猫宮の情報\n\n組んで相性の良いキャラ\n・ダメカ破壊持ち※周囲がおすすめ\n・スタンorサイレントの状態異常カード持ち\n\n有利対面のキャラ\n・自分より射程が同じかそれ以下のガンナーほぼ全て(アサルト時のみ)\n・遠距離持ちのアタッカーほぼ全て\n\n不利対面のキャラ\n・自分より射程の長いガンナー全て\n・マジスク＆ゆらら持ちキャラ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/414356#link05",
 	"アクア":"アクアの情報\n\n組んで相性の良いキャラ\n・マリア\n・マジスクを持ってるアタッカー\n・オカリン\n・ギル\n\n有利対面のキャラ\n・ディズィー\n・ソーン\n\n不利対面のキャラ\n・レイヤ\n・きらら\n・ルチアーノ\n・勇者\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/388828#link02",
 	"ピエール":"ピエールの情報\n\n組んで相性の良いキャラ\n・支援系を除く全てのキャラ\n\n耐え難い対面\n・ギルガメッシュ\n・オカリン\n・ルチアーノ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/452335#link05",
- 	"セイバー":"セイバーの情報\n\n組んで相性の良いキャラ\n・ディズィー\n・デッキ次第で攻撃系キャラならなんでも合う\n・グスタフ\n\n有利体面のキャラ\n・ギル、イスタカ以外のガンナー全般\n・きらら\n\n不利対面のキャラ\n・アダム\n・デルミン\n・ギル、イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/436927#link05",
- 	"マリア":"まだ書かれていません！ごめんなさい",
+ 	"セイバー":"セイバーの情報\n\n組んで相性の良いキャラ\n・ディズィー\n・デッキ次第で攻撃系キャラならなんでも合う\n・グスタフ\n\n有利対面のキャラ\n・ギル、イスタカ以外のガンナー全般\n・きらら\n\n不利対面のキャラ\n・アダム\n・デルミン\n・ギル、イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/436927#link05",
+ 	"マリア":"マリアの情報\n\n組んで相性の良いキャラ\n・アクア\n・ギルガメッシュ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・近距離アタッカー\n\n不利体面のキャラ\n・コクリコ\n・マルコス\n・ピエール\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/313986#link05",
  	"サーティーン":"まだ書かれていません！ごめんなさい",
  	"勇者":"まだ書かれていません！ごめんなさい",
  	"エミリア":"まだ書かれていません！ごめんなさい",
@@ -136,7 +154,7 @@ async def ヘルプ(ctx):
 	embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ",inline=False)
 	embed.add_field(name="！登録",value="自分のプロフィールを登録するよ。\n既に登録していても何度でも再登録できるよ。",inline=False)
 	embed.add_field(name="！プロフィール",value="自分のプロフィールを表示するよ。",inline=False)
-	embed.add_field(name="！サーチ",value="例「！サーチプロフィール」・プロフィール\nこのコマンドの後にグループメンバーのメンションするとメンションした人のプロフィールを出すよ\n・ロール名\nプロフィール検索をオンにした登録してある人のプロフィールをランダムに出すよ",inline=False)
+	embed.add_field(name="！サーチ",value="例「！サーチプロフィール」・プロフィール\nこのコマンドの後にグループメンバーのメンションするとメンションした人のプロフィールを出すよ\n・ロール名\nプロフィール検索をオンにした登録してある人のプロフィールをランダムに出すよ\nロール名の後にデッキレベルを入力すると更に絞れるようになったよ",inline=False)
 	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ。",inline=False)
 	embed.add_field(name="！お知らせ",value="botについてのお知らせを表示するよ",inline=False)
 	embed.add_field(name="作者",value="コンパスで語ってることが間違っていたり、追加して欲しい機能があったら\nhttps://peing.net/ja/blalcxw2aqk2dbh?event=0\n↑に入れてね\nhttps://discord.gg/CE94F4t\n作業通話常に募集してるよ；；良ければ来てね",inline=False)
@@ -152,27 +170,91 @@ async def ping(ctx):
 
 @bot.command()
 async def お知らせ(ctx):
-	await ctx.send(osirase[0])
+	await ctx.send(osirase)
 	
 @bot.command()
-async def サーチアタッカー(ctx):
-	sati = random.choice([i for i in atk_plo.values()])
-	await ctx.send(sati)
+async def サーチアタッカー(ctx, arg=None):
+	try:arg = int(arg)
+	except:pass
+	if arg == None:
+		sati = random.choice([i for i in atk_plo.values()])
+		await ctx.send(sati)
+	if 4 <= arg < 120:
+		sati = random.choice([i for i in l0])
+		await ctx.send(sati)
+	if 120 <= arg < 160:
+		sati = random.choice([i for i in l1])
+		await ctx.send(sati)
+	if 160 <= arg < 200:
+		sati = random.choice([i for i in l2])
+		await ctx.send(sati)
+	if 200 <= arg <= 240:
+		sati = random.choice([i for i in l3])
+		await ctx.send(sati)
+	else:await ctx.send("そんなデキレは存在しないよ")
 
 @bot.command()
-async def サーチガンナー(ctx):
-	sati = random.choice([i for i in gun_plo.values()])
-	await ctx.send(sati)
+async def サーチガンナー(ctx, arg=None):
+	try:arg = int(arg)
+	except:pass
+	if arg == None:
+		sati = random.choice([i for i in gun_plo.values()])
+		await ctx.send(sati)
+	if 4 <= arg < 120:
+		sati = random.choice([i for i in l4])
+		await ctx.send(sati)
+	if 120 <= arg < 160:
+		sati = random.choice([i for i in l5])
+		await ctx.send(sati)
+	if 160 <= arg < 200:
+		sati = random.choice([i for i in l6])
+		await ctx.send(sati)
+	if 200 <= arg <= 240:
+		sati = random.choice([i for i in l7])
+		await ctx.send(sati)
+	else:await ctx.send("そんなデキレは存在しないよ")
 
 @bot.command()
-async def サーチタンク(ctx):
-	sati = random.choice([i for i in tank_plo.values()])
-	await ctx.send(sati)
+async def サーチタンク(ctx ,arg=None):
+	try:arg = int(arg)
+	except:pass
+	if arg == None:
+		sati = random.choice([i for i in tank_plo.values()])
+		await ctx.send(sati)
+	if 4 <= arg < 120:
+		sati = random.choice([i for i in l8])
+		await ctx.send(sati)
+	if 120 <= arg < 160:
+		sati = random.choice([i for i in l9])
+		await ctx.send(sati)
+	if 160 <= arg < 200:
+		sati = random.choice([i for i in l10])
+		await ctx.send(sati)
+	if 200 <= arg <= 240:
+		sati = random.choice([i for i in l11])
+		await ctx.send(sati)
+	else:await ctx.send("そんなデキレは存在しないよ")
 
 @bot.command()
-async def サーチスプリンター(ctx):
-	sati = random.choice([i for i in supri_plo.values()])
-	await ctx.send(sati)
+async def サーチスプリンター(ctx ,arg=None):
+	try:arg = int(arg)
+	except:pass
+	if arg == None:
+		sati = random.choice([i for i in supri_plo.values()])
+		await ctx.send(sati)
+	if 4 <= arg < 120:
+		sati = random.choice([i for i in l12])
+		await ctx.send(sati)
+	if 120 <= arg < 160:
+		sati = random.choice([i for i in l13])
+		await ctx.send(sati)
+	if 160 <= arg < 200:
+		sati = random.choice([i for i in l14])
+		await ctx.send(sati)
+	if 200 <= arg <= 240:
+		sati = random.choice([i for i in l15])
+		await ctx.send(sati)
+	else:await ctx.send("そんなデキレは存在しないよ")
 
 @bot.command()
 async def 最新ブログ(ctx):
@@ -252,10 +334,46 @@ async def on_message(message):
 											if saticheck.content == "1":
 												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
 												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
-												if roll in atk:atk_plo[message.author.id] = rireki_text[message.author.id]
-												if roll in gun:gun_plo[message.author.id] = rireki_text[message.author.id]
-												if roll in tank:tank_plo[message.author.id] = rireki_text[message.author.id]
-												if roll in supri:supri_plo[message.author.id] = rireki_text[message.author.id]
+												if roll in atk:
+													atk_plo[message.author.id] = rireki_text[message.author.id]
+													if level == "4~119":
+														l0.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "120~159":
+														l1.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "160~199":
+														l2.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "200~240":
+														l3.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+												if roll in gun:
+													gun_plo[message.author.id] = rireki_text[message.author.id]
+													if level == "4~119":
+														l4.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "120~159":
+														l5.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "160~199":
+														l6.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "200~240":
+														l7.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+												if roll in tank:
+													tank_plo[message.author.id] = rireki_text[message.author.id]
+													if level == "4~119":
+														l8.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "120~159":
+														l9.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "160~199":
+														l10.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "200~240":
+														l11.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+												if roll in supri:
+													supri_plo[message.author.id] = rireki_text[message.author.id]
+													if level == "4~119":
+														l12.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "120~159":
+														l13.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "160~199":
+														l14.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
+													if level == "200~240":
+														l15.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
 												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
 											if saticheck.content == "2":
 												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\n\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
@@ -271,28 +389,82 @@ async def on_message(message):
 											if saticheck.content == "1":
 												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-												if roll in atk:atk_plo[message.author.id] = rireki_text[message.author.id]
-												if roll in gun:gun_plo[message.author.id] = rireki_text[message.author.id]
-												if roll in tank:tank_plo[message.author.id] = rireki_text[message.author.id]
-												if roll in supri:supri_plo[message.author.id] = rireki_text[message.author.id]
+												if roll in atk:
+													atk_plo[message.author.id] = rireki_text[message.author.id]
+													if level == "4~119":
+														l0.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "120~159":
+														l1.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "160~199":
+														l2.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "200~240":
+														l3.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+												if roll in gun:
+													gun_plo[message.author.id] = rireki_text[message.author.id]
+													if level == "4~119":
+														l4.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "120~159":
+														l5.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "160~199":
+														l6.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "200~240":
+														l7.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+												if roll in tank:
+													tank_plo[message.author.id] = rireki_text[message.author.id]
+													if level == "4~119":
+														l8.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "120~159":
+														l9.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "160~199":
+														l10.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "200~240":
+														l11.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+												if roll in supri:
+													supri_plo[message.author.id] = rireki_text[message.author.id]
+													if level == "4~119":
+														l12.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "120~159":
+														l13.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "160~199":
+														l14.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
+													if level == "200~240":
+														l15.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
 												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
 											if saticheck.content == "2":
 												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
 												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-		if message.content == "！プロフィール":
-			channel = message.channel
+		if "https://compass.link/fb/" in message.content:
 			m_id = message.author.id
-			if m_id in rireki_text.keys():
-				await channel.send(f'{message.author.mention}さんのプロフィール\n'+rireki_text[m_id])
-			else:await channel.send(f"{message.author.mention}さんはまだ登録されていません。「！登録」でプロフィールを入力してください")
+			if m_id != 700618658799419512:
+				ch = bot.get_channel(701450028299976755)
+				cl = message.channel
+				room_mes = message.content
+				await ch.send(message.author.name+"さんがイベントアリーナのメンバーを募集しています\n"+room_mes[61:106])
+				await cl.send("枠埋め掲示板に貼っておきました")
+		if "https://compass.link/ba/" in message.content:
+			m_id = message.author.id
+			if m_id != 700618658799419512:
+				ch = bot.get_channel(701450028299976755)
+				cl = message.channel
+				room_mes = message.content
+				await ch.send(message.author.name+"さんがバトルアリーナのメンバーを募集しています\n"+room_mes[60:119])
+				await cl.send("枠埋め掲示板に貼っておきました")
+		if "https://compass.link/cb" in message.content:
+			if m_id != 700618658799419512:
+				ch = bot.get_channel(701450028299976755)
+				cl = message.channel
+				room_mes = message.content
+				await ch.send(message.author.name+"さんがカスタムバトルのメンバーを募集しています\n"+room_mes[55:100])
+				await cl.send("枠埋め掲示板に貼っておきました")
 		if message.content == "！コンパス":
 			channel = message.channel
-			embed = discord.Embed(title="何が知りたいの？",description="キャラ名を書き込んでね")
+			embed = discord.Embed(title="何が知りたいの？",description="知りたいことを書き込んでね")
 			embed.add_field(name="アタッカー",value=atk,inline=False)
 			embed.add_field(name="\nガンナー",value=gun,inline=False)
 			embed.add_field(name="\nスプリンター",value=supri,inline=False)
 			embed.add_field(name="\nタンク",value=tank,inline=False)
+			embed.add_field(name="\nその他",value=eve,inline=False)
 			await channel.send(embed=embed)	
 			def check(message):
 				return message.content in [i for i in compass.keys()] and message.channel == channel
@@ -418,18 +590,6 @@ async def on_message(message):
 				else:
 					supri.remove(com.content)
 					await channel.send(com.content+"をスプリンターから削除しました")
-			if message.content == "お知らせ":
-				channel = message.channel
-				await channel.send("お知らせすることを書き込んでください")
-				def check_mes(message):
-					return message.author.id in god and message.channel == channel
-				try:
-					com = await bot.wait_for('message', timeout=300.0, check=check_mes)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					osirase[0] = com.content
-					await channel.send(com.content+"をお知らせ欄に追加しました")
 	await bot.process_commands(message)
 @bot.command()
 async def バイオハザード(ctx):
@@ -463,8 +623,17 @@ async def 追加(ctx, member: discord.Member, *, reason=None):
 
 @bot.command()
 @commands.check(check_god)
+async def お知らせ編集(ctx, arg=None):
+	global osirase
+	osirase = arg
+	await ctx.send(arg+"\nをお知らせに追加しました")
+
+
+@bot.command()
+@commands.check(check_god)
 async def 一括削除(ctx):
-	sub_god = [263614623238848522,347747169387937793,598640625142726668,483573525974614017,276000856556437504]
+	global sub_god
+	sub_god = [263614623238848522,347747169387937793,598640625142726668,483573525974614017,276000856556437504,437965222523961344]
 	await ctx.send("特別な人以外の権限を全て剥奪しました")
 
 @bot.command()
@@ -473,6 +642,12 @@ async def 削除(ctx, member: discord.Member, *, reason=None):
 	sub_god.remove(member.id)
 	await ctx.send(f"{member.mention}様からbot専用の権限を削除しました")
 	
+@bot.command()
+async def プロフィール(ctx):
+		m_id = ctx.message.author.id
+		if m_id in rireki_text.keys():
+			await ctx.send(f'{message.author.mention}さんのプロフィール\n'+rireki_text[m_id])
+		else:await ctx.send(f"{message.author.mention}さんはまだ登録されていません。「！登録」でプロフィールを入力してください")
 
 @bot.command()
 async def サーチプロフィール(ctx, member: discord.Member, *, reason=None):
@@ -484,8 +659,67 @@ async def サーチプロフィール(ctx, member: discord.Member, *, reason=Non
 @bot.command()
 @commands.check(check_god)
 async def グループ表示(ctx):
-	for guild in bot.guilds:
-		await ctx.send(guild)
+	await ctx.send(len(bot.guilds))
+
+@bot.command()
+async def 募集(ctx, about=None, arg=None):
+	settime = 300.0
+	arg, settime = int(arg), float(settime)
+	reaction_member = [">>>"]
+	test = discord.Embed(title=about,colour=0x1e90ff)
+	test.add_field(name=f"あと{arg}人 募集中\n", value=None, inline=True)
+	msg = await ctx.send(embed=test)
+	await msg.add_reaction('⏫')
+	await msg.add_reaction('✖')
+
+	def check(reaction, user):
+		emoji = str(reaction.emoji)
+		if user.bot != True:
+			return emoji == '⏫' or emoji == '✖'
+
+	while len(reaction_member)-1 <= arg:
+		try:
+			reaction, user = await bot.wait_for('reaction_add', timeout=settime, check=check)
+		except asyncio.TimeoutError:
+			await ctx.send('残念、人が足りなかったようだ...')
+			break
+		else:
+			print(str(reaction.emoji))
+			if str(reaction.emoji) == '⏫':
+				reaction_member.append(user.name)
+				arg -= 1
+				test = discord.Embed(title=about,colour=0x1e90ff)
+				test.add_field(name=f"あと__{arg}__人 募集中\n", value='\n'.join(reaction_member), inline=True)
+				await msg.edit(embed=test)
+
+				if arg == 0:
+					test = discord.Embed(title=about,colour=0x1e90ff)
+					test.add_field(name=f"あと__{arg}__人 募集中\n", value='\n'.join(reaction_member), inline=True)
+					await msg.edit(embed=test)
+					finish = discord.Embed(title=about,colour=0x1e90ff)
+					finish.add_field(name="おっと、メンバーがきまったようだ",value='\n'.join(reaction_member), inline=True)
+					await ctx.send(embed=finish)
+
+			elif str(reaction.emoji) == '✖':
+				if user.name in reaction_member:
+					reaction_member.remove(user.name)
+					arg += 1
+					test = discord.Embed(title=about,colour=0x1e90ff)
+					test.add_field(name=f"あと__{arg}__人 募集中\n", value='\n'.join(reaction_member), inline=True)
+					await msg.edit(embed=test)
+				else:
+					pass
+		await msg.remove_reaction(str(reaction.emoji), user)
+
+@bot.command()
+async def 求人(ctx, about=None, arg=None):
+	ch = bot.get_channel(701450028299976755)
+	arg = str(arg)
+	test = discord.Embed(title=about,colour=0x1e90ff)
+	test.add_field(name="条件", value=f"{arg}", inline=True)
+	await ch.send(embed=test)
+	await ctx.send("募集文を送信しました")
+
 
 @bot.command()
 @commands.check(check_god)
@@ -497,4 +731,5 @@ async def 権限確認(ctx, member: discord.Member, *, reason=None):
 	if member.id in sub_god:
 		await ctx.send("この人はbotの権限を持っているよ")
 	else:await ctx.send("この人はbotの権限を持っていないよ笑")
+
 bot.run(token)
