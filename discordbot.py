@@ -411,7 +411,7 @@ async def 追加(ctx, member: discord.Member, *, reason=None):
 
 @bot.command()
 @commands.check(check_god)
-async def 一括削除(ctx, member: discord.Member, *, reason=None):
+async def 一括削除(ctx):
 	sub_god = [263614623238848522,347747169387937793,598640625142726668,483573525974614017,276000856556437504]
 	await ctx.send("特別な人以外の権限を全て剥奪しました")
 
