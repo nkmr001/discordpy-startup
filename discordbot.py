@@ -419,8 +419,8 @@ async def on_message(message):
 					supri.remove(com.content)
 					await channel.send(com.content+"をスプリンターから削除しました")
 			if message.content == "お知らせ":
-				await channel.send("お知らせすることを書き込んでください")
 				channel = message.channel
+				await channel.send("お知らせすることを書き込んでください")
 				def check_mes(message):
 					return message.author.id in god and message.channel == channel
 				try:
