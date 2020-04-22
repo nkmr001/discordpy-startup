@@ -108,7 +108,8 @@ compass = {
  	"めぐみん":"まだ書かれていません！ごめんなさい",
  	"ザクレイ":"まだ書かれていません！ごめんなさい",
 	"きらら":"まだ書かれていません！ごめんなさい",
-	"春麗":"まだ書かれていません！ごめんなさい"
+	"春麗":"まだ書かれていません！ごめんなさい",
+	"ポロロッチョ":"まだ書かれていません！ごめんなさい"
 }
 
 
@@ -147,7 +148,7 @@ async def ランダムスプリンター(ctx):
 
 @bot.command()
 async def ヘルプ(ctx):
-	embed = discord.Embed(title="このbotの説明書",description="コマンド見にくくてごめん。")
+	embed = discord.Embed(title="このbotの説明書",description="コマンド見にくくてごめん。",color=0xff0000)
 	embed.add_field(name="！コンパス",value="コンパスのキャラについて解説するよ。\nリストが出てくるから知りたいキャラの名前を送ってね\nhttps://twitter.com/compass_AG\nの記事を引用しています。\n",inline=False)
 	embed.add_field(name="！ランダム",value="何のキャラで遊ぶか中々決まらない時にランダムで決めちゃうよ",inline=False)
 	embed.add_field(name="！ランダム[ロール名]",value="指定したロールの中からランダムで決めるよ")
@@ -156,9 +157,8 @@ async def ヘルプ(ctx):
 	embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ\n",inline=False)
 	embed.add_field(name="！登録",value="自分のプロフィールを登録するよ。\n既に登録していても何度でも再登録できるよ。\n",inline=False)
 	embed.add_field(name="！プロフィール",value="自分のプロフィールを表示するよ。\n",inline=False)
-	embed.add_field(name="！サーチ",value="プロフィールの表示",inline=False)
 	embed.add_field(name="！サーチプロフィール[@メンション]",value="メンションした人のプロフを出すよ")
-	embed.add_field(name="！サーチ[ロール名][デキレ]",value="ロール名の中からランダムに一人のプロフを表示するよ\nデキレを書いたら更に絞れる")
+	embed.add_field(name="！サーチ[ロール名][デキレ]",value="登録してくれた人の中からロール別でランダムに引っ張ってくるよ\nデキレを書いたら更に絞れる")
 	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ。\n",inline=False)
 	embed.add_field(name="！募集 [募集要項] 人数",value="メンバーを募集するよ リアクションで反応してあげてね※バグってる\n",inline=False)
 	embed.add_field(name="！求人 [募集要項] [条件]",value="メンバーを募集するよ メッセージは募集用サーバーに送られるよ\n",inline=False)
