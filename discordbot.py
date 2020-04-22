@@ -199,7 +199,6 @@ async def サーチアタッカー(ctx, arg=None):
 	if 200 <= arg <= 240:
 		sati = random.choice([i for i in l3])
 		await ctx.send(sati)
-	else:await ctx.send("そんなデキレは存在しないよ")
 
 @bot.command()
 async def サーチガンナー(ctx, arg=None):
@@ -220,7 +219,6 @@ async def サーチガンナー(ctx, arg=None):
 	if 200 <= arg <= 240:
 		sati = random.choice([i for i in l7])
 		await ctx.send(sati)
-	else:await ctx.send("そんなデキレは存在しないよ")
 
 @bot.command()
 async def サーチタンク(ctx ,arg=None):
@@ -241,7 +239,6 @@ async def サーチタンク(ctx ,arg=None):
 	if 200 <= arg <= 240:
 		sati = random.choice([i for i in l11])
 		await ctx.send(sati)
-	else:await ctx.send("そんなデキレは存在しないよ")
 
 @bot.command()
 async def サーチスプリンター(ctx ,arg=None):
@@ -262,7 +259,6 @@ async def サーチスプリンター(ctx ,arg=None):
 	if 200 <= arg <= 240:
 		sati = random.choice([i for i in l15])
 		await ctx.send(sati)
-	else:await ctx.send("そんなデキレは存在しないよ")
 
 @bot.command()
 async def 最新ブログ(ctx):
