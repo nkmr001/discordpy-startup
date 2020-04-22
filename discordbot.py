@@ -655,8 +655,8 @@ async def 削除(ctx, member: discord.Member, *, reason=None):
 async def プロフィール(ctx):
 		m_id = ctx.message.author.id
 		if m_id in rireki_text.keys():
-			await ctx.send(f'{message.author.mention}さんのプロフィール\n'+rireki_text[m_id])
-		else:await ctx.send(f"{message.author.mention}さんはまだ登録されていません。「！登録」でプロフィールを入力してください")
+			await ctx.send(f'{ctx.message.author.mention}さんのプロフィール\n'+rireki_text[m_id])
+		else:await ctx.send(f"{ctx.message.author.mention}さんはまだ登録されていません。「！登録」でプロフィールを入力してください")
 
 @bot.command()
 async def サーチプロフィール(ctx, member: discord.Member, *, reason=None):
