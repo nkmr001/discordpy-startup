@@ -1,444 +1,118 @@
 import discord
 from discord.ext import commands
-import random
-import os
-import traceback
-import requests
 from bs4 import BeautifulSoup
-import time
-import asyncio
+import random,os,traceback,requests,time,asyncio,sqlite3
 
-bot = commands.Bot(command_prefix='！')
+cmps = sqlite3.connect("cmps.db")
+c = cmps.cursor()
+bot = commands.Bot(command_prefix='!')
 token = os.environ['DISCORD_BOT_TOKEN']
-pong = random.randrange(10)
 bot.remove_command('help')
 
-god = [263614623238848522]
-sub_god = [263614623238848522,347747169387937793,598640625142726668,483573525974614017,276000856556437504,437965222523961344]
-def check_god(ctx):
-	return ctx.message.author.id in god
-def check_god2(ctx):
-	return ctx.message.author.id in sub_god
-rireki_text = {}
-rireki = {}
-l0 = []
-l1 = []
-l2 = []
-l3 = []
-l4 = []
-l5 = []
-l6 = []
-l7 = []
-l8 = []
-l9 = []
-l10 = []
-l11 = []
-l12 = []
-l13 = []
-l14 = []
-l15 = []
+def DBclose():
+	c.commit()
+	c.close()
 
+Notice_txt = None
+owner = ["263614623238848522"]
+roll_list = ["アタッカー","ガンナー","タンク","スプリンター"]
+Reg_text = ["""
+主に使用するロール:
+デッキレベル:
+実力:
+通話が可能か:
+一言:
+"""]
 
-atk = ["ノホ","忠臣","マルコス","ソル","リュウ","アダム","マリア","レム","カイ","ポロロッチョ","リヴァイ","デルミン","セイバー","ルルカ"]
-gun = ["リリカ","ルチアーノ","まとい","ディズィー","サーティーン","エミリア","めぐめぐ","リン","イスタカ","ソーン","オカリン","猫宮","ギルガメッシュ"]
-tank = ["ジャスティス","ジャンヌ","ヴィオレッタ","グスタフ","レン","モノクマ","めぐみん","トマス"]
-supri = ["アタリ","ボイドール","テスラ","ミク","コクリコ","春麗","ザクレイ","勇者","きらら","アクア","レイヤ","ピエール"]
-eve = []
-lol = {"1":"アタッカー","2":"ガンナー","3":"タンク","4":"スプリンター"}
-llevel = {"1":"4~119","2":"120~159","3":"160~199","4":"200~240"}
-mmedal = {"1":"アイコンなし","2":"銅アイコン経験あり","3":"銀アイコン経験あり","4":"金アイコンor公式大会優勝経験あり"}
-yyn = {"1":"可能","2":"聞き専なら可能","3":"聞き専も不可能","4":"応相談"}
-ynn = {"1":"オン","2":"オフ"}
+def check_owner(ctx):
+	return ctx.message.author.id in owner
 
-all_roll = atk+gun+tank+supri
-lll = [atk,gun,tank,supri]
+c.execute("""CREATE TABLE users
+ (ユーザーID text,
+ 名前 text,
+ 使用キャラクター text,
+ デッキレベル INTEGER,
+ 実力 text,
+ 通話 text,
+ 一言 text
+ );""")
 
+c.execute("""CREATE TABLE rolls
+ (name text,
+ roll text,
+ info text);""")
 
+DBclose()
 
-atk_plo = {}
-gun_plo = {}
-tank_plo = {}
-supri_plo = {}
-
-osirase = None
-
-compass = {
-	"アタリ":"アタリの情報※HS発動時のみ記載\n\n組んで相性の良いキャラ\n・マルコス＆リリカ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・全てのキャラに有利\n\n不利対面\n①貫通\n②毒、サイレント、スタンなどの状態異常\n③ダメカ破壊\n④防御UP中に防御ダウン\n⑤カードキャンセル\n上記のものどれか一つでもまともに食らえば不利になる。\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229151#link05",
-	"ジャスティス":"ジャスティスの情報\n\n組んで相性の良いキャラ\n・ポロロッチョ\n・スタン持ち\n\n有利、不利対面のキャラ\n・相手にスタンと貫通がなければ有利、あれば不利\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/232405#link05",
-	"リリカ":"リリカの情報\n\n組んで相性の良いキャラ\n・マルコス\n・アタリ\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・自分より射程の短いガンナー\n・ソーン\n\n不利対面のキャラ\n・足の速いアタッカー\n・ギルガメッシュ\n・攻撃寄りスプリンター\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/230284#link05",
-	"ノホ":"ノホの情報\n\n組んで相性の良いキャラ\n・ディズィー\n・トマス\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・体力倍率が0.85以下のキャラほぼ全て(マジスク＆ゆらら前提)\n\n不利対面のキャラ\n・ギルガメッシュ\n・グスタフ\n・きらら\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/232243#link05",
-	"忠臣":"忠臣の情報\n\n組んで相性の良いキャラ\n・射程の長いガンナー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・体力倍率0.8以下のキャラ\n\n不利対面のキャラ\n・自分より足が速いキャラ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/231602#link05",
-	"ジャンヌ":"ジャンヌの情報\n\n組んで相性の良いキャラ\n・ポロロッチョ\n・デルミン\n\n耐えやすい対面\n・サーティーン\n・ノホ\n・リリカ\n\n耐え難い対面\n・オカリン\n・ルチアーノ\n・忠臣\n・イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229854#link05",
-	"ボイドール":"ボイドールの情報\n\n組んで相性の良いキャラ\n・トマス\n・ボイドの型によって幅広いアタッカー、ガンナーと組みやすい\n\n耐え難い対面\n・お母さん入りガンナー\n・マジスク&貫通持ち\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/231086#link05",
-	"マルコス":"マルコスの情報\n\n組んで相性の良いキャラ\n・リリカ\n・アタリ\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・枝でのカードキャンセルが成功すればほぼ全キャラ\n\n不利対面のキャラ(HSゲージが溜まっていれば対処可)\n・周囲カノーネ持ち\n・マジスク＆ゆらら持ち\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229810#link05",
-	"ルチアーノ":"ルチアーノの情報\n\n組んで相性の良いキャラ\n・カノーネ持ちキャラクター全般\n・周囲の発動がが速いキャラクター\n\n有利対面のキャラ\n・ディーバのみアタッカー全般\n\n不利対面のキャラ\n・マルコス\n・デルミン\n・自分より射程が長いガンナー\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/232197#link05",
-	"まとい":"まといの情報\n\n組んで相性の良いキャラ\n・ヴィオレッタ\n・フルカノアタッカー\n\n有利対面のキャラ\n・ディズィー\n・ソーン\n\n不利対面のキャラ\n・ほぼ全キャラ※自衛カードに当たってくれたら勝てるかもしれない\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/230412#link05",
-	"ソル":"ソルの情報\n\n組んで相性の良いキャラ\n・周囲カノーネor周囲スタン持ち\n・転倒させることができるカードを積んでいるキャラ\n\n有利対面のキャラ\n・体力倍率が0.90以下のキャラ全て\n\n不利対面のキャラ\n・フルカノ持ちアタッカー\n・ノホ、デルミン\n・ルチ、ギルガメッシュ、イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/229147#link02",
-	"ディズィー":"ディズィーの情報\n\n組んで相性の良いキャラ\n・HSで相手を確実に倒せるキャラ全て\n・トマス、ノホなどHSを相手に吐かせることができるキャラ\n\n有利対面のキャラ\n・ルチアーノ\n・自分より足が遅いキャラクター\n\n不利対面のキャラ\n・マルコス\n・デルミン\n・自分より射程が長いガンナー\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/230728#link05",
-	"グスタフ":"†世界最強のサポ兼アタッカーキャラグスタフの情報†\n\n組んで相性の良いキャラ\n・全てのキャラクター\n↑自分でも書いててバカらしくなってくるね\n\n有利対面のキャラ\n・周囲スタン、周囲カノーネを当てられたらとれる\n\n不利対面のキャラ\n・お母さん持ち\n・アバカン持ち\n・イデア持ち(ポータル回復カードがあれば不利にはならない)\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/251781#link05",
-	"テスラ":"テスラの情報\n\n組んで相性の良いキャラ\n・ルルカ\n・デルミン\n・カノーネ持ちのアタッカー\n\n耐え難いキャラ\n・ルチ、ギルガメッシュ、イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/251256#link08",
-	"ミク":"ミクの情報\n\n組んで相性の良いキャラ\n・フルカノ持ちアタッカー\n・デルミン\n・グスタフ\n\n耐え難いキャラ\n・ガンナー全般\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/261015#link02",
-	"ヴィオレッタ":"ヴィオレッタの情報\n\n組んで相性の良いキャラ\n・ポロロッチョ\n・デルミン\n\n耐え難いキャラ\n・お母さん持ちガンナー\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/282804#link05",
-	"ソーン":"ソーンの情報\n\n組んで相性の良いキャラ\n・アダム\n・忠臣\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・自分より射程が短いキャラ\n\n不利対面のキャラ\n・マルコス、デルミン\n・リリカ、まとい\n・マジスク＆ゆらら持ち\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/391208#link05",
-	"コクリコ":"コクリコの情報\n\n組んで相性の良いキャラ\n・HS発動時はアタッカー、ガンナー全キャラに合う\n・フルカノアタッカー\n・ディズィー\n\n有利対面のキャラ\n・初手のみマルコス＆リリカ\n・ダメカを積んでたらカノーネがないキャラ\n・防御バフカードを積んでいたらお母さんがないキャラ\n\n不利対面\n・ソル\n・ギルガメッシュ\n・貫通カードを持っているキャラ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/281658#link02",
-	"リュウ":"リュウの情報\n\n組んで相性の良いキャラ\n・周囲カノーネor周囲スタン持ち\n・ディズィー\n・ギルガメッシュ\n・春麗\n\n有利対面のキャラ※HSが溜まってる場合のみ\n・ダメカがないキャラ全部\n・遠距離or周囲持ちヒーロー\n\n不利対面\n・マルコス＆リリカ\n・デルミン\n・ノホ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/296611#link02",
-	"アダム":"アダムの情報\n\n組んで相性の良いキャラ\n・デズ\n・ギルガメッシュ\n・ルチアーノ\n・めぐみん\n\n有利対面のキャラ\n・ギルガメッシュ以外のガンナー全般\n・体力倍率0.75以下のキャラほぼ全て\n\n・2凸以上のマルコス\n・デルミン\n・イスタカ\n・マリア\n・ギルガメッシュ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/313514#link05",
-	"イスタカ":"イスタカの情報\n\n組んで相性の良いキャラ\n・ダメカ破壊があるキャラ\n\n有利対面のキャラ\n・基本全有利\n\n不利対面\n・きらら\n・デルミン\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/365276#link05",
-	"リン":"リンの情報\n\n組んで相性の良いキャラ\n・セイバー\n・アダム\nデルミン\n・ノホ\n・マリア\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・イスタカ以外のガンナー全般\n・マルコス&リリカ(諸説)\n\n不利対面のキャラ\n・デルミン\n・アダム\n・イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/355191#link02",
-	"デルミン":"デルミンの情報\n\n組んで相性の良いキャラ\n・トマス\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・基本ガンナー全般\n・アダム、ソル\n\n不利対面\n・周囲カノーネ持ち\n・マリア\n・格上ガンナーからのUR貫通遠距離\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/400270#link05",
-	"リヴァイ":"リヴァイの情報\n\n組んで相性の良いキャラ\n・近距離、周囲の発動が速いスプリンターとタンク全て\n\n有利対面のキャラ\n・エミリア\n・ディズィー\n・ポロロッチョ\n・マリア\n\n不利対面のキャラ\n・ノホ\n・イスタカ\n・近距離、周囲スタンor周囲ダメカ破壊、ゆらら持ち全キャラ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/397046#link06",
-	"猫宮":"猫宮の情報\n\n組んで相性の良いキャラ\n・ダメカ破壊持ち※周囲がおすすめ\n・スタンorサイレントの状態異常カード持ち\n\n有利対面のキャラ\n・自分より射程が同じかそれ以下のガンナーほぼ全て(アサルト時のみ)\n・遠距離持ちのアタッカーほぼ全て\n\n不利対面のキャラ\n・自分より射程の長いガンナー全て\n・マジスク＆ゆらら持ちキャラ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/414356#link05",
-	"アクア":"アクアの情報\n\n組んで相性の良いキャラ\n・マリア\n・マジスクを持ってるアタッカー\n・オカリン\n・ギル\n\n有利対面のキャラ\n・ディズィー\n・ソーン\n\n不利対面のキャラ\n・レイヤ\n・きらら\n・ルチアーノ\n・勇者\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/388828#link02",
-	"ピエール":"ピエールの情報\n\n組んで相性の良いキャラ\n・支援系を除く全てのキャラ\n\n耐え難い対面\n・ギルガメッシュ\n・オカリン\n・ルチアーノ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/452335#link05",
- 	"セイバー":"セイバーの情報\n\n組んで相性の良いキャラ\n・ディズィー\n・デッキ次第で攻撃系キャラならなんでも合う\n・グスタフ\n\n有利対面のキャラ\n・ギル、イスタカ以外のガンナー全般\n・きらら\n\n不利対面のキャラ\n・アダム\n・デルミン\n・ギル、イスタカ\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/436927#link05",
- 	"マリア":"マリアの情報\n\n組んで相性の良いキャラ\n・アクア\n・ギルガメッシュ\n・ディズィー\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・近距離アタッカー\n\n不利体面のキャラ\n・コクリコ\n・マルコス\n・ピエール\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/313986#link05",
- 	"サーティーン":"まだ書かれていません！ごめんなさい",
- 	"勇者":"まだ書かれていません！ごめんなさい",
- 	"エミリア":"まだ書かれていません！ごめんなさい",
- 	"レム":"まだ書かれていません！ごめんなさい",
- 	"カイ":"まだ書かれていません！ごめんなさい",
- 	"メグメグ":"まだ書かれていません！ごめんなさい",
- 	"レン":"まだ書かれていません！ごめんなさい",
- 	"トマス":"まだ書かれていません！ごめんなさい",
- 	"モノクマ":"まだ書かれていません！ごめんなさい",
- 	"オカリン":"まだ書かれていません！ごめんなさい",
- 	"ギルガメッシュ":"まだ書かれていません！ごめんなさい",
- 	"ルルカ":"まだ書かれていません！ごめんなさい",
- 	"レイヤ":"零夜の情報\n\n組んで相性の良いキャラ\n・トマス\n・リン\n・周囲カノーネor周囲スタン持ち\n\n有利対面のキャラ\n・ダメージカットが1枚以下のキャラ\n・マリア\n・オカリン\n\n不利対面のキャラ\n・ギルガメッシュ\n・イスタカ\n・ダメージカットの枚数が負けていたら猫宮\n\n相性の良いカード、立ち回り等\nhttps://games.app-liv.jp/archives/429859#link05",
- 	"めぐみん":"まだ書かれていません！ごめんなさい",
- 	"ザクレイ":"まだ書かれていません！ごめんなさい",
-	"きらら":"まだ書かれていません！ごめんなさい",
-	"春麗":"まだ書かれていません！ごめんなさい",
-	"ポロロッチョ":"まだ書かれていません！ごめんなさい"
-}
-
-
-
+###################オーナーコマンド####################
 
 @bot.command()
-async def ランダムパーティー(ctx):
-	pt = []
-	await ctx.send("勝手にパーティーを決めます")
-	romm = random.sample(lll,k=3)
-	for r in romm:
-		for ii in random.choice(r):
-			pt.append(ii)
-	await ctx.send("".join(pt))
+@commands.check(check_owner)
+async def Nedit(ctx, N=None):
+	global Notice_txt
+	Notice_txt = N
+	await ctx.send(N+"\nをお知らせを編集しました")
+
+@bot.command(pass_context=True, name="kick")
+@commands.check(check_owner)
+async def kick(ctx, member: discord.Member, *, reason=None):
+	try:await member.kick(reason=reason)
+	except:await ctx.send("キックできませんでした。")
 
 @bot.command()
-async def ランダム(ctx):
-	await ctx.send(random.choice(all_roll))
+@commands.check(check_owner)
+async def addinfo(ctx,chara_name=None,roll_name=None,info_txt=None):
+	if chara_name == None or roll_name not in roll_list:await ctx.send("ロールかキャラ名が正しくありません")
+	else:
+		chara_info = (chara_name,roll_name,info_txt)
+		c.execute('insert into rolls (name,roll,info) values (?,?,?)', chara_info)
+		DBclose()
+		await ctx.send(chara_name+"の情報を追加しました")
 
 @bot.command()
-async def ランダムアタッカー(ctx):
-	await ctx.send(random.choice(atk))
+@commands.check(check_owner)
+async def editinfo(ctx,chara_name=None,roll_name=None,info_txt=None):
+	R_list = [for R in c.execute("select * from rolls where name = chara_name")]
+	if chara_name not in R_list:await ctx.send("キャラが登録されていません")
+	else:
+		c.execute('update rolls set name = chara_name where name == chara_name')
+		c.execute('update rolls set roll = roll_name where name == chara_name')
+		c.execute('update rolls set info = info_txt where name == chara_name')
+		DBclose()
+		await ctx.send(chara_name+"の情報を修正しました")
 
 @bot.command()
-async def ランダムガンナー(ctx):
-	await ctx.send(random.choice(gun))
+@commands.check(check_owner)
+async def editinfo(ctx,chara_name=None)
+	R_list = [for R in c.execute("select * from rolls where name = chara_name")]
+	if chara_name not in R_list:await ctx.send("存在していません")
+	else:
+		c.execute('delete from rolls where name == chara_name')
+		DBclose()
+		await ctx.send(chara_name+"の情報を削除しました")
 
-@bot.command()
-async def ランダムタンク(ctx):
-	await ctx.send(random.choice(tank))
-
-@bot.command()
-async def ランダムスプリンター(ctx):
-	await ctx.send(random.choice(supri))
-
-
-@bot.command()
-async def ヘルプ(ctx):
-	embed = discord.Embed(title="このbotの説明書",description="コマンド見にくくてごめん。",color=0xff0000)
-	embed.add_field(name="！コンパス",value="コンパスのキャラについて解説するよ。\nリストが出てくるから知りたいキャラの名前を送ってね\nhttps://twitter.com/compass_AG\nの記事を引用しています。\n",inline=False)
-	embed.add_field(name="！ランダム",value="何のキャラで遊ぶか中々決まらない時にランダムで決めちゃうよ",inline=False)
-	embed.add_field(name="！ランダム[ロール名]",value="指定したロールの中からランダムで決めるよ")
-	embed.add_field(name="！ランダムパーティー",value="ロール被りなしでパーティーランダムに決めるよ")
-	embed.add_field(name="！バイオハザード",value="https://japan-cov-19.now.sh/\nから最新のコロナ感染者の情報を５件表示するよ\n",inline=False)
-	embed.add_field(name="！招待URL",value="このbotを他のサーバーに入れるためのURLが出てくるよ\n",inline=False)
-	embed.add_field(name="！登録",value="自分のプロフィールを登録するよ。\n既に登録していても何度でも再登録できるよ。\n",inline=False)
-	embed.add_field(name="！プロフィール",value="自分のプロフィールを表示するよ。\n",inline=False)
-	embed.add_field(name="！サーチプロフィール[@メンション]",value="メンションした人のプロフを出すよ")
-	embed.add_field(name="！サーチ[ロール名][デキレ]",value="登録してくれた人の中からロール別でランダムに引っ張ってくるよ\nデキレを書いたら更に絞れる")
-	embed.add_field(name="！最新ブログ",value="ariria.com\nから最新の記事を持ってくるよ。\n",inline=False)
-	embed.add_field(name="！募集 [募集要項] 人数",value="メンバーを募集するよ リアクションで反応してあげてね※バグってる\n",inline=False)
-	embed.add_field(name="！求人 [募集要項] [条件]",value="メンバーを募集するよ メッセージは募集用サーバーに送られるよ\n",inline=False)
-	embed.add_field(name="！お知らせ",value="botについてのお知らせを表示するよ\n",inline=False)
-	embed.add_field(name="枠埋め募集機能",value="[チームメンバーを募集]→[バトルに誘う]→[SNSに投稿]→[コピー]\nでbotと話せる場所でペーストすると募集用サーバーに送られるよ",inline=False)
-	embed.add_field(name="作者",value="コンパスで語ってることが間違っていたり、追加して欲しい機能があったら\nhttps://peing.net/ja/blalcxw2aqk2dbh?event=0\n↑に入れてね",inline=False)
-	embed.add_field(name="募集用サーバー",value="https://discord.gg/knYwFb9",inline=False)
-	await ctx.send(embed=embed)
-
-@bot.event
-async def on_command_error(ctx, error):
-	pass
-
-@bot.command()
-async def ping(ctx):
-	await ctx.send(pong)
-
-@bot.command()
-async def お知らせ(ctx):
-	await ctx.send(osirase)
-	
-@bot.command()
-async def サーチアタッカー(ctx, arg=None):
-	try:arg = int(arg)
-	except:pass
-	if arg == None:
-		sati = random.choice([i for i in atk_plo.values()])
-		await ctx.send(sati)
-	if 4 <= arg < 120:
-		sati = random.choice([i for i in l0])
-		await ctx.send(sati)
-	if 120 <= arg < 160:
-		sati = random.choice([i for i in l1])
-		await ctx.send(sati)
-	if 160 <= arg < 200:
-		sati = random.choice([i for i in l2])
-		await ctx.send(sati)
-	if 200 <= arg <= 240:
-		sati = random.choice([i for i in l3])
-		await ctx.send(sati)
-
-@bot.command()
-async def サーチガンナー(ctx, arg=None):
-	try:arg = int(arg)
-	except:pass
-	if arg == None:
-		sati = random.choice([i for i in gun_plo.values()])
-		await ctx.send(sati)
-	if 4 <= arg < 120:
-		sati = random.choice([i for i in l4])
-		await ctx.send(sati)
-	if 120 <= arg < 160:
-		sati = random.choice([i for i in l5])
-		await ctx.send(sati)
-	if 160 <= arg < 200:
-		sati = random.choice([i for i in l6])
-		await ctx.send(sati)
-	if 200 <= arg <= 240:
-		sati = random.choice([i for i in l7])
-		await ctx.send(sati)
-
-@bot.command()
-async def サーチタンク(ctx ,arg=None):
-	try:arg = int(arg)
-	except:pass
-	if arg == None:
-		sati = random.choice([i for i in tank_plo.values()])
-		await ctx.send(sati)
-	if 4 <= arg < 120:
-		sati = random.choice([i for i in l8])
-		await ctx.send(sati)
-	if 120 <= arg < 160:
-		sati = random.choice([i for i in l9])
-		await ctx.send(sati)
-	if 160 <= arg < 200:
-		sati = random.choice([i for i in l10])
-		await ctx.send(sati)
-	if 200 <= arg <= 240:
-		sati = random.choice([i for i in l11])
-		await ctx.send(sati)
-
-@bot.command()
-async def サーチスプリンター(ctx ,arg=None):
-	try:arg = int(arg)
-	except:pass
-	if arg == None:
-		sati = random.choice([i for i in supri_plo.values()])
-		await ctx.send(sati)
-	if 4 <= arg < 120:
-		sati = random.choice([i for i in l12])
-		await ctx.send(sati)
-	if 120 <= arg < 160:
-		sati = random.choice([i for i in l13])
-		await ctx.send(sati)
-	if 160 <= arg < 200:
-		sati = random.choice([i for i in l14])
-		await ctx.send(sati)
-	if 200 <= arg <= 240:
-		sati = random.choice([i for i in l15])
-		await ctx.send(sati)
-
-@bot.command()
-async def 最新ブログ(ctx):
-	url = "http://ariria.com/"
-	res = requests.get(url).text
-	soup = BeautifulSoup(res, 'html.parser')
-	ariria = soup.find_all('h2',class_= "entry-title",itemprop="headline")
-	ari = ariria[1].find("a")
-	await ctx.send(ariria[1].get_text()+'\n'+ari.get("href"))
-
-#コマンドエラーが起きてしまうから無理矢理passで対応しちゃってる
+#################################################################
+#####################メッセージ周り##############################
 @bot.event
 async def on_message(message):
-	if message.author.id != 685676747173134337:
-		if message.content == "！登録":
+	if message.content == "!Reg":
 			m_id = message.author.id
 			channel = message.channel
-			await channel.send("登録を開始します。まずは主に使用するキャラ1人教えてください")
+			await channel.send(Reg_text)
 			def check_mes(message):
-				return message.author.id == m_id and message.channel == channel
-			def check_roll(message):
-				return message.content in all_roll and message.channel == channel and message.author.id == m_id
-			def check_level(message):
-				return message.content in llevel and message.channel == channel and message.author.id == m_id
-			def check_medal(message):
-				return message.content in mmedal and message.channel == channel and message.author.id == m_id
-			def check_yn(message):
-				return message.content in yyn and message.channel == channel and message.author.id == m_id
-			def check_n(message):
-				return message.content in ynn and message.channel == channel and message.author.id == m_id
+				return message.author.id == m_id and message.channel == channel or message.content in roll_list and Reg_text
 			try:
-				roll = await bot.wait_for('message', timeout=30.0, check=check_roll)
+				mes = await bot.wait_for('message', timeout=300.0, check=check_mes)
 			except asyncio.TimeoutError:
 				await channel.send("タイムアウトしたよ。最初からやり直してね")
 			else:
-				roll = roll.content
-				await channel.send('デッキの合計レベルを番号で教えてください\n1:4~119 2:120~159 3:160~199 4:200~240'.format(roll))
-				try:
-					level = await bot.wait_for('message', timeout=30.0, check=check_level)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					level = llevel[level.content]
-					await channel.send("実力を番号で教えてください\n1:参加賞 2:銅アイコン経験あり 3:銀アイコン経験あり 4:金アイコンor公式大会優勝経験あり".format(level))
-					try:
-						medal = await bot.wait_for('message', timeout=30.0, check=check_medal)
-					except asyncio.TimeoutError:
-						await channel.send("タイムアウトしたよ。最初からやり直してね")
-					else:
-						medal = mmedal[medal.content]
-						await channel.send("通話が可能かどうか番号で教えてください\n1:可能 2:聞き専なら可能 3:聞き専も不可 4:応相談".format(medal))
-						try:
-							yn = await bot.wait_for('message', timeout=30.0, check=check_yn)
-						except asyncio.TimeoutError:
-							await channel.send("タイムアウトしたよ。最初からやり直してね")
-						else:
-							yn = yyn[yn.content]
-							await channel.send("何か一言をお願いします".format(yn))
-							try:
-								hitokoto = await bot.wait_for('message', timeout=30.0, check=check_mes)
-							except asyncio.TimeoutError:
-								await channel.send("タイムアウトしたよ。最初からやり直してね")
-							else:
-								await channel.send("ツイッターのIDをURLで載せてください\nない場合は適当な文字を入力してください".format(hitokoto))
-								try:
-									twit = await bot.wait_for('message', timeout=30.0, check=check_mes)
-								except asyncio.TimeoutError:
-									await channel.send("タイムアウトしたよ。最初からやり直してね")
-								else:
-									if "https://twitter.com/" in twit.content:
-										await channel.send("プロフィールの検索を許可しますか？\n1:許可する 2:許可しない".format(check_mes))
-										try:
-											saticheck = await bot.wait_for('message', timeout=30.0, check=check_n)
-										except asyncio.TimeoutError:
-											await channel.send("タイムアウトしたよ。最初からやり直してね")
-										else:
-											if saticheck.content == "1":
-												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
-												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content
-												if roll in atk:
-													atk_plo[message.author.id] = rireki_text[message.author.id]
-													if level == "4~119":
-														l0.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "120~159":
-														l1.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "160~199":
-														l2.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "200~240":
-														l3.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-												if roll in gun:
-													gun_plo[message.author.id] = rireki_text[message.author.id]
-													if level == "4~119":
-														l4.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "120~159":
-														l5.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "160~199":
-														l6.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "200~240":
-														l7.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-												if roll in tank:
-													tank_plo[message.author.id] = rireki_text[message.author.id]
-													if level == "4~119":
-														l8.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "120~159":
-														l9.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "160~199":
-														l10.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "200~240":
-														l11.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-												if roll in supri:
-													supri_plo[message.author.id] = rireki_text[message.author.id]
-													if level == "4~119":
-														l12.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "120~159":
-														l13.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "160~199":
-														l14.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-													if level == "200~240":
-														l15.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content+"\nツイッター:"+twit.content)
-												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-											if saticheck.content == "2":
-												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\n\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-												else:rireki_text[m_id] = '名前:'+message.author.name+"\n\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-									if "https://twitter.com/" not in twit.content:
-										await channel.send("プロフィールの検索を許可しますか？\n1:許可する 2:許可しない".format(check_mes))
-										try:
-											saticheck = await bot.wait_for('message', timeout=30.0, check=check_n)
-										except asyncio.TimeoutError:
-											await channel.send("タイムアウトしたよ。最初からやり直してね")
-										else:
-											if saticheck.content == "1":
-												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-												if roll in atk:
-													atk_plo[message.author.id] = rireki_text[message.author.id]
-													if level == "4~119":
-														l0.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "120~159":
-														l1.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "160~199":
-														l2.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "200~240":
-														l3.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-												if roll in gun:
-													gun_plo[message.author.id] = rireki_text[message.author.id]
-													if level == "4~119":
-														l4.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "120~159":
-														l5.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "160~199":
-														l6.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "200~240":
-														l7.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-												if roll in tank:
-													tank_plo[message.author.id] = rireki_text[message.author.id]
-													if level == "4~119":
-														l8.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "120~159":
-														l9.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "160~199":
-														l10.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "200~240":
-														l11.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-												if roll in supri:
-													supri_plo[message.author.id] = rireki_text[message.author.id]
-													if level == "4~119":
-														l12.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "120~159":
-														l13.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "160~199":
-														l14.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-													if level == "200~240":
-														l15.append('名前:'+message.author.name+"#"+message.author.discriminator+"\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content)
-												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-											if saticheck.content == "2":
-												if m_id in sub_god:rireki_text[m_id] = '名前:'+message.author.name+"\nbotの権限:あり\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-												else:rireki_text[m_id] = '名前:'+message.author.name+"#"+message.author.discriminator+"\nbotの権限:なし\n使用キャラ:"+roll+"\nデッキレベル:"+level+"\n実力:"+medal+"\n通話について:"+yn+"\n一言:"+hitokoto.content
-												await channel.send(rireki_text[m_id]+"\n\nこの内容で登録しました。".format(saticheck))
-		if "https://compass.link/fb/" in message.content:
+				mes = mes.content
+				if デッキレベルが4以下241以上の場合:
+				elif 空欄がある場合:
+				elif 既に登録されている場合:
+					await channel.send(f"{m_id.mention}様の情報を修正しました")
+				else:await channel.send(f"{m_id.mention}様の情報を登録しました")
+	if "https://compass.link/fb/" in message.content:
 			m_id = message.author.id
 			if m_id != 700618658799419512:
 				ch = bot.get_channel(701525994908942448)
@@ -446,7 +120,7 @@ async def on_message(message):
 				room_mes = message.content
 				await ch.send(message.author.name+"さんがイベントアリーナのメンバーを募集しています\n"+room_mes[60:119])
 				await cl.send("https://discord.gg/knYwFb9\nに貼っておきました")
-		if "https://compass.link/ba/" in message.content:
+	if "https://compass.link/ba/" in message.content:
 			m_id = message.author.id
 			if m_id != 700618658799419512:
 				ch = bot.get_channel(701525994908942448)
@@ -454,149 +128,58 @@ async def on_message(message):
 				room_mes = message.content
 				await ch.send(message.author.name+"さんがバトルアリーナのメンバーを募集しています\n"+room_mes[61:94])
 				await cl.send("https://discord.gg/knYwFb9\nに貼っておきました")
-		if "https://compass.link/cb" in message.content:
+	if "https://compass.link/cb" in message.content:
 			if m_id != 700618658799419512:
 				ch = bot.get_channel(701525994908942448)
 				cl = message.channel
 				room_mes = message.content
 				await ch.send(message.author.name+"さんがカスタムバトルのメンバーを募集しています\n"+room_mes[55:100])
 				await cl.send("https://discord.gg/knYwFb9\nに貼っておきました")
-		if message.content == "！コンパス":
-			channel = message.channel
-			embed = discord.Embed(title="何が知りたいの？",description="知りたいことを書き込んでね")
-			embed.add_field(name="アタッカー",value=atk,inline=False)
-			embed.add_field(name="\nガンナー",value=gun,inline=False)
-			embed.add_field(name="\nスプリンター",value=supri,inline=False)
-			embed.add_field(name="\nタンク",value=tank,inline=False)
-			await channel.send(embed=embed)	
-			def check(message):
-				return message.content in [i for i in compass.keys()] and message.channel == channel
-			try:
-				msg = await bot.wait_for('message', timeout=30.0, check=check)
-			except asyncio.TimeoutError:
-				await message.delete()
-				await channel.send("タイムアウトしたよ。最初からやり直してね")
-			else:
-				await channel.send(compass[msg.content].format(msg))
-		if message.author.id in god:
-			if message.content == "辞書編集":
-				channel = message.channel
-				await channel.send("どうぞ")
-				def check_mes(message):
-					return message.author.id in god and message.channel == channel
-				try:
-					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					await channel.send(com.content+"の内容をどうぞ")
-					try:
-						comm = await bot.wait_for('message', timeout=30.0, check=check_mes)
-					except asyncio.TimeoutError:
-						await channel.send("タイムアウトしたよ。最初からやり直してね")
-					else:
-						compass[com.content] = comm.content
-						await channel.send(com.content+"\n"+comm.content)
-			if message.content == "アタッカー追加":
-				channel = message.channel
-				await channel.send("どうぞ")
-				def check_mes(message):
-					return message.author.id in god and message.channel == channel
-				try:
-					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					atk.append(com.content)
-					await channel.send(com.content+"をアタッカーに追加しました")
-			if message.content == "ガンナー追加":
-				channel = message.channel
-				await channel.send("どうぞ")
-				def check_mes(message):
-					return message.author.id in god and message.channel == channel
-				try:
-					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					gun.append(com.content)
-					await channel.send(com.content+"をガンナーに追加しました")
-			if message.content == "タンク追加":
-				channel = message.channel
-				await channel.send("どうぞ")
-				def check_mes(message):
-					return message.author.id in god and message.channel == channel
-				try:
-					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					tank.append(com.content)
-					await channel.send(com.content+"をタンクに追加しました")
-			if message.content == "スプリンター追加":
-				channel = message.channel
-				await channel.send("どうぞ")
-				def check_mes(message):
-					return message.author.id in god and message.channel == channel
-				try:
-					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					supri.append(com.content)
-					await channel.send(com.content+"をスプリンターに追加しました")
-			if message.content == "アタッカー削除":
-				channel = message.channel
-				await channel.send("どうぞ")
-				def check_mes(message):
-					return message.author.id in god and message.channel == channel
-				try:
-					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					atk.remove(com.content)
-					await channel.send(com.content+"をアタッカーから削除しました")
-			if message.content == "ガンナー削除":
-				channel = message.channel
-				await channel.send("どうぞ")
-				def check_mes(message):
-					return message.author.id in god and message.channel == channel
-				try:
-					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					gun.remove(com.content)
-					await channel.send(com.content+"をガンナーから削除しました")
-			if message.content == "タンク削除":
-				channel = message.channel
-				await channel.send("どうぞ")
-				def check_mes(message):
-					return message.author.id in god and message.channel == channel
-				try:
-					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					tank.remove(com.content)
-					await channel.send(com.content+"をタンクから削除しました")
-			if message.content == "スプリンター削除":
-				channel = message.channel
-				await channel.send("どうぞ")
-				def check_mes(message):
-					return message.author.id in god and message.channel == channel
-				try:
-					com = await bot.wait_for('message', timeout=30.0, check=check_mes)
-				except asyncio.TimeoutError:
-					await channel.send("タイムアウトしたよ。最初からやり直してね")
-				else:
-					supri.remove(com.content)
-					await channel.send(com.content+"をスプリンターから削除しました")
+	if message.content == "!cmps":
+		channel = message.channel
+		embed = discord.Embed(title="何が知りたいの？",description="知りたいことを書き込んでね")
+		embed.add_field(name="アタッカー",value=atk,inline=False)#valueをrollsのアタッカーロールをリストにしたものを入れる
+		embed.add_field(name="\nガンナー",value=gun,inline=False)#valueをrollsのガンナーロールをリストにしたものを入れる
+		embed.add_field(name="\nスプリンター",value=supri,inline=False)#valueをrollsのスプリンターロールをリストにしたものを入れる
+		embed.add_field(name="\nタンク",value=tank,inline=False)#valueをrollsのタンクロールをリストにしたものを入れる
+		await channel.send(embed=embed)
+		def check(message):
+			return message.content in [i for i in compass.keys()] and message.channel == channel　#[i for i in compass.keys()]の部分をrollsからnameで引っ張ってくる
+		try:
+			msg = await bot.wait_for('message', timeout=30.0, check=check)
+		except asyncio.TimeoutError:
+			await message.delete()
+			await channel.send("タイムアウトしたよ。最初からやり直してね")
+		else:
+			await channel.send(compass[msg.content].format(msg))
 	await bot.process_commands(message)
+################################################################
 @bot.command()
-async def バイオハザード(ctx):
-	await ctx.send("日本国内の感染者情報を最新５件表示します")
+async def P(ctx):#自分のプロフィールを表示
+	m_id = ctx.message.author.id
+	if m_id in rireki_text.keys():#ディスコードのIDとusersのIDで探して表示
+		await ctx.send(f'{ctx.message.author.mention}さんのプロフィール\n'+rireki_text[m_id])
+	else:await ctx.send(f"{ctx.message.author.mention}さんはまだ登録されていません。「！登録」でプロフィールを入力してください")
+
+@bot.command()#プロフィールを検索
+async def searchP(ctx, rol=None, level=None):
+	if member.id in rireki_text.keys():#usersからデッキレベルorロールで引っ張ってくる
+		await ctx.send(f'{member.mention}さんのプロフィールを表示します\n'+rireki_text[member.id])
+	else:await ctx.send(f"{member.mention}さんはまだ登録されていません。")
+
+@bot.command()#メンションした人のプロフィール表示
+async def MemP(ctx,member: discord.Member):
+	if member.id in rireki_text.keys():
+		await ctx.send(f'{member.mention}さんのプロフィールを表示します\n'+rireki_text[member.id])
+	else:await ctx.send(f"{member.mention}さんはまだ登録されていません。")
+
+@bot.command()
+async def Notice(ctx):
+	await ctx.send(Notice_txt)
+
+@bot.commad()
+async def COVID(ctx):
+	await ctx.send("日本国内の感染者情報の最新５件を表示します")
 	url = "https://japan-cov-19.now.sh/"
 	res = requests.get(url).text
 	soup = BeautifulSoup(res, 'html.parser')
@@ -606,118 +189,20 @@ async def バイオハザード(ctx):
 		time.sleep(1)
 
 @bot.command()
-async def 招待URL(ctx):
+async def URL(ctx):
 	await ctx.send("https://discordapp.com/api/oauth2/authorize?client_id=685676747173134337&permissions=8&scope=bot\n招待したいサーバーの管理者が操作してください")
-	
-@bot.command(pass_context=True, name="kick")
-@commands.check(check_god2)
-async def kick(ctx, member: discord.Member, *, reason=None):
-	if member.id in sub_god:ctx.send(f"{member.mention}も権限を持ってるみたいだね")
-	else:
-		try:
-			await member.kick(reason=reason)
-			await ctx.send(f"{member.mention}をキックしちゃったぜ！笑")
-		except:await ctx.send("すみません。なんでもないです。")
-
 
 @bot.command()
-@commands.check(check_god2)
-async def 追加(ctx, member: discord.Member, *, reason=None):
-	sub_god.append(member.id)
-	await ctx.send(f"{member.mention}様にbot専用の権限を付与しました")
+async def ariria(ctx):
+	url = "http://ariria.com/"
+	res = requests.get(url).text
+	soup = BeautifulSoup(res, 'html.parser')
+	ariria = soup.find_all('h2',class_= "entry-title",itemprop="headline")
+	ari = ariria[1].find("a")
+	await ctx.send(ariria[1].get_text()+'\n'+ari.get("href"))
 
 @bot.command()
-@commands.check(check_god)
-async def お知らせ編集(ctx, arg=None):
-	global osirase
-	osirase = arg
-	await ctx.send(arg+"\nをお知らせに追加しました")
-
-
-@bot.command()
-@commands.check(check_god)
-async def 一括削除(ctx):
-	global sub_god
-	sub_god = [263614623238848522,347747169387937793,598640625142726668,483573525974614017,276000856556437504,437965222523961344]
-	await ctx.send("特別な人以外の権限を全て剥奪しました")
-
-@bot.command()
-@commands.check(check_god)
-async def 削除(ctx, member: discord.Member, *, reason=None):
-	sub_god.remove(member.id)
-	await ctx.send(f"{member.mention}様からbot専用の権限を削除しました")
-	
-@bot.command()
-async def プロフィール(ctx):
-		m_id = ctx.message.author.id
-		if m_id in rireki_text.keys():
-			await ctx.send(f'{ctx.message.author.mention}さんのプロフィール\n'+rireki_text[m_id])
-		else:await ctx.send(f"{ctx.message.author.mention}さんはまだ登録されていません。「！登録」でプロフィールを入力してください")
-
-@bot.command()
-async def サーチプロフィール(ctx, member: discord.Member, *, reason=None):
-	if member.id in rireki_text.keys():
-		await ctx.send(f'{member.mention}さんのプロフィールを表示します\n'+rireki_text[member.id])
-	else:await ctx.send(f"{member.mention}さんはまだ登録されていません。")
-
-
-@bot.command()
-@commands.check(check_god)
-async def グループ表示(ctx):
-	await ctx.send(len(bot.guilds))
-
-@bot.command()
-async def 募集(ctx, about=None, arg=None):
-	settime = 300.0
-	arg, settime = int(arg), float(settime)
-	reaction_member = [">>>"]
-	test = discord.Embed(title=about,colour=0x1e90ff)
-	test.add_field(name=f"あと{arg}人 募集中\n", value=None, inline=True)
-	msg = await ctx.send(embed=test)
-	await msg.add_reaction('⏫')
-	await msg.add_reaction('✖')
-
-	def check(reaction, user):
-		emoji = str(reaction.emoji)
-		if user.bot != True:
-			return emoji == '⏫' or emoji == '✖'
-
-	while len(reaction_member)-1 <= arg:
-		try:
-			reaction, user = await bot.wait_for('reaction_add', timeout=settime, check=check)
-		except asyncio.TimeoutError:
-			await ctx.send('残念、人が足りなかったようだ...')
-			break
-		else:
-			print(str(reaction.emoji))
-			if str(reaction.emoji) == '⏫':
-				reaction_member.append(user.name)
-				arg -= 1
-				test = discord.Embed(title=about,colour=0x1e90ff)
-				test.add_field(name=f"あと__{arg}__人 募集中\n", value='\n'.join(reaction_member), inline=True)
-				await msg.edit(embed=test)
-
-				if arg == 0:
-					test = discord.Embed(title=about,colour=0x1e90ff)
-					test.add_field(name=f"あと__{arg}__人 募集中\n", value='\n'.join(reaction_member), inline=True)
-					await msg.edit(embed=test)
-					finish = discord.Embed(title=about,colour=0x1e90ff)
-					finish.add_field(name="おっと、メンバーがきまったようだ",value='\n'.join(reaction_member), inline=True)
-					await ctx.send(embed=finish)
-
-			elif str(reaction.emoji) == '✖':
-				if user.name in reaction_member:
-					reaction_member.remove(user.name)
-					arg += 1
-					test = discord.Embed(title=about,colour=0x1e90ff)
-					test.add_field(name=f"あと__{arg}__人 募集中\n", value='\n'.join(reaction_member), inline=True)
-					await msg.edit(embed=test)
-				else:
-					pass
-		await msg.remove_reaction(str(reaction.emoji), user)
-
-@bot.command()
-async def 求人(ctx, about=None, arg=None):
+async def wanted(ctx, about=None, arg=None):
 	ch = bot.get_channel(701525994908942448)
 	arg = str(arg)
 	await ch.send(ctx.message.author.name+"さんのメッセージです")
@@ -726,16 +211,27 @@ async def 求人(ctx, about=None, arg=None):
 	await ch.send(embed=test)
 	await ctx.send("https://discord.gg/knYwFb9\nに募集文を送信しました。")
 
+@bot.command()#rollsから引っ張ってくる
+async def ram(stx,ram_txt=None):
+	if ram_txt == None:
+	if ram_txt == "アタッカー":
+	if ram_txt == "ガンナー":
+	if ram_txt == "スプリンター":
+	if ram_txt == "タンク":
+	if ram_txt == "パーティー":
 
 @bot.command()
-@commands.check(check_god)
-async def チェック(ctx):
-	await ctx.send("今、権限を持っている人は"+str(len(sub_god))+"人いるよ")
-
-@bot.command()
-async def 権限確認(ctx, member: discord.Member, *, reason=None):
-	if member.id in sub_god:
-		await ctx.send("この人はbotの権限を持っているよ")
-	else:await ctx.send("この人はbotの権限を持っていないよ笑")
+async def help(ctx):
+	embed = discord.Embed(title="マニュアル",description="コマンド見にくくてごめん。",color=0xff0000)
+	embed.add_field(name="!Reg",value="",inline=False)
+	embed.add_field(name="!cmps",value="",inline=False)
+	embed.add_field(name="!ram",value="",inline=False)
+	embed.add_field(name="!P",value="",inline=False)
+	embed.add_field(name="!Notice",value="",inline=False)
+	embed.add_field(name="!URL",value="",inline=False)
+	embed.add_field(name="!ariria",value="",inline=False)
+	embed.add_field(name="!wanted",value="",inline=False)
+	embed.add_field(name="!COVID",value="",inline=False)
+	await ctx.send(embed=embed)
 
 bot.run(token)
