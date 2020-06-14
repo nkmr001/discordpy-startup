@@ -13,7 +13,7 @@ def check_with(ctx):
 	return ctx.message.author.id in with_you
 
 @bot.command()
-async def スタート(ctx):
+async def (ctx):
 #@commands.check(check_with)
 	url = "https://rmt.club/post_list?title=5121&search_word=&deal_type_id=1&price_lower=&price_upper=&is_search=1&sort=update&deal_account_id=0"
 	res = requests.get(url).text
