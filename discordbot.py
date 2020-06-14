@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import os,traceback,requests,time,asyncio
 
 bot = commands.Bot(command_prefix='!')
+token = os.environ['DISCORD_BOT_TOKEN']
 bot.remove_command('help')
 
 @bot.command()
@@ -18,4 +19,4 @@ async def a(ctx):
 				else:await ctx.send(f"{ctx.message.author.mention} ありませんでした！")
 		time.sleep(21600)
 
-bot.run("Njg1Njc2NzQ3MTczMTM0MzM3.XuX1gQ.t-1P0fcYWi3vKijWMYgVf2HOcMU")
+bot.run("token")
