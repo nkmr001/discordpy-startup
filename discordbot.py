@@ -22,7 +22,7 @@ async def スタート(ctx):
 		for hoge in soup.find_all('div', class_='tab-list'):
 			for h in soup.find_all('div', class_='title')[0:5]:
 				if "雪ミク" in h.get_text():
-					await ctx.send(f"256433255723565057.mention}"+h.get_text()+'\nhttps://rmt.club/post_list?title=5121&search_word=&deal_type_id=1&price_lower=&price_upper=&is_search=1&sort=update&deal_account_id=0')
+					await ctx.send(f"ctx.message.author.mention}"+h.get_text()+'\nhttps://rmt.club/post_list?title=5121&search_word=&deal_type_id=1&price_lower=&price_upper=&is_search=1&sort=update&deal_account_id=0')
 		time.sleep(21600)
 
 bot.run(token)
