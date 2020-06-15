@@ -16,4 +16,4 @@ async def on_message(message):
 			await bot.kick(message.author.id)
 		except:await channel.send("作戦の本質を見失った")
 
-bot.run("token")
+bot.run(token)
