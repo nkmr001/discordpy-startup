@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
-from bs4 import BeautifulSoup
-import os,traceback,requests,time,asyncio
+import os
+import traceback
+import asyncio
 
 bot = commands.Bot(command_prefix='!')
 token = os.environ['DISCORD_BOT_TOKEN']
