@@ -12,8 +12,8 @@ async def on_message(message):
 	channel = message.channel
 	if "リヴァイ弱" in message.content:
 		try:
-			await channel.send("立体機動装置を見たことはあるか？")
 			await bot.kick(message.author.id)
-		except:await channel.send("作戦の本質を見失った")
+			await channel.send(f"{message.author.id.mention} 立体機動装置を見たことはあるか？")
+		except:await channel.send("作戦の本質を見失った...")
 
 bot.run(token)
