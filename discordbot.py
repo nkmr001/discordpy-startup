@@ -1,20 +1,33 @@
 import discord
 from discord.ext import commands
-import os
-import traceback
-import asyncio
+import os,asyncio,traceback
 
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='//')
 token = os.environ['DISCORD_BOT_TOKEN']
-bot.remove_command('help')
 
-@bot.event
-async def on_message(message):
-	channel = message.channel
-	if "リヴァイ弱" in message.content:
-		try:
-			await bot.kick(message.author.id)
-			await channel.send(f"{message.author.id.mention} 立体機動装置を見たことはあるか？")
-		except:await channel.send("作戦の本質を見失った...")
+
+@bot.command()
+async def check(ctx):
+	rank = {}
+	ch = bot.get_channel(714188878734688287)
+	async for message in ch.history(limit=200):
+		rea = message.reactions
+		c = 0
+		for i in rea:
+			if i.emoji == '👍':
+				c+=int(i.count)*5
+			if i.emoji == '👎':
+				c+=int(i.count) * -5
+			if i.emoji != '👍' and i.emoji != '👎':
+				c+=int(i.count)
+		rank[message.content] = int(c)
+	rank2 = sorted(rank.items(), key=lambda x:x[1],reverse=True)
+	print(rank2)
+	embed = discord.Embed(title="映画",description=None,color=0xff0000)
+	co = 0
+	for em in rank2:
+		co+=1
+		embed.add_field(name=str(co)+'位\n'+em[0],value=str(em[1])+'点',inline=False)
+	await ctx.send(embed=embed)
 
 bot.run(token)
