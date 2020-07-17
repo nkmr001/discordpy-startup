@@ -27,7 +27,7 @@ async def check(ctx):
 	co = 0
 	for em in rank2:
 		co+=1
-		embed.add_field(name=str(co)+'位\n'+em[0],value=str(em[1])+'点',inline=False)
+		embed.add_field(name=str(co)+'位 '+str(em[1])+'点',value=em[0],inline=False)
 	await ctx.send(embed=embed)
 
 bot.run(token)
