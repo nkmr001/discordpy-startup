@@ -1,10 +1,15 @@
 import discord
 from discord.ext import commands
-import os,asyncio
+import os,asyncio,sqlite3
 
 bot = commands.Bot(command_prefix='//')
 token = os.environ['DISCORD_BOT_TOKEN']
 
+conn = sqlite3.connect('discord.db')
+c = conn.cursor()
+c.execute('''CREATE TABLE servers(s_name, s_id)''')
+conn.commit()
+conn.close()
 
 @bot.command()
 async def check(ctx):
@@ -28,6 +33,25 @@ async def check(ctx):
 	for em in rank2:
 		co+=1
 		embed.add_field(name=str(co)+'位 '+str(em[1])+'点',value=em[0],inline=False)
+	await ctx.send(embed=embed)
+
+@bot.command()
+async def register(ctx):
+	conn = sqlite3.connect('discord.db')
+	c = conn.cursor()
+	c.execute("INSERT INTO servers VALUES (ctx.message.guild.name, ctx.message.channel)")
+	conn.commit()
+	conn.close()
+	await ctx.send(ctx.message.guild.name+'を登録しました')
+	
+@bot.command()
+async def list(ctx):
+	conn = sqlite3.connect('discord.db')
+	c = conn.cursor()
+	embed = discord.Embed(title="登録サーバーリスト",description=None,color=0xff0000)
+	for row in c.execute('SELECT * FROM servers ORDER BY s_name DESC'):
+		embed.add_field(name=row,value=None,inline=False)
+	conn.close()
 	await ctx.send(embed=embed)
 
 bot.run(token)
