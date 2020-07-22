@@ -5,11 +5,13 @@ import os,asyncio,sqlite3
 bot = commands.Bot(command_prefix='//')
 token = os.environ['DISCORD_BOT_TOKEN']
 
-conn = sqlite3.connect('discord.db')
-c = conn.cursor()
-c.execute('''CREATE TABLE servers(s_name, s_id)''')
-conn.commit()
-conn.close()
+try:
+	conn = sqlite3.connect('discord.db')
+	c = conn.cursor()
+	c.execute('''CREATE TABLE servers(s_name, s_id)''')
+	conn.commit()
+	conn.close()
+except:pass
 
 @bot.command()
 async def check(ctx):
@@ -37,20 +39,22 @@ async def check(ctx):
 
 @bot.command()
 async def reg(ctx):
+	ch = ctx.message.channel.id
+	g = ctx.message.guild
 	conn = sqlite3.connect('discord.db')
 	c = conn.cursor()
-	c.execute("INSERT INTO servers VALUES (ctx.message.guild.name, ctx.message.channel)")
+	c.execute("INSERT INTO servers VALUES ('%s', '%s')"%(g,ch))
 	conn.commit()
 	conn.close()
-	await ctx.send(ctx.message.guild.name+'を登録しました')
+	await ctx.send(str(g)+'を登録しました')
 	
 @bot.command()
 async def list(ctx):
 	conn = sqlite3.connect('discord.db')
 	c = conn.cursor()
 	embed = discord.Embed(title="登録サーバーリスト",description=None,color=0xff0000)
-	for row in c.execute('SELECT * FROM servers ORDER BY s_name DESC'):
-		embed.add_field(name=row,value=None,inline=False)
+	for row in c.execute('SELECT distinct * FROM servers ORDER BY s_name DESC'):
+		embed.add_field(name=row[0],value=row[1],inline=False)
 	conn.close()
 	await ctx.send(embed=embed)
 
