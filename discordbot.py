@@ -36,7 +36,7 @@ async def check(ctx):
 	await ctx.send(embed=embed)
 
 @bot.command()
-async def register(ctx):
+async def reg(ctx):
 	conn = sqlite3.connect('discord.db')
 	c = conn.cursor()
 	c.execute("INSERT INTO servers VALUES (ctx.message.guild.name, ctx.message.channel)")
