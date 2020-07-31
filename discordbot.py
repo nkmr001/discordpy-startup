@@ -19,9 +19,12 @@ async def check(ctx):
 		rea = message.reactions
 		c = 0
 		for i in rea:
-			if i.emoji == '👍':c+=int(i.count)*5
-			if i.emoji == '👎':c+=int(i.count) * -5
-			if i.emoji != '👍' and i.emoji != '👎':c+=int(i.count)
+			if i.emoji == '👍':
+				c+=int(i.count)*5
+			if i.emoji == '👎':
+				c+=int(i.count) * -5
+			if i.emoji != '👍' and i.emoji != '👎':
+				c+=int(i.count)
 		rank[message.content] = int(c)
 	rank2 = sorted(rank.items(), key=lambda x:x[1],reverse=True)
 	embed = discord.Embed(title="映画",description=None,color=0xff0000)
