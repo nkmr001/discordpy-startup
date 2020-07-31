@@ -12,10 +12,6 @@ try:
 	conn.close()
 except:pass
 
-def connect():
-	conn = sqlite3.connect('discord.db')
-	c = conn.cursor()
-
 @bot.command()
 async def check(ctx):
 	ch = bot.get_channel(714188878734688287)
@@ -39,7 +35,8 @@ async def check(ctx):
 async def reg(ctx):
 	ch = ctx.message.channel.id
 	g = ctx.message.guild
-	connect()
+	conn = sqlite3.connect('discord.db')
+	c = conn.cursor()
 	c.execute("INSERT INTO servers VALUES ('%s', '%s')"%(g,ch))
 	conn.commit()
 	conn.close()
@@ -47,7 +44,8 @@ async def reg(ctx):
 
 @bot.command()
 async def list(ctx):
-	connect()
+	conn = sqlite3.connect('discord.db')
+	c = conn.cursor()
 	embed = discord.Embed(title="登録サーバーリスト",description=None,color=0xff0000)
 	for row in c.execute('SELECT distinct * FROM servers ORDER BY s_name DESC'):
 		embed.add_field(name=row[0],value=row[1],inline=False)
