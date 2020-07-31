@@ -17,8 +17,8 @@ ENGINE = create_engine(
 session = scoped_session(
   # ORM実行時の設定。自動コミットするか、自動反映するなど。
 　　　　sessionmaker(
-　　　　　　　　autocommit = True,
-　　　　　　　　autoflush = True,
+　　　　　　　　autocommit = False,
+　　　　　　　　autoflush = False,
 　　　　　　　　bind = ENGINE
 　　　　)
 )
