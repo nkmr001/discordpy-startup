@@ -58,4 +58,3 @@ async def list(ctx):
 	await ctx.send(embed=embed)
 
 bot.run(token)
-###
